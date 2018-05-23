@@ -1,0 +1,55 @@
+﻿@model ws.web.eng.Models.LoginValidatorModel
+@{
+    ViewBag.Title = "Validar Acesso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("VerifyUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.Hidden("UsuarioId", (int)Model.UsuarioId)
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <h2>Cadastre sua senha e <span style="color:red;">Ative</span> o seu acesso</h2>
+    </div>
+
+    <div class="container-fluid">
+        <fieldset>
+            <legend>Todos os campos são obrigatórios"</legend>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.NomeUsuario)
+                        @Html.TextBoxFor(x => x.NomeUsuario, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.NovaSenha)
+                        @Html.PasswordFor(x => x.NovaSenha, new { @class = "form-control", maxlength = "8" })
+                        @Html.ValidationMessageFor(m => m.NovaSenha, null, new { @class = "text-warning" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.RepetirNovaSenha)
+                        @Html.PasswordFor(x => x.RepetirNovaSenha, new { @class = "form-control", maxlength = "8" })
+                        @Html.ValidationMessageFor(m => m.RepetirNovaSenha, null, new { @class = "text-warning" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <br />
+                <input type="submit" value="Continuar" class="btn btn-primary" />
+
+            </div>
+        </fieldset>
+    </div>
+}
+

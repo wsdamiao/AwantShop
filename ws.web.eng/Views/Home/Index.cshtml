@@ -1,0 +1,66 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Monte seu projeto agora com ";
+}
+
+
+@section scripts {
+    <script type="text/javascript">
+        //$('#dialog').dialog({
+        //    autoOpen: false,
+        //    width: 600,
+        //    buttons: {
+        //        "Ok": function () { $(this).dialog("close"); },
+        //        "Cancel": function () { $(this).dialog("close"); }
+        //    }
+        //});
+
+        //$("#show-dialog").button().click(function () {
+        //    $('#dialog').dialog('open');
+        //    return false;
+        //});
+
+        //$("#SubmitPT").button().click(function () {
+        //    $("#form").submit();
+        //});
+
+        //$("#SubmitBR").button().click(function () {
+        //    $("#form").submit(function () {
+        //        alert("Teste");
+        //    });
+        //});
+    
+    </script>
+}
+
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    
+    
+        <br />
+        <div class="row">
+            <div class="has-error">
+                @ViewBag.Message
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <h1>Informe o <span style="color:red">local</span> do seu projeto</h1>
+            <div class="col-md-4">
+                <input type="submit" value="" name="BT_PT" class="btt_PT" />                
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="" name="BT_RJ" class="btt_RJ" />                
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="" name="BT_BR" class="btt_BR" />                
+            </div>
+        </div>
+        
+
+
+
+}
+

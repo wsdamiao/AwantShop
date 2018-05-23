@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Acompanhamento de Serviços";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Acompanhamento", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="h1">Acompanhamento de Serviços</div>
+    <br />
+    <div class="row">
+        <table class="table">
+            <tr>
+                <td>
+                    <b>Data</b>
+                </td>
+                <td>
+                    10/10/2018
+                </td>
+                <td>
+                    <b>Executado por</b>
+                </td>
+                <td>
+                    Wallace Damião
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Status Atual</b>
+                </td>
+                <td colspan="3">
+                    Criado
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <b>Descrição</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    Bla bla bla
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td>
+                    <a href="#">Download de arquivo anexo</a>
+                </td>
+                <td style="text-align:right;">
+                    <div class="ui-button">Aprovar</div> <div class="ui-button">Rejeitar</div> <div class="ui-button">Questionar</div>
+                </td>
+            </tr>
+        </table>
+        <br />
+    </div>
+    <div class="row">
+        <textarea class="form-control" aria-label="With textarea"></textarea> <br /> <div class="ui-button">Enviar</div> <div class="ui-button">Anexar Documento</div>
+    </div>
+    <div class="row text-center">
+        <b><a href="#">Listar todas as interações anteriores</a></b>
+    </div>
+}
+

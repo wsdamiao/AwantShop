@@ -1,0 +1,50 @@
+﻿@model ws.web.eng.Models.UsuarioModel
+@{
+    ViewBag.Title = "Usuários";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("User", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h2>Usuário</h2>
+    <p class="text-warning">@ViewBag.Message</p>
+    
+    <fieldset>
+        <legend>Nosso Formulário</legend>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"> 
+                    Nome de Usuário (max. 6)
+                    @Html.TextBoxFor(x => x.NomeUsuario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NomeUsuario, null, new { @class = "text-warning" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    Nome Completo
+                    @Html.TextBoxFor(x => x.NomeCompleto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NomeCompleto, null, new { @class = "text-warning" })
+                </div>
+            </div>  
+            <div class="col-md-4">
+                <div class="form-group">
+                    Categoria<br />
+                    @Html.DropDownListFor(x => x.CategoriaID, Model.Categorias, "Selecione uma categoria")
+                </div>
+            </div>
+        </div>        
+    </fieldset>
+
+    <div class="row text-center">
+        <br />
+        <input type="submit" value="Confirmar" class="btn btn-primary" />
+        <a class="btn btn-primary" href="@Url.Action("UserList")" role="button">Cancelar</a>
+
+    </div>
+
+    
+}
+
+
+

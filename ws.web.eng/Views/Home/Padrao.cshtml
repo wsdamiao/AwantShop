@@ -1,0 +1,41 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Padrão de acabamento do Projeto";
+}
+
+@using (Html.BeginForm("Padrao", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
+    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+    @Html.Hidden("idProjeto", (int)Model.Projeto)
+    @Html.Hidden("idArea", (int)Model.Area)
+
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <h1>Informe o <span style="color:red">padrão de acabamento</span> do seu projeto</h1>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_P" class="btt_PT" />
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_M" class="btt_RJ" />
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_G" class="btt_BR" />
+        </div>
+    </div>
+   
+    <div class="row text-center">
+        <br />
+            <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
+        
+            <input type="submit" value="Projeto Personalizado" name="BT_PER" class="btn btn-primary" />
+        
+    </div>
+}

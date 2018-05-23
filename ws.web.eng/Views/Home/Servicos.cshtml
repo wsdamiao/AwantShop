@@ -1,0 +1,53 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Serviços";
+    string desc_pa = "Projeto Arquitetônico";
+    string desc_phs = "Projeto Hidráulico/Sanitário";
+    string desc_pe = "Projeto Elétrico";
+}
+
+@using (Html.BeginForm("Servicos", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
+    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+    @Html.Hidden("idProjeto", (int)Model.Projeto)
+    @Html.Hidden("idArea", (int)Model.Area)
+    @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <h2>Nossos <span style="color:red">serviços</span></h2>
+        <h4>Para o local, tipo, área e padrão de acabamento, selecione um ou mais serviços que deseja contratar</h4>
+        <div class="col-md-4">
+            @Html.CheckBoxFor(x => x.ProjetoArquitetonico) @desc_pa
+        </div>
+        <div class="col-md-4">
+            @if (Model.Regiao == ws.eng.obj.RegiaoProjeto.RioDeJaneiro)
+            {
+                @Html.CheckBoxFor(x => x.ProjetoHidraSanitario) @desc_phs
+            }
+        </div>
+        <div class="col-md-4">
+            @if (Model.Regiao == ws.eng.obj.RegiaoProjeto.RioDeJaneiro)
+            {
+                @Html.CheckBoxFor(x => x.ProjetoEletrico) @desc_pe
+            }
+        </div>
+    </div>
+    
+    <div class="row text-center">
+        <br />
+            <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />        
+            <input type="submit" value="Continuar" name="BT_PROX" class="btn btn-primary" />
+        
+    </div>
+}
+
+
+

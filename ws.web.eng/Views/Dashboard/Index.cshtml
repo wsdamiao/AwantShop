@@ -1,0 +1,97 @@
+﻿@model ICollection<ws.web.eng.Models.DashboardViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <script type="text/javascript">
+        function slideonlyone(thechosenone) {
+            $('.table-active').each(function (index) {
+                if ($(this).attr("id") == thechosenone) {
+                    $(this).slideDown(20);
+                }
+                else {
+                    $(this).slideUp(200);
+                }
+            });
+        }
+    </script> 
+
+    <br />
+        <div class="row">
+            <div class="has-error">
+                @ViewBag.Message
+            </div>
+        </div>
+        <br />
+    <div class="h1">Meus projetos</div>
+    <table class="table">
+        <caption>Administre aqui os seus projetos</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">País</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Regiao</td>
+                <td>@item.DescrProj</td>
+                <td>@item.Valor</td>
+                <td>@item.Status</td>
+                <td>                    
+                    <div class="btn-group">
+                        <button class="btn btn-primary">Opções</button>
+                        <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="javascript:slideonlyone('det_@item.Id');">Serviços</a></li>                            
+                            <li><a tabindex="-1" href="@Url.Action("Cancelar","Dashboard",new {id = int.Parse(item.Id) })">Solicitar Cancelamento</a></li>
+                            <li><a tabindex="-1" href="@Url.Action("Servicos","Home",new {id = int.Parse(item.Id) })">Adicionar Novo Serviço</a></li>                            
+                            <li><a tabindex="-1" href="@Url.Action("Acompanhamento","Dashboard",new {id = int.Parse(item.Id) })">Acompanhamento</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr id="det_@item.Id" class="table-active" style="display:none;">
+                <td colspan="6">
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                            <tr>                                
+                                <th scope="col">Serviço</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var subItem in item.Servicos)
+                            {
+                            <tr>
+                                <td>@subItem.Servico</td>
+                                <td>@subItem.Valor</td>
+                                <td>@subItem.Data</td>
+                                <td>@subItem.Status</td>
+                                <td><div class="ui-button">Acompanhamento</div></td>
+                            </tr>  
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+}
+

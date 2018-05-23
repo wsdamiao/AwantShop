@@ -1,0 +1,90 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Dados do Cliente";
+}
+
+@using (Html.BeginForm("Formulario", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
+    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+    @Html.Hidden("idProjeto", (int)Model.Projeto)
+    @Html.Hidden("idArea", (int)Model.Area)
+    @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
+    @Html.Hidden("PA", (bool)Model.ProjetoArquitetonico)
+    @Html.Hidden("PHS", (bool)Model.ProjetoHidraSanitario)
+    @Html.Hidden("PE", (bool)Model.ProjetoEletrico)
+    <br />
+    <div class="row">
+        <div class="text-warning">
+            @Html.Raw(ViewBag.Message)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <h2>Informe seus <span style="color:red;">Dados Cadastrais</span></h2>
+    </div>
+    <div class="container-fluid">
+        <fieldset>
+            <legend>Os campos com (*) são de preenchimento obrigatório</legend>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CpfCnpj)
+                        @Html.TextBoxFor(x => x.CpfCnpj, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Nome)
+                        @Html.TextBoxFor(x => x.Nome, new { @class = "form-control", style = "width:100%;" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Email)
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.TelContato1)
+                        @Html.TextBoxFor(x => x.TelContato1, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.TelContato2)
+                        @Html.TextBoxFor(x => x.TelContato2, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.TelContato3)
+                        @Html.TextBoxFor(x => x.TelContato3, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.TextoLivre)
+                        @Html.TextAreaFor(x => x.TextoLivre, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        </div>
+
+        <div class="row text-center">
+            <br />
+            <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
+            <input type="submit" value="Continuar" name="BT_PROX" class="btn btn-primary" />
+
+        </div>
+        }
+

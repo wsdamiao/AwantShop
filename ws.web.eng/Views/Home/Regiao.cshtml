@@ -1,0 +1,30 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Projeto Engenharia";
+}
+
+
+@using (Html.BeginForm("Regiao", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+     @Html.Hidden("idRegiao", (int)Model.Regiao)
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    
+    <div class="row">
+        <h1>Selecione uma cidade do Estado do Rio de Janeiro</h1>
+        <div class="col-md-4">
+            <p>Escolha a sua cidade:</p>
+            <p>@Html.DropDownListFor(x => x.CodMunicipio, Model.Municipios, "Selecione uma Cidade") </p>
+        </div>        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-primary" value="Selecionar" name="Selecionar" /> <input type="submit" class="btn btn-primary" value="voltar" name="BT_VOLTAR" class="btn-default" />
+        </div>        
+    </div>
+
+}

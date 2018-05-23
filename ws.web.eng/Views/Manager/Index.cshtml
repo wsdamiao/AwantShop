@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Administrar o Sistema</h2>
+<ul>    
+    <li>@Html.ActionLink("Listar Usuários", "UserList", "Manager", routeValues: null, htmlAttributes: new { title = "Listar Usuários" })</li>
+    <li>Listar Mensagens recebidas</li>
+    <li>Listar Log de Erros</li>
+</ul>
+

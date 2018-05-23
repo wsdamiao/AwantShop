@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Cancelar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Cancelar", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+        <br />
+        <div class="h1">Solicitar Cancelamento</div>
+        <div class="h3">Leia atentamente os termos de cancelamento, selecione os itens desejados e confirme</div>
+        <br />
+        <div class="h3">Seus serviços ativos para o projeto #000001</div>
+        <br />
+        <div class="row">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Todos</label>
+        </div>
+        <div class="row">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Serviço 1</label>
+        </div>
+        <div class="row">
+            <br />
+            <a class="btn btn-primary" href="@Url.Action("index")">Voltar</a> <input type="submit" class="btn btn-primary" value="Confirmar" />
+        </div>
+}

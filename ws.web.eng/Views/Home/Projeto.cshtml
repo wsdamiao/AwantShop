@@ -1,0 +1,35 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Tipo de Projeto";
+}
+
+@using (Html.BeginForm("Projeto", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*@Html.Hidden("_projeto", ws.eng.dll.SerializationUtility.Serializable(Model))*@
+    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <h1>Informe o <span style="color:red">tipo</span> do seu projeto</h1>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_R" class="btt_PT" />
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_C" class="btt_RJ" />
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="" name="BT_I" class="btt_BR" />
+        </div>
+    </div>    
+    <div class="row text-center">
+        <br />
+        <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
+        <input type="submit" value="Projeto Personalizado" name="BT_PER" class="btn btn-primary" />
+    </div>
+}

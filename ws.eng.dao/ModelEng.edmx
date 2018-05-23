@@ -1,0 +1,1139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProEngModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoleClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ConcurrencyStamp" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" />
+          <Property Name="NormalizedName" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="ProviderDisplayName" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="450" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="ConcurrencyStamp" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEnd" Type="datetimeoffset" Precision="7" />
+          <Property Name="NormalizedEmail" Type="nvarchar" MaxLength="256" />
+          <Property Name="NormalizedUserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="AspNetUserTokens">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="450" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TelContato1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TelContato2" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelContato3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CpfCnpj" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Logradouro" Type="nvarchar" MaxLength="250" />
+          <Property Name="Cidade" Type="nvarchar" MaxLength="250" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="4" />
+          <Property Name="CodPostal" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DadosGerais">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Valor" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Distancia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogradouroID" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="VigenciaFim" Type="date" />
+        </EntityType>
+        <EntityType Name="Elemento">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar" MaxLength="250" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ElementoValor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ElementoID" Type="int" Nullable="false" />
+          <Property Name="PaisID" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="VigenciaFim" Type="date" />
+        </EntityType>
+        <EntityType Name="Logradouro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiglaUF" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="NomeUF" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CodMunicipio" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NomeMunicipio" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MensagemCliente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Telefone" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Mensagem" Type="text" Nullable="false" />
+          <Property Name="DtEnvio" Type="datetime" Nullable="false" />
+          <Property Name="DtLeitura" Type="datetime" />
+          <Property Name="IdUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NomeOficial" Type="nvarchar" MaxLength="250" />
+          <Property Name="Idioma" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="MetroQuadrado" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Projeto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="TextoLivre" Type="nvarchar(max)" />
+          <Property Name="PaisID" Type="int" Nullable="false" />
+          <Property Name="LogradouroID" Type="int" Nullable="false" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="PadraoID" Type="int" Nullable="false" />
+          <Property Name="ProjetoID" Type="int" Nullable="false" />
+          <Property Name="AreaPersonalizada" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DataCad" Type="datetime" />
+          <Property Name="VlMetroQuadradoBase" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProjetoServico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjetoID" Type="int" Nullable="false" />
+          <Property Name="ServicoID" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="FormaPgto" Type="int" />
+          <Property Name="T" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="A" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="P" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="d" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ServicoHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="IdServico" Type="bigint" Nullable="false" />
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Historico" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeUsuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Senha" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="Token" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CategoriaID" Type="int" Nullable="false" />
+          <Property Name="NomeCompleto" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UsuarioCategoria">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descr" Type="nvarchar" MaxLength="150" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AspNetRoleClaims_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetRoleClaims" Type="Self.AspNetRoleClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetRoleClaims">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserClaims_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserLogins_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementoValor_Elemento">
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="1" />
+          <End Role="ElementoValor" Type="Self.ElementoValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ElementoValor">
+              <PropertyRef Name="ElementoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementoValor_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+          <End Role="ElementoValor" Type="Self.ElementoValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ElementoValor">
+              <PropertyRef Name="PaisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projeto_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Projeto">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjetoServico_Projeto">
+          <End Role="Projeto" Type="Self.Projeto" Multiplicity="1" />
+          <End Role="ProjetoServico" Type="Self.ProjetoServico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projeto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjetoServico">
+              <PropertyRef Name="ProjetoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProEngModelStoreContainer">
+          <EntitySet Name="AspNetRoleClaims" EntityType="Self.AspNetRoleClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserTokens" EntityType="Self.AspNetUserTokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DadosGerais" EntityType="Self.DadosGerais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Distancia" EntityType="Self.Distancia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elemento" EntityType="Self.Elemento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ElementoValor" EntityType="Self.ElementoValor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logradouro" EntityType="Self.Logradouro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MensagemCliente" EntityType="Self.MensagemCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projeto" EntityType="Self.Projeto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjetoServico" EntityType="Self.ProjetoServico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServicoHistorico" EntityType="Self.ServicoHistorico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioCategoria" EntityType="Self.UsuarioCategoria" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetRoleClaims_AspNetRoles_RoleId" Association="Self.FK_AspNetRoleClaims_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetRoleClaims" EntitySet="AspNetRoleClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserClaims_AspNetUsers_UserId" Association="Self.FK_AspNetUserClaims_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserLogins_AspNetUsers_UserId" Association="Self.FK_AspNetUserLogins_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles_RoleId" Association="Self.FK_AspNetUserRoles_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers_UserId" Association="Self.FK_AspNetUserRoles_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Usuario" Association="Self.FK_Cliente_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementoValor_Elemento" Association="Self.FK_ElementoValor_Elemento">
+            <End Role="Elemento" EntitySet="Elemento" />
+            <End Role="ElementoValor" EntitySet="ElementoValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementoValor_Pais" Association="Self.FK_ElementoValor_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="ElementoValor" EntitySet="ElementoValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projeto_Cliente" Association="Self.FK_Projeto_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Projeto" EntitySet="Projeto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjetoServico_Projeto" Association="Self.FK_ProjetoServico_Projeto">
+            <End Role="Projeto" EntitySet="Projeto" />
+            <End Role="ProjetoServico" EntitySet="ProjetoServico" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProEngModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProEngEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Logradouroes" EntityType="ProEngModel.Logradouro" />
+          <EntitySet Name="Elementoes" EntityType="ProEngModel.Elemento" />
+          <EntitySet Name="ElementoValors" EntityType="ProEngModel.ElementoValor" />
+          <EntitySet Name="Pais" EntityType="ProEngModel.Pai" />
+          <AssociationSet Name="FK_ElementoValor_Elemento" Association="ProEngModel.FK_ElementoValor_Elemento">
+            <End Role="Elemento" EntitySet="Elementoes" />
+            <End Role="ElementoValor" EntitySet="ElementoValors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ElementoValor_Pais" Association="ProEngModel.FK_ElementoValor_Pais">
+            <End Role="Pai" EntitySet="Pais" />
+            <End Role="ElementoValor" EntitySet="ElementoValors" />
+          </AssociationSet>
+          <EntitySet Name="Distancias" EntityType="ProEngModel.Distancia" />
+          <EntitySet Name="DadosGerais" EntityType="ProEngModel.DadosGerai" />
+          <EntitySet Name="Clientes" EntityType="ProEngModel.Cliente" />
+          <EntitySet Name="Projetoes" EntityType="ProEngModel.Projeto" />
+          <EntitySet Name="ProjetoServicoes" EntityType="ProEngModel.ProjetoServico" />
+          <AssociationSet Name="FK_Projeto_Cliente" Association="ProEngModel.FK_Projeto_Cliente">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Projeto" EntitySet="Projetoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjetoServico_Projeto" Association="ProEngModel.FK_ProjetoServico_Projeto">
+            <End Role="Projeto" EntitySet="Projetoes" />
+            <End Role="ProjetoServico" EntitySet="ProjetoServicoes" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="ProEngModel.sysdiagram" />
+          <EntitySet Name="AspNetRoleClaims" EntityType="ProEngModel.AspNetRoleClaim" />
+          <EntitySet Name="AspNetRoles" EntityType="ProEngModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="ProEngModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="ProEngModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="ProEngModel.AspNetUser" />
+          <EntitySet Name="AspNetUserTokens" EntityType="ProEngModel.AspNetUserToken" />
+          <EntitySet Name="ServicoHistoricoes" EntityType="ProEngModel.ServicoHistorico" />
+          <AssociationSet Name="FK_AspNetRoleClaims_AspNetRoles_RoleId" Association="ProEngModel.FK_AspNetRoleClaims_AspNetRoles_RoleId">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetRoleClaim" EntitySet="AspNetRoleClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserClaims_AspNetUsers_UserId" Association="ProEngModel.FK_AspNetUserClaims_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserLogins_AspNetUsers_UserId" Association="ProEngModel.FK_AspNetUserLogins_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="ProEngModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="MensagemClientes" EntityType="ProEngModel.MensagemCliente" />
+          <EntitySet Name="UsuarioCategorias" EntityType="ProEngModel.UsuarioCategoria" />
+          <EntitySet Name="Usuarios" EntityType="ProEngModel.Usuario" />
+          <AssociationSet Name="FK_Cliente_Usuario" Association="ProEngModel.FK_Cliente_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Logradouro">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="SiglaUF" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="NomeUF" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CodMunicipio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NomeMunicipio" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Elemento">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ElementoValors" Relationship="ProEngModel.FK_ElementoValor_Elemento" FromRole="Elemento" ToRole="ElementoValor" />
+        </EntityType>
+        <EntityType Name="ElementoValor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ElementoID" Type="Int32" Nullable="false" />
+          <Property Name="PaisID" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="VigenciaFim" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Elemento" Relationship="ProEngModel.FK_ElementoValor_Elemento" FromRole="ElementoValor" ToRole="Elemento" />
+          <NavigationProperty Name="Pai" Relationship="ProEngModel.FK_ElementoValor_Pais" FromRole="ElementoValor" ToRole="Pai" />
+        </EntityType>
+        <EntityType Name="Pai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomeOficial" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Idioma" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ElementoValors" Relationship="ProEngModel.FK_ElementoValor_Pais" FromRole="Pai" ToRole="ElementoValor" />
+          <Property Name="MetroQuadrado" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_ElementoValor_Elemento">
+          <End Type="ProEngModel.Elemento" Role="Elemento" Multiplicity="1" />
+          <End Type="ProEngModel.ElementoValor" Role="ElementoValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ElementoValor">
+              <PropertyRef Name="ElementoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ElementoValor_Pais">
+          <End Type="ProEngModel.Pai" Role="Pai" Multiplicity="1" />
+          <End Type="ProEngModel.ElementoValor" Role="ElementoValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pai">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ElementoValor">
+              <PropertyRef Name="PaisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Distancia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogradouroID" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="VigenciaFim" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="DadosGerai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Valor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TelContato1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelContato2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelContato3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CpfCnpj" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projetoes" Relationship="ProEngModel.FK_Projeto_Cliente" FromRole="Cliente" ToRole="Projeto" />
+          <Property Name="Logradouro" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Cidade" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="ProEngModel.FK_Cliente_Usuario" FromRole="Cliente" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Projeto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="TextoLivre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaisID" Type="Int32" Nullable="false" />
+          <Property Name="LogradouroID" Type="Int32" Nullable="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="PadraoID" Type="Int32" Nullable="false" />
+          <Property Name="ProjetoID" Type="Int32" Nullable="false" />
+          <Property Name="AreaPersonalizada" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DataCad" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="ProEngModel.FK_Projeto_Cliente" FromRole="Projeto" ToRole="Cliente" />
+          <NavigationProperty Name="ProjetoServicoes" Relationship="ProEngModel.FK_ProjetoServico_Projeto" FromRole="Projeto" ToRole="ProjetoServico" />
+          <Property Name="VlMetroQuadradoBase" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProjetoServico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjetoID" Type="Int32" Nullable="false" />
+          <Property Name="ServicoID" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Projeto" Relationship="ProEngModel.FK_ProjetoServico_Projeto" FromRole="ProjetoServico" ToRole="Projeto" />
+          <Property Name="FormaPgto" Type="Int32" />
+          <Property Name="T" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="A" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="P" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="d" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Projeto_Cliente">
+          <End Type="ProEngModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="ProEngModel.Projeto" Role="Projeto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Projeto">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjetoServico_Projeto">
+          <End Type="ProEngModel.Projeto" Role="Projeto" Multiplicity="1" />
+          <End Type="ProEngModel.ProjetoServico" Role="ProjetoServico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projeto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjetoServico">
+              <PropertyRef Name="ProjetoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoleClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetRole" Relationship="ProEngModel.FK_AspNetRoleClaims_AspNetRoles_RoleId" FromRole="AspNetRoleClaim" ToRole="AspNetRole" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="ConcurrencyStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NormalizedName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetRoleClaims" Relationship="ProEngModel.FK_AspNetRoleClaims_AspNetRoles_RoleId" FromRole="AspNetRole" ToRole="AspNetRoleClaim" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ProEngModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="ProEngModel.FK_AspNetUserClaims_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderDisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="ProEngModel.FK_AspNetUserLogins_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="ConcurrencyStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEnd" Type="DateTimeOffset" Precision="7" />
+          <Property Name="NormalizedEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NormalizedUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="ProEngModel.FK_AspNetUserClaims_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="ProEngModel.FK_AspNetUserLogins_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="AspNetRoles" Relationship="ProEngModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+        </EntityType>
+        <EntityType Name="AspNetUserToken">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ServicoHistorico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="IdServico" Type="Int64" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Historico" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_AspNetRoleClaims_AspNetRoles_RoleId">
+          <End Type="ProEngModel.AspNetRole" Role="AspNetRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProEngModel.AspNetRoleClaim" Role="AspNetRoleClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetRoleClaim">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserClaims_AspNetUsers_UserId">
+          <End Type="ProEngModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProEngModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserLogins_AspNetUsers_UserId">
+          <End Type="ProEngModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProEngModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="ProEngModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="ProEngModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MensagemCliente">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Telefone" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Mensagem" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DtEnvio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DtLeitura" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UsuarioCategoria">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descr" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeUsuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="Token" Type="Guid" Nullable="false" />
+          <Property Name="CategoriaID" Type="Int32" Nullable="false" />
+          <Property Name="NomeCompleto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clientes" Relationship="ProEngModel.FK_Cliente_Usuario" FromRole="Usuario" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK_Cliente_Usuario">
+          <End Type="ProEngModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="ProEngModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProEngModelStoreContainer" CdmEntityContainer="ProEngEntities" >
+          <EntitySetMapping Name="Logradouroes">
+            <EntityTypeMapping TypeName="ProEngModel.Logradouro">
+              <MappingFragment StoreEntitySet="Logradouro">
+                <ScalarProperty Name="NomeMunicipio" ColumnName="NomeMunicipio" />
+                <ScalarProperty Name="CodMunicipio" ColumnName="CodMunicipio" />
+                <ScalarProperty Name="NomeUF" ColumnName="NomeUF" />
+                <ScalarProperty Name="SiglaUF" ColumnName="SiglaUF" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elementoes">
+            <EntityTypeMapping TypeName="ProEngModel.Elemento">
+              <MappingFragment StoreEntitySet="Elemento">
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ElementoValors">
+            <EntityTypeMapping TypeName="ProEngModel.ElementoValor">
+              <MappingFragment StoreEntitySet="ElementoValor">
+                <ScalarProperty Name="VigenciaFim" ColumnName="VigenciaFim" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="PaisID" ColumnName="PaisID" />
+                <ScalarProperty Name="ElementoID" ColumnName="ElementoID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="ProEngModel.Pai">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="MetroQuadrado" ColumnName="MetroQuadrado" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+                <ScalarProperty Name="NomeOficial" ColumnName="NomeOficial" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distancias">
+            <EntityTypeMapping TypeName="ProEngModel.Distancia">
+              <MappingFragment StoreEntitySet="Distancia">
+                <ScalarProperty Name="VigenciaFim" ColumnName="VigenciaFim" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="LogradouroID" ColumnName="LogradouroID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DadosGerais">
+            <EntityTypeMapping TypeName="ProEngModel.DadosGerai">
+              <MappingFragment StoreEntitySet="DadosGerais">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="ProEngModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="CodPostal" ColumnName="CodPostal" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Logradouro" ColumnName="Logradouro" />
+                <ScalarProperty Name="CpfCnpj" ColumnName="CpfCnpj" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TelContato3" ColumnName="TelContato3" />
+                <ScalarProperty Name="TelContato2" ColumnName="TelContato2" />
+                <ScalarProperty Name="TelContato1" ColumnName="TelContato1" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projetoes">
+            <EntityTypeMapping TypeName="ProEngModel.Projeto">
+              <MappingFragment StoreEntitySet="Projeto">
+                <ScalarProperty Name="VlMetroQuadradoBase" ColumnName="VlMetroQuadradoBase" />
+                <ScalarProperty Name="DataCad" ColumnName="DataCad" />
+                <ScalarProperty Name="AreaPersonalizada" ColumnName="AreaPersonalizada" />
+                <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
+                <ScalarProperty Name="PadraoID" ColumnName="PadraoID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="LogradouroID" ColumnName="LogradouroID" />
+                <ScalarProperty Name="PaisID" ColumnName="PaisID" />
+                <ScalarProperty Name="TextoLivre" ColumnName="TextoLivre" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjetoServicoes">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoServico">
+              <MappingFragment StoreEntitySet="ProjetoServico">
+                <ScalarProperty Name="d" ColumnName="d" />
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="T" ColumnName="T" />
+                <ScalarProperty Name="FormaPgto" ColumnName="FormaPgto" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="ServicoID" ColumnName="ServicoID" />
+                <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProEngModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoleClaims">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetRoleClaim">
+              <MappingFragment StoreEntitySet="AspNetRoleClaims">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="NormalizedName" ColumnName="NormalizedName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ConcurrencyStamp" ColumnName="ConcurrencyStamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderDisplayName" ColumnName="ProviderDisplayName" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="NormalizedUserName" ColumnName="NormalizedUserName" />
+                <ScalarProperty Name="NormalizedEmail" ColumnName="NormalizedEmail" />
+                <ScalarProperty Name="LockoutEnd" ColumnName="LockoutEnd" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ConcurrencyStamp" ColumnName="ConcurrencyStamp" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserTokens">
+            <EntityTypeMapping TypeName="ProEngModel.AspNetUserToken">
+              <MappingFragment StoreEntitySet="AspNetUserTokens">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServicoHistoricoes">
+            <EntityTypeMapping TypeName="ProEngModel.ServicoHistorico">
+              <MappingFragment StoreEntitySet="ServicoHistorico">
+                <ScalarProperty Name="Historico" ColumnName="Historico" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdServico" ColumnName="IdServico" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ProEngModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="MensagemClientes">
+            <EntityTypeMapping TypeName="ProEngModel.MensagemCliente">
+              <MappingFragment StoreEntitySet="MensagemCliente">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="DtLeitura" ColumnName="DtLeitura" />
+                <ScalarProperty Name="DtEnvio" ColumnName="DtEnvio" />
+                <ScalarProperty Name="Mensagem" ColumnName="Mensagem" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioCategorias">
+            <EntityTypeMapping TypeName="ProEngModel.UsuarioCategoria">
+              <MappingFragment StoreEntitySet="UsuarioCategoria">
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ProEngModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="NomeCompleto" ColumnName="NomeCompleto" />
+                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="NomeUsuario" ColumnName="NomeUsuario" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
