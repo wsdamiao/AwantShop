@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ws.eng.obj;
+using ws.com.v2017;
 
 namespace ws.eng.dao
 {
@@ -20,7 +21,7 @@ namespace ws.eng.dao
         private UsuarioObj ConverterObj(Usuario obj)
         {
             UsuarioObj objOut = new UsuarioObj();
-
+            
             objOut.ID = obj.ID;
             objOut.Ativo = obj.Ativo;
             objOut.CategoriaID = obj.CategoriaID;
