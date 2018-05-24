@@ -27,7 +27,7 @@ namespace ws.eng.dll
             UsuarioObj objEncontrado;
             Criptografia criptografia = new Criptografia(CryptProvider.TripleDES);
 
-            string senha = "";
+            string senha = obj.Senha;
 
             criptografia.Key = ws.eng.obj.DadosProjeto.CRIPTOGRAFIA;
 
@@ -37,7 +37,7 @@ namespace ws.eng.dll
             {
                 if (gerarSenhaAutomatica)
                     senha = criptografia.Encrypt(Gerador.alfanumericoAleatorio(DadosProjeto.TAMANHOSENHAPADRAO));
-
+                
                 obj.Senha = senha;
                 obj.Ativo = false;
                 obj.Token = Guid.NewGuid();

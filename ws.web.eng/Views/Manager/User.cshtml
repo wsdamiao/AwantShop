@@ -7,6 +7,7 @@
 @using (Html.BeginForm("User", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
+    @Html.Hidden("Id", Model.Id)
     <h2>Usuário</h2>
     <p class="text-warning">@ViewBag.Message</p>
     
@@ -14,23 +15,24 @@
         <legend>Nosso Formulário</legend>
         <div class="row">
             <div class="col-md-4">
-                <div class="form-group"> 
-                    Nome de Usuário (max. 6)
-                    @Html.TextBoxFor(x => x.NomeUsuario, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.NomeUsuario, null, new { @class = "text-warning" })
+                <div class="form-group">  
+                    @Html.LabelFor(x => x.NomeUsuario)
+                    @Html.TextBoxFor(x => x.NomeUsuario, new { @class = "form-control", maxlength = "8" })
+                    @Html.ValidationMessageFor(m => m.NomeUsuario, null, new { @class = "text-warning"})
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    Nome Completo
-                    @Html.TextBoxFor(x => x.NomeCompleto, new { @class = "form-control" })
+                    @Html.LabelFor(x => x.NomeCompleto)
+                    @Html.TextBoxFor(x => x.NomeCompleto, new { @class = "form-control", maxlength = "150" })
                     @Html.ValidationMessageFor(m => m.NomeCompleto, null, new { @class = "text-warning" })
                 </div>
             </div>  
             <div class="col-md-4">
                 <div class="form-group">
-                    Categoria<br />
-                    @Html.DropDownListFor(x => x.CategoriaID, Model.Categorias, "Selecione uma categoria")
+                    @Html.LabelFor(x => x.Categorias)
+                    @Html.DropDownListFor(x => x.CategoriaID, Model.Categorias, "Selecione uma categoria", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CategoriaID, null, new { @class = "text-warning" })
                 </div>
             </div>
         </div>        

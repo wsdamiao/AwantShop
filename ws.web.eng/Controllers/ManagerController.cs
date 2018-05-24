@@ -38,20 +38,25 @@ namespace ws.web.eng.Controllers
             return View(model);
         }
 
-        public ActionResult User(int Id)
+        private List<SelectListItem> Popularcategorias()
         {
-            //if (Session["usu"] == null)
-            //    return RedirectToAction("index", "Home");
-
-            UsuarioModel model = new UsuarioModel();            
-
             List<SelectListItem> lista = new List<SelectListItem>();
             foreach (var item in new UsuarioClienteDll().ListarCategoria())
             {
                 lista.Add(new SelectListItem { Value = item.ID.ToString(), Text = item.Nome });
             }
 
-            model.Categorias = lista;
+            return lista;
+        }
+
+        public ActionResult User(int Id)
+        {
+            //if (Session["usu"] == null)
+            //    return RedirectToAction("index", "Home");
+
+            UsuarioModel model = new UsuarioModel();            
+                                    
+            model.Categorias = Popularcategorias();
 
             if(Id != 0)
             {
@@ -62,6 +67,7 @@ namespace ws.web.eng.Controllers
 
                 if(usu != null)
                 {
+                    model.Id = usu.ID;
                     model.CategoriaID = usu.CategoriaID;
                     model.NomeCompleto = usu.NomeCompleto;
                     model.NomeUsuario = usu.NomeUsuario;
@@ -73,41 +79,51 @@ namespace ws.web.eng.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult User(int id,UsuarioObj model)
+        public ActionResult User(int id, UsuarioModel model)
         {
             //if (Session["usu"] == null)
             //    return RedirectToAction("index", "Home");
 
-            UsuarioObj usu = new UsuarioObj();
-            UsuarioClienteDll usuDll = new UsuarioClienteDll();
+            model.Categorias = Popularcategorias();
+                       
 
-            try
+            if (ModelState.IsValid)
             {
-                if (usu.ID != 0)
-                    usu = usuDll.BuscarUsuario(model.ID);
+                UsuarioObj usu = new UsuarioObj();
+                UsuarioClienteDll usuDll = new UsuarioClienteDll();                
 
-                usu.NomeUsuario = model.NomeUsuario;
-                usu.NomeCompleto = model.NomeCompleto;
-                usu.CategoriaID = model.CategoriaID;
+                    try
+                {
+                    if (model.Id != 0)
+                        usu = usuDll.BuscarUsuario(model.Id);
 
-                if (usu.ID == 0)
-                {
-                    usuDll.CriarUsuario(usu, true);
-                    TempData["Message"] = "Usuário cadastrado com sucesso";
+                    usu.NomeUsuario = model.NomeUsuario;
+                    usu.NomeCompleto = model.NomeCompleto;
+                    usu.CategoriaID = model.CategoriaID;
+                    
+                    if (usu.ID == 0)
+                    {
+                        usu.Senha = DadosProjeto.SENHAPADRAO;
+
+                        usuDll.CriarUsuario(usu, false);
+                        TempData["Message"] = "Usuário cadastrado com sucesso";
+                    }
+                    else
+                    {
+                        usuDll.AlterarUsuario(usu, false);
+                        TempData["Message"] = "Usuário alterado com sucesso";
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    usuDll.AlterarUsuario(usu,false);
-                    TempData["Message"] = "Usuário alterado com sucesso";
+                    //salvarLog(ex);
+                    TempData["Message"] = "O usuário não pode ser criado no momento. O erro encontrado já foi enviado para o suporte";
                 }
+
+                return RedirectToAction("UserList");
             }
-            catch(Exception ex)
-            {
-                //salvarLog
-                TempData["Message"] = "O usuário não pode ser criado no momento. O erro encontrado já foi enviado para o suporte";
-            }
-            
-            return RedirectToAction("UserList");
+
+            return View(model);
         }
 
         

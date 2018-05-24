@@ -31,17 +31,9 @@ namespace ws.eng.obj
     public class UsuarioObj
     {
         public int ID { get; set; }
-
-        [Display(Name = "Categoria")]
-        public int CategoriaID { get; set; }
-
-        [Display(Name = "Nome de usuário")]
+        public int CategoriaID { get; set; }        
         public string NomeUsuario { get; set; }
-
-        [Display(Name = "Nome completo")]
-        public string NomeCompleto { get; set; }
-
-        [Display(Name = "Senha")]
+        public string NomeCompleto { get; set; }                
         public string Senha { get; set; }
         public bool Ativo { get; set; }
         public Guid Token { get; set; }

@@ -107,31 +107,46 @@ namespace ws.web.eng.Models
     [Serializable]
     public class UsuarioModel
     {
-        [Required]
-        [StringLength(14, MinimumLength = 6)]
-        [Display(Name = "Usuário")]
+        public int Id { get; set; }
+
+        [Display(Name = "Usuário (de 4 a 8 caracteres)")]
+        [StringLength(8, MinimumLength = 4)]
+        [Required(ErrorMessage = "Informe o nome do usuário")]
         public string NomeUsuario { get; set; }
 
         [Required]
         [Display(Name = "Nome")]
         public string NomeCompleto { get; set; }
+                
+        public IEnumerable<SelectListItem> Categorias { get; set; }
+
+        [Display(Name = "Categoria")]
+        [Required(ErrorMessage = "Informe uma categoria")]
+        public int CategoriaID { get; set; }
+    }
+
+    [Serializable]
+    public class UsuarioModelSenha
+    {
+        public int Id { get; set; }
+
+        [Display(Name = "Usuário (de 4 a 8 caracteres)")]        
+        public string NomeUsuario { get; set; }
+                
+        [Display(Name = "Nome")]
+        public string NomeCompleto { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(10, MinimumLength = 4)]
+        [StringLength(50, MinimumLength = 4)]
         [Display(Name = "Senha")]
         public string Senha { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(10, MinimumLength = 4)]
+        [StringLength(50, MinimumLength = 4)]
         [Display(Name = "Repetir Senha")]
         public string RepetirSenha { get; set; }
-
-        [Required]        
-        [Display(Name = "Categoria")]
-        public IEnumerable<SelectListItem> Categorias { get; set; }
-
-        public int CategoriaID { get; set; }
+        
     }
 }
