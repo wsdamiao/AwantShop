@@ -15,9 +15,9 @@ namespace ws.eng.obj
         public static int TAMANHOSENHAPADRAO = 8;
         public static string EMAILDOSISTEMA = "sistemas@wallacedamiao.com";
         public static string EMAILDOSISTEMASENHA = "senha@senha@123";
-        public static string EMAILDOSISTEMASERVIDOR = "webmail.wallacedamiao.com";
+        public static string EMAILDOSISTEMASERVIDOR = "localhost ";
         public static bool EMAILSSL = false;
-        public static int EMAILPORTA = 143;
+        public static int EMAILPORTA = 25;
     }
         
     public static class EnumObj
@@ -48,11 +48,11 @@ namespace ws.eng.obj
     public enum RegiaoProjeto
     {
         [Description("Portugal")]
-        Portugal = 1,
+        Portugal = 2,
         [Description("Rio de Janeiro")]
-        RioDeJaneiro = 2,
+        RioDeJaneiro = 3,
         [Description("Restante do Brasil")]
-        Brasil = 3
+        Brasil = 1
     }
 
     public enum TipoProjeto

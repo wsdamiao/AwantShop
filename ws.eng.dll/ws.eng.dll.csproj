@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ContatoDll.cs" />
     <Compile Include="DadosGerais.cs" />
+    <Compile Include="DistanciaRodoviaria.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Financeiro.cs" />
     <Compile Include="HistoricoServico.cs" />

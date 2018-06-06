@@ -101,6 +101,12 @@ namespace ws.web.eng.Controllers
             //}
 
             UsuarioObj usu = usuDll.ValidarAcesso(model.UserName, model.Password, model.RememberMe);
+
+            if(model.RememberMe)
+            {
+
+            }
+
             if (usu.NomeUsuario != null)
             {
                 if (usu.Ativo)

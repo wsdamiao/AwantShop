@@ -18,5 +18,6 @@ namespace ws.eng.dao
         public int LogradouroID { get; set; }
         public decimal Valor { get; set; }
         public Nullable<System.DateTime> VigenciaFim { get; set; }
+        public Nullable<decimal> DistRodoviaria { get; set; }
     }
 }

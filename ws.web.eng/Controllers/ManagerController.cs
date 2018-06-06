@@ -34,7 +34,7 @@ namespace ws.web.eng.Controllers
 
             List<UsuarioObj> model = new List<UsuarioObj>();
             
-            model = usu.ListarUsuarioAdministrativo();
+            model = usu.ListarUsuarioAdministrativo().OrderBy(x=>x.NomeCompleto).ToList();
             return View(model);
         }
 
@@ -44,6 +44,17 @@ namespace ws.web.eng.Controllers
             foreach (var item in new UsuarioClienteDll().ListarCategoria())
             {
                 lista.Add(new SelectListItem { Value = item.ID.ToString(), Text = item.Nome });
+            }
+
+            return lista;
+        }
+
+        private List<SelectListItem> PopularLogradouro()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
+            foreach (var item in new LogradouroDll().ListarCidades().OrderBy(x => x.NomeMunicipio))
+            {
+                lista.Add(new SelectListItem { Value = item.ID.ToString(), Text = item.NomeMunicipio });
             }
 
             return lista;
@@ -125,8 +136,7 @@ namespace ws.web.eng.Controllers
 
             return View(model);
         }
-
-        
+                
         public ActionResult UserPassword(int Id)
         {
             UsuarioObj usu = new UsuarioObj();
@@ -144,7 +154,87 @@ namespace ws.web.eng.Controllers
             return RedirectToAction("UserList");
         }
 
+        public ActionResult DistanciaList()
+        {
+            DistanciaRodoviariaDll disDll = new DistanciaRodoviariaDll();
+            LogradouroDll logrDll = new LogradouroDll();
 
+            List<DistanciaRodoviariaViewModel> lista = new List<DistanciaRodoviariaViewModel>();
+            
+            foreach (var item in disDll.Listar())
+            {
+                DistanciaRodoviariaViewModel obj = new DistanciaRodoviariaViewModel();
+
+                if(item.Distancia != null)
+                    obj.DistanciaRodoviaria = item.Distancia.Value;
+
+                obj.ID = item.ID;
+                obj.LogradouroID = item.LogradouroID;
+                obj.NomeCidade = logrDll.BuscarMunicipioPorId(item.LogradouroID).NomeMunicipio;                               
+                obj.Valor = item.ValorPercentual;
+
+                lista.Add(obj);
+
+            }
+
+            ViewBag.Message = TempData["Message"];
+
+            return View(lista.OrderBy(x =>x.NomeCidade).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult DistanciaList(DistanciaRodoviariaViewModel model)
+        {
+            return View();
+        }
+
+        public ActionResult DistanciaRodoviaria(int Id)
+        {
+            DistanciaRodoviariaViewModel model = new DistanciaRodoviariaViewModel();
+            FinanceiroDll finDll = new FinanceiroDll();
+
+            model.Logradouros = PopularLogradouro();         
+            model.ValorBase =  finDll.BuscarValorMetroQuadrado(RegiaoProjeto.Brasil);
+
+            if(Id > 0)
+            {
+                DistanciaRodoviariaDll dll = new DistanciaRodoviariaDll();
+                DistanciaRodoviariaObj obj = new DistanciaRodoviariaObj();
+
+                obj = dll.Buscar(Id);
+
+                model.LogradouroID = obj.LogradouroID;
+                model.Valor = obj.ValorPercentual;
+                if (obj.Distancia != null)
+                    model.DistanciaRodoviaria = obj.Distancia.Value;
+
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult DistanciaRodoviaria(int Id,DistanciaRodoviariaViewModel model)
+        {
+            DistanciaRodoviariaDll disDll = new DistanciaRodoviariaDll();
+            DistanciaRodoviariaObj obj = new DistanciaRodoviariaObj();
+
+            obj.Distancia = model.DistanciaRodoviaria;
+            obj.LogradouroID = model.LogradouroID;
+            obj.ValorPercentual = model.Valor;
+            obj.ID = model.ID;
+
+            try
+            {
+                disDll.Salvar(obj);
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+            
+            return RedirectToAction("DistanciaList");
+        }
 
     }
 }

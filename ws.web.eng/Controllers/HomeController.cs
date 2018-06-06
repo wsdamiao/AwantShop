@@ -671,14 +671,14 @@ namespace ws.web.eng.Controllers
                     GravarMensagem(model);
                     mail.MontarMensagem();
                     mail.Enviar();
+
+                    TempData["Message"] = "Sua mensagem foi enviada para nossos consultores";
                 }
-                catch
+                catch(Exception ex)
                 {
-                    //ViewBag.Message = "Sua mensagem foi enviada corretamente";
+                    TempData["Message"] = ex.Message;
                 }
-
-                TempData["Message"] = "Sua mensagem foi enviada para nossos consultores";
-
+                
                 return RedirectToAction("Contato");
             }
             else

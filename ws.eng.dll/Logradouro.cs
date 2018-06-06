@@ -18,14 +18,14 @@ namespace ws.eng.dll
         }
 
         #region Infra
-        public List<LogradouroObj> BuscarMunicipios()
+        public List<LogradouroObj> ListarCidades()
         {
             List<LogradouroObj> obj = new List<LogradouroObj>();
             
             return lgrDao.ListarLogradouro();
         }
 
-        public List<PaisObj> Listar ()
+        public List<PaisObj> ListarPaises ()
         {
             List<PaisObj> obj = new List<PaisObj>();
             
@@ -49,6 +49,11 @@ namespace ws.eng.dll
         public LogradouroObj BuscarMunicipio(string CodMunicipio)
         {
             return lgrDao.ListarLogradouro().Where(x=> x.CodMunicipio == CodMunicipio).FirstOrDefault();
+        }
+
+        public LogradouroObj BuscarMunicipioPorId(int Id)
+        {
+            return lgrDao.ListarLogradouro().Where(x => x.ID == Id).FirstOrDefault();
         }
     }
 }

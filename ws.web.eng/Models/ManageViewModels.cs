@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using ws.eng.obj;
 
+
 namespace ws.web.eng.Models
 {
     public class IndexViewModel
@@ -85,4 +86,5 @@ namespace ws.web.eng.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+    
 }

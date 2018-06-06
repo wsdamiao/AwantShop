@@ -1,0 +1,58 @@
+﻿@model ICollection <ws.web.eng.Models.DistanciaRodoviariaViewModel>
+@{
+    ViewBag.Title = "Distâncias Rodoviárias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("DistanciaList", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <script type="text/javascript">
+        $(function () {
+            function DialogoExcluir() {
+                $("#dialogExcluir").dialog();
+            }
+        });
+    </script>
+
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="h1">Distâncias Rodoviárias</div>
+        <table class="table">
+            <caption><a class="btn btn-primary" href="@Url.Action("DistanciaRodoviaria", "Manager", new { id = 0 })" role="button">Cadastrar Nova Distância</a></caption>
+            <thead>
+                <tr>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">Percentual</th>
+                    <th scope="col">Distância</th>                    
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.NomeCidade</td>
+                        <td>@item.Valor</td>
+                        <td>@item.DistanciaRodoviaria</td>                        
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="@Url.Action("DistanciaRodoviaria", "Manager", new { id = item.ID })" role="button">Editar</a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
+
+        @*<div id="dialogExcluir" title="Basic dialog">
+                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+            </div>*@
+

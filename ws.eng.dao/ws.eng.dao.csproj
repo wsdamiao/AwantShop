@@ -86,6 +86,7 @@
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
     <Compile Include="objs\ContatoDao.cs" />
+    <Compile Include="objs\DistanciaRodoviariaDao.cs" />
     <Compile Include="objs\FinanceiroDao.cs" />
     <Compile Include="objs\LogradouroDao.cs" />
     <Compile Include="Logradouro.cs">

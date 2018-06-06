@@ -149,4 +149,32 @@ namespace ws.web.eng.Models
         public string RepetirSenha { get; set; }
         
     }
+
+    [Serializable]
+    public class DistanciaRodoviariaViewModel
+    {
+        public int ID { get; set; }
+
+        [Display(Name = "Cidade")]
+        [Required(ErrorMessage = "Informe o munícipio")]
+        public int LogradouroID { get; set; }
+
+        [Display(Name = "Cidade")]        
+        public string NomeCidade { get; set; }
+
+        public IEnumerable<SelectListItem> Logradouros { get; set; }
+
+        [Display(Name = "Valor Percentual")]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Informe o valor percentual")]
+        public decimal Valor { get; set; }
+
+        [Display(Name = "Distância Rodoviária")]
+        [Required(ErrorMessage = "Informe a distância rodoviária do marco zero")]
+        public decimal DistanciaRodoviaria { get; set; }
+
+        [Display(Name = "Valor Base")]
+        [DisplayFormat(DataFormatString = "{0:n2}")]
+        public decimal ValorBase { get; set; }
+    }
 }

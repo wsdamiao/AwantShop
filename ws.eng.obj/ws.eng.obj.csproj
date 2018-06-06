@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DistanciaRodoviaria.cs" />
     <Compile Include="Elemento.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Logradouro.cs" />

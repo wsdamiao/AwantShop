@@ -1,0 +1,47 @@
+﻿@model ws.web.eng.Models.DistanciaRodoviariaViewModel
+@{
+    ViewBag.Title = "DistanciaRodoviaria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Distâncias Rodoviárias</h2>
+@using (Html.BeginForm("DistanciaRodoviaria", "Manager", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.HiddenFor(m => m.ID)
+
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.ValorBase)<br />
+            @Html.DisplayFor(m => m.ValorBase, new { @class = "form-control" })                
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Logradouros)                           
+            @Html.DropDownListFor(x => x.LogradouroID, Model.Logradouros, "Selecione uma cidade", new { @class = "form-control" })
+                    </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.DistanciaRodoviaria)
+            @Html.TextBoxFor(m => m.DistanciaRodoviaria, new { @class = "form-control", @type = "number" })            
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Valor)            
+            @Html.TextBoxFor(m => m.Valor, new { @class = "form-control" })            
+        </div>
+    </div>
+    <div class="row text-center">
+        <br />
+        <input type="submit" value="Confirmar" class="btn btn-primary" />
+        <a class="btn btn-primary" href="@Url.Action("DistanciaList")" role="button">Cancelar</a>
+
+    </div>
+}
