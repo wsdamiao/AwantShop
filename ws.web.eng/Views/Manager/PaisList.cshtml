@@ -1,0 +1,60 @@
+﻿@model ICollection <ws.web.eng.Models.PaisViewModel>
+@{
+    ViewBag.Title = "Países";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("PaisList", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <script type="text/javascript">
+        $(function () {
+            function DialogoExcluir() {
+                $("#dialogExcluir").dialog();
+            }
+        });
+    </script>
+
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="h1">Distâncias Rodoviárias</div>
+        <table class="table">
+            
+            <thead>
+                <tr>
+                    <th scope="col">País</th>
+                    <th scope="col">Nome Oficial</th>
+                    <th scope="col">Moeda</th>
+                    <th scope="col">Valor</th>                    
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.NomePais</td>
+                        <td>@item.NomeOficial</td>
+                        <td>@item.NomeMoeda</td>
+                        <td>@item.Valor</td>                        
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary" href="@Url.Action("Pais", "Manager", new { id = item.ID })" role="button">Editar</a>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+}
+
+        @*<div id="dialogExcluir" title="Basic dialog">
+                <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+            </div>*@
+

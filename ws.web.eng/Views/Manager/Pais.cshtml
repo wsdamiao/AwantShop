@@ -1,0 +1,47 @@
+﻿@model ws.web.eng.Models.PaisViewModel
+@{
+    ViewBag.Title = "Cadastro de País";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>País</h2>
+@using (Html.BeginForm("Pais", "Manager", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.HiddenFor(m => m.ID)
+       
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.NomePais)
+            @Html.TextBoxFor(m => m.NomePais, new { @class = "form-control" })
+                    </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.NomeOficial)
+            @Html.TextBoxFor(m => m.NomeOficial, new { @class = "form-control" })            
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Moedas)
+            @Html.DropDownListFor(x => x.MoedaID, Model.Moedas, "Selecione uma moeda", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MoedaID, null, new { @class = "text-warning" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Valor)            
+            @Html.TextBoxFor(m => m.Valor, new { @class = "form-control", @maxlength = "9" })            
+        </div>
+    </div>
+    <div class="row text-center">
+        <br />
+        <input type="submit" value="Confirmar" class="btn btn-primary" />
+        <a class="btn btn-primary" href="@Url.Action("PaisList")" role="button">Cancelar</a>
+
+    </div>
+}

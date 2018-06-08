@@ -55,5 +55,23 @@ namespace ws.eng.dll
         {
             return lgrDao.ListarLogradouro().Where(x => x.ID == Id).FirstOrDefault();
         }
+
+        public PaisObj BuscarPaisPorId(int Id)
+        {
+            return lgrDao.BuscarPaisPorId(Id);
+        }
+
+        public void Salvar(PaisObj obj)
+        {
+            try
+            {
+                lgrDao.SalvarPais(obj);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace ws.eng.dao
         public string NomeOficial { get; set; }
         public string Idioma { get; set; }
         public Nullable<decimal> MetroQuadrado { get; set; }
+        public Nullable<int> MoedaID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ElementoValor> ElementoValors { get; set; }

@@ -13,5 +13,6 @@ namespace ws.eng.obj
         public string NomeOficial { get; set; }
         public string Idioma { get; set; }
         public decimal MetroQuadrado { get; set; }
+        public int MoedaID { get; set; }
     }
 }

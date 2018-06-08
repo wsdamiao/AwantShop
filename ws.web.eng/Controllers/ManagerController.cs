@@ -60,6 +60,17 @@ namespace ws.web.eng.Controllers
             return lista;
         }
 
+        private List<SelectListItem> PopularMoedas()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            lista.Add(new SelectListItem { Value = "1", Text = "Real (R$)" });
+            lista.Add(new SelectListItem { Value = "2", Text = "Euro (EU$)" });
+            lista.Add(new SelectListItem { Value = "3", Text = "Dollar (US$)" });
+
+            return lista;
+        }
+
         public ActionResult User(int Id)
         {
             //if (Session["usu"] == null)
@@ -234,6 +245,83 @@ namespace ws.web.eng.Controllers
             }
             
             return RedirectToAction("DistanciaList");
+        }
+
+        public ActionResult PaisList()
+        {            
+            LogradouroDll logrDll = new LogradouroDll();
+
+            List<PaisViewModel> lista = new List<PaisViewModel>();
+
+            foreach (var item in logrDll.ListarPaises())
+            {
+                PaisViewModel obj = new PaisViewModel();
+
+                obj.Valor = item.MetroQuadrado;
+                obj.ID = item.ID;
+                obj.NomeOficial = item.NomeOficial;
+                obj.NomePais = item.Nome;
+                obj.NomeMoeda = PopularMoedas()[item.MoedaID - 1].Text;
+                
+                lista.Add(obj);
+
+            }
+
+            ViewBag.Message = TempData["Message"];
+
+            return View(lista.OrderBy(x => x.NomePais).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult PaisList(PaisViewModel model)
+        {
+            return View(model);
+        }
+        
+        public ActionResult Pais(int Id)
+        {
+            PaisViewModel model = new PaisViewModel();
+
+            model.Moedas = PopularMoedas();
+
+            if (Id > 0)
+            {
+                LogradouroDll dll = new LogradouroDll();
+                PaisObj obj = new PaisObj();
+
+                obj = dll.BuscarPaisPorId(Id);
+
+                model.NomeOficial = obj.NomeOficial;
+                model.NomePais = obj.Nome;
+                model.Valor = obj.MetroQuadrado;
+                model.MoedaID = obj.MoedaID;
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Pais(int Id, PaisViewModel model)
+        {
+            LogradouroDll dll = new LogradouroDll();
+            PaisObj obj = new PaisObj();
+
+            obj.Nome = model.NomePais;
+            obj.NomeOficial = model.NomeOficial;
+            obj.MetroQuadrado = model.Valor;
+            obj.MoedaID = model.MoedaID;
+            obj.ID = model.ID;
+
+            try
+            {
+                dll.Salvar(obj);
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            return RedirectToAction("PaisList");
         }
 
     }

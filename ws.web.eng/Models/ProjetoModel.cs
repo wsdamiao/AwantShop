@@ -177,4 +177,30 @@ namespace ws.web.eng.Models
         [DisplayFormat(DataFormatString = "{0:n2}")]
         public decimal ValorBase { get; set; }
     }
+
+    [Serializable]
+    public class PaisViewModel
+    {
+        public int ID { get; set; }
+
+        [Display(Name = "Nome")]
+        [Required(ErrorMessage = "Informe o pais")]
+        public string NomePais { get; set; }
+
+        [Display(Name = "Nome Oficial")]
+        [Required(ErrorMessage = "Informe o nome oficial do pais")]
+        public string NomeOficial { get; set; }        
+
+        [Display(Name = "Valor padrão do metro quadrado")]
+        [RegularExpression(@"^\d+\.\d{0,2}$")]
+        [Required(ErrorMessage = "Informe o valor do metro quadrado")]
+        public decimal Valor { get; set; }
+
+        [Display(Name = "Moeda")]
+        public int MoedaID { get; set; }
+
+        public IEnumerable<SelectListItem> Moedas { get; set; }
+
+        public string NomeMoeda { get; set; }
+    }
 }

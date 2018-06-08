@@ -316,6 +316,8 @@
     <Content Include="Views\Account\VerifyUser.cshtml" />
     <Content Include="Views\Manager\DistanciaRodoviaria.cshtml" />
     <Content Include="Views\Manager\DistanciaList.cshtml" />
+    <Content Include="Views\Manager\PaisList.cshtml" />
+    <Content Include="Views\Manager\Pais.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

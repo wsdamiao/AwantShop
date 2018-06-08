@@ -35,6 +35,21 @@ namespace ws.eng.dao
             objOut.NomeOficial = obj.NomeOficial;
             objOut.Idioma = obj.Idioma;
             objOut.MetroQuadrado = obj.MetroQuadrado.Value;
+            objOut.MoedaID = obj.MoedaID.Value;
+
+            return objOut;
+        }
+
+        private Pai ConverterObj(PaisObj obj)
+        {
+            Pai objOut = new Pai();
+
+            objOut.ID = obj.ID;
+            objOut.Nome = obj.Nome;
+            objOut.NomeOficial = obj.NomeOficial;
+            objOut.Idioma = obj.Idioma;
+            objOut.MetroQuadrado = obj.MetroQuadrado;
+            objOut.MoedaID = obj.MoedaID;
 
             return objOut;
         }
@@ -68,6 +83,40 @@ namespace ws.eng.dao
                 objOut.Add(ConverterObj(item));
             }
             return objOut;
+        }
+
+        public PaisObj BuscarPaisPorId(int Id)
+        {
+            return this.ListarPais().Where(x => x.ID == Id).FirstOrDefault();
+        }
+
+        public void SalvarPais(PaisObj obj)
+        {
+            try
+            {
+                if (obj.ID == 0)
+                {
+                    ProEng.Pais.Add(ConverterObj(obj));
+                }
+                else
+                {
+                    var aux = ProEng.Pais.Find(obj.ID);
+
+                    aux.MetroQuadrado = obj.MetroQuadrado;
+                    aux.Nome = obj.Nome;
+                    aux.NomeOficial = obj.NomeOficial;
+                    aux.MoedaID = obj.MoedaID;
+
+                    ProEng.Entry(aux).State = System.Data.Entity.EntityState.Modified;
+                }
+                ProEng.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
     }
