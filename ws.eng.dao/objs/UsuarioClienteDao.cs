@@ -165,6 +165,10 @@ namespace ws.eng.dao
             objOut.Status = obj.Status;
             objOut.UsuarioID = obj.UsuarioID;
             objOut.Valor = obj.Valor;
+            objOut.A = obj.A;
+            objOut.d = obj.d;
+            objOut.P = obj.P;
+            objOut.T = obj.T;
 
             return objOut;
         }

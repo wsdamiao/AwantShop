@@ -526,6 +526,14 @@ namespace ws.web.eng.Controllers
                     ser.UsuarioID = usu.ID;
                     ser.Descricao = "Projeto arquitetônico";                    
                     ser.Valor = model.ValorProjetoArquitetonico;
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    ServicosProjeto.ProjetoArquitetonico,
+                                    model.CidadeID);
+
                     ser.T = finDll.T;
                     ser.P = finDll.P;
                     ser.A = finDll.A;
@@ -546,6 +554,14 @@ namespace ws.web.eng.Controllers
                     ser.UsuarioID = usu.ID;
                     ser.Descricao = "Projeto Executivo";
                     ser.Valor = model.ValorProjetoExecutivo;
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    ServicosProjeto.ProjetoExecutivo,
+                                    model.CidadeID);
+
                     ser.T = finDll.T;
                     ser.P = finDll.P;
                     ser.A = finDll.A;
@@ -566,6 +582,15 @@ namespace ws.web.eng.Controllers
                     ser.UsuarioID = usu.ID;
                     ser.Descricao = "Projeto Elétrico";
                     ser.Valor = model.ValorProjetoEletrico;
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    ServicosProjeto.ProjetoEletrico,
+                                    model.CidadeID);
+
+
                     ser.T = finDll.T;
                     ser.P = finDll.P;
                     ser.A = finDll.A;
@@ -586,6 +611,14 @@ namespace ws.web.eng.Controllers
                     ser.UsuarioID = usu.ID;
                     ser.Valor = model.ValorProjetoHidroSanitario;
                     ser.Descricao = "Projeto Hidráulico / Sanitário";
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    ServicosProjeto.ProjetoHidroSanitario,
+                                    model.CidadeID);
+
                     ser.T = finDll.T;
                     ser.P = finDll.P;
                     ser.A = finDll.A;
