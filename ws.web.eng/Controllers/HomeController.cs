@@ -394,10 +394,10 @@ namespace ws.web.eng.Controllers
                     Destinatario destinatario = new Destinatario(projeto.Nome, projeto.Email);
 
                     usu = usuCliDll.BuscarUsuario(projeto.CpfCnpj);
-
+                    
                     IDictionary<VariavelEmail, string> dados = new Dictionary<VariavelEmail, string>();
                     dados.Add(VariavelEmail.VAR_CODIGO, usu.CodigoValidacao);
-                    dados.Add(VariavelEmail.VAR_LINK, @"http://http://www.wallacedamiao.com/avshop/Home/confirmarcadastro?cod=" + usu.CodigoValidacao + "&key=" + usu.Token);
+                    dados.Add(VariavelEmail.VAR_LINK, @"http://www.wallacedamiao.com/avshop/Home/ConfirmarCadastro?cod=" + usu.CodigoValidacao + "&key=" + usu.Token);
 
                     email.EnviarEmailTemplate(TemplateEmail.ConfirmaCadastro, dados, destinatario);
 
@@ -430,7 +430,8 @@ namespace ws.web.eng.Controllers
                     pro.Id = usuCliDll.buscarUltimoIDProjetoPorChaveOuCpf(new Guid(),model.Cpf_Cnpj);
                     Session["_projeto"] = pro;
                 }
-
+                                
+                Session["usu"] = usuCliDll.BuscarUsuario(model.Cpf_Cnpj); 
                 return RedirectToAction("Resumo");
             }
             else
