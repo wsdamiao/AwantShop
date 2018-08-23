@@ -12,14 +12,8 @@ namespace ws.eng.dao
     using System;
     using System.Collections.Generic;
     
-    public partial class Projeto
+    public partial class ProjetoCliUsu
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Projeto()
-        {
-            this.ProjetoServicoes = new HashSet<ProjetoServico>();
-        }
-    
         public int ID { get; set; }
         public int ClienteID { get; set; }
         public string TextoLivre { get; set; }
@@ -31,10 +25,7 @@ namespace ws.eng.dao
         public Nullable<decimal> AreaPersonalizada { get; set; }
         public Nullable<System.DateTime> DataCad { get; set; }
         public Nullable<decimal> VlMetroQuadradoBase { get; set; }
-        public string EnderecoObra { get; set; }
-    
-        public virtual Cliente Cliente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjetoServico> ProjetoServicoes { get; set; }
+        public int UsuarioID { get; set; }
+        public System.Guid Token { get; set; }
     }
 }

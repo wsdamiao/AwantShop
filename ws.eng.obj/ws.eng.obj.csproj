@@ -48,6 +48,7 @@
     <Compile Include="MensagemCliente.cs" />
     <Compile Include="ServicoHistorico.cs" />
     <Compile Include="Pais.cs" />
+    <Compile Include="ServicoObj.cs" />
     <Compile Include="UsuarioCliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

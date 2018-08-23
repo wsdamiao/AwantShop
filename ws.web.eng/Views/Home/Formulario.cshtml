@@ -1,19 +1,13 @@
-﻿@model ws.web.eng.Models.ProjetoModel
+﻿@using ws.web.eng.Models;
+@model ws.web.eng.Models.ProjetoModel
 @{
     ViewBag.Title = "Dados do Cliente";
 }
 
 @using (Html.BeginForm("Formulario", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
-    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
-    @Html.Hidden("idProjeto", (int)Model.Projeto)
-    @Html.Hidden("idArea", (int)Model.Area)
-    @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
-    @Html.Hidden("PA", (bool)Model.ProjetoArquitetonico)
-    @Html.Hidden("PHS", (bool)Model.ProjetoHidraSanitario)
-    @Html.Hidden("PE", (bool)Model.ProjetoEletrico)
+    @Html.Partial("_Percistencia")
+    
     <br />
     <div class="row">
         <div class="text-warning">
@@ -47,7 +41,28 @@
                     </div>
                 </div>
             </div>
-                        
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ClienteCidade)
+                        @Html.TextBoxFor(x => x.ClienteCidade, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ClienteEstado)
+                        @Html.TextBoxFor(x => x.ClienteEstado, new { @class = "form-control", @maxlenght = 4 })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ClientePais)
+                        @Html.TextBoxFor(x => x.ClientePais, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -67,18 +82,9 @@
                         @Html.TextBoxFor(x => x.TelContato3, new { @class = "form-control" })
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.TextoLivre)
-                        @Html.TextAreaFor(x => x.TextoLivre, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
+            </div>            
         </fieldset>
-        </div>
+    </div>
 
         <div class="row text-center">
             <br />
@@ -86,5 +92,5 @@
             <input type="submit" value="Continuar" name="BT_PROX" class="btn btn-primary" />
 
         </div>
-        }
+}
 

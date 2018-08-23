@@ -45,5 +45,9 @@ namespace ws.eng.dao
         public virtual DbSet<MensagemCliente> MensagemClientes { get; set; }
         public virtual DbSet<UsuarioCategoria> UsuarioCategorias { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Servico> Servicoes { get; set; }
+        public virtual DbSet<ServicoTipo> ServicoTipoes { get; set; }
+        public virtual DbSet<ProjetoCliUsu> ProjetoCliUsus { get; set; }
+        public virtual DbSet<ProjetoServicoSerTipo> ProjetoServicoSerTipoes { get; set; }
     }
 }

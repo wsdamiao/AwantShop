@@ -33,7 +33,7 @@
     </script>
 }
 
-
+@Html.Partial("_Percistencia")
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -48,14 +48,17 @@
         <br />
         <div class="row">
             <h1>Informe o <span style="color:red">local</span> do seu projeto</h1>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                
+            </div>
+            <div class="col-md-3">
                 <input type="submit" value="" name="BT_PT" class="btt_PT" />                
-            </div>
-            <div class="col-md-4">
-                <input type="submit" value="" name="BT_RJ" class="btt_RJ" />                
-            </div>
-            <div class="col-md-4">
+            </div>            
+            <div class="col-md-3">
                 <input type="submit" value="" name="BT_BR" class="btt_BR" />                
+            </div>
+            <div class="col-md-3">
+                
             </div>
         </div>
         

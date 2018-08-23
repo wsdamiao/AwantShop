@@ -97,6 +97,7 @@
           <Property Name="Cidade" Type="nvarchar" MaxLength="250" />
           <Property Name="Estado" Type="nvarchar" MaxLength="4" />
           <Property Name="CodPostal" Type="nvarchar" MaxLength="10" />
+          <Property Name="Pais" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DadosGerais">
           <Key>
@@ -185,6 +186,7 @@
           <Property Name="AreaPersonalizada" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DataCad" Type="datetime" />
           <Property Name="VlMetroQuadradoBase" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EnderecoObra" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ProjetoServico">
           <Key>
@@ -204,6 +206,18 @@
           <Property Name="P" Type="decimal" Precision="18" Scale="2" />
           <Property Name="d" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="Servico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDTipoServico" Type="int" Nullable="false" />
+          <Property Name="IDPais" Type="int" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="PossuiCidade" Type="bit" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="ServicoHistorico">
           <Key>
             <PropertyRef Name="ID" />
@@ -214,6 +228,14 @@
           <Property Name="IdStatus" Type="int" Nullable="false" />
           <Property Name="Data" Type="datetime" Nullable="false" />
           <Property Name="Historico" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServicoTipo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -236,6 +258,7 @@
           <Property Name="Token" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CategoriaID" Type="int" Nullable="false" />
           <Property Name="NomeCompleto" Type="nvarchar" MaxLength="255" />
+          <Property Name="CodValidacao" Type="varchar" MaxLength="4" />
         </EntityType>
         <EntityType Name="UsuarioCategoria">
           <Key>
@@ -245,6 +268,63 @@
           <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Descr" Type="nvarchar" MaxLength="150" />
           <Property Name="Ativo" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProEng.dbo.ProjetoCliUsu' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProjetoCliUsu">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClienteID" />
+            <PropertyRef Name="PaisID" />
+            <PropertyRef Name="LogradouroID" />
+            <PropertyRef Name="AreaID" />
+            <PropertyRef Name="PadraoID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="UsuarioID" />
+            <PropertyRef Name="Token" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="TextoLivre" Type="nvarchar(max)" />
+          <Property Name="PaisID" Type="int" Nullable="false" />
+          <Property Name="LogradouroID" Type="int" Nullable="false" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="PadraoID" Type="int" Nullable="false" />
+          <Property Name="ProjetoID" Type="int" Nullable="false" />
+          <Property Name="AreaPersonalizada" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DataCad" Type="datetime" />
+          <Property Name="VlMetroQuadradoBase" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="Token" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProjetoServicoSerTipo">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="ServicoID" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Data" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="UsuarioID" />
+            <PropertyRef Name="IDTipoServico" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ProjetoID" Type="int" Nullable="false" />
+          <Property Name="ServicoID" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="FormaPgto" Type="int" />
+          <Property Name="T" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="A" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="P" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="d" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IDTipoServico" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AspNetRoleClaims_AspNetRoles_RoleId">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
@@ -394,10 +474,47 @@
           <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projeto" EntityType="Self.Projeto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjetoServico" EntityType="Self.ProjetoServico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servico" EntityType="Self.Servico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServicoHistorico" EntityType="Self.ServicoHistorico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServicoTipo" EntityType="Self.ServicoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioCategoria" EntityType="Self.UsuarioCategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjetoCliUsu" EntityType="Self.ProjetoCliUsu" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProjetoCliUsu].[ID] AS [ID], 
+    [ProjetoCliUsu].[ClienteID] AS [ClienteID], 
+    [ProjetoCliUsu].[TextoLivre] AS [TextoLivre], 
+    [ProjetoCliUsu].[PaisID] AS [PaisID], 
+    [ProjetoCliUsu].[LogradouroID] AS [LogradouroID], 
+    [ProjetoCliUsu].[AreaID] AS [AreaID], 
+    [ProjetoCliUsu].[PadraoID] AS [PadraoID], 
+    [ProjetoCliUsu].[ProjetoID] AS [ProjetoID], 
+    [ProjetoCliUsu].[AreaPersonalizada] AS [AreaPersonalizada], 
+    [ProjetoCliUsu].[DataCad] AS [DataCad], 
+    [ProjetoCliUsu].[VlMetroQuadradoBase] AS [VlMetroQuadradoBase], 
+    [ProjetoCliUsu].[UsuarioID] AS [UsuarioID], 
+    [ProjetoCliUsu].[Token] AS [Token]
+    FROM [dbo].[ProjetoCliUsu] AS [ProjetoCliUsu]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProjetoServicoSerTipo" EntityType="Self.ProjetoServicoSerTipo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProjetoServicoSerTipo].[ID] AS [ID], 
+    [ProjetoServicoSerTipo].[ProjetoID] AS [ProjetoID], 
+    [ProjetoServicoSerTipo].[ServicoID] AS [ServicoID], 
+    [ProjetoServicoSerTipo].[Valor] AS [Valor], 
+    [ProjetoServicoSerTipo].[Data] AS [Data], 
+    [ProjetoServicoSerTipo].[Status] AS [Status], 
+    [ProjetoServicoSerTipo].[Descricao] AS [Descricao], 
+    [ProjetoServicoSerTipo].[UsuarioID] AS [UsuarioID], 
+    [ProjetoServicoSerTipo].[FormaPgto] AS [FormaPgto], 
+    [ProjetoServicoSerTipo].[T] AS [T], 
+    [ProjetoServicoSerTipo].[A] AS [A], 
+    [ProjetoServicoSerTipo].[P] AS [P], 
+    [ProjetoServicoSerTipo].[d] AS [d], 
+    [ProjetoServicoSerTipo].[IDTipoServico] AS [IDTipoServico]
+    FROM [dbo].[ProjetoServicoSerTipo] AS [ProjetoServicoSerTipo]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AspNetRoleClaims_AspNetRoles_RoleId" Association="Self.FK_AspNetRoleClaims_AspNetRoles_RoleId">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetRoleClaims" EntitySet="AspNetRoleClaims" />
@@ -500,6 +617,10 @@
             <End Role="Usuario" EntitySet="Usuarios" />
             <End Role="Cliente" EntitySet="Clientes" />
           </AssociationSet>
+          <EntitySet Name="Servicoes" EntityType="ProEngModel.Servico" />
+          <EntitySet Name="ServicoTipoes" EntityType="ProEngModel.ServicoTipo" />
+          <EntitySet Name="ProjetoCliUsus" EntityType="ProEngModel.ProjetoCliUsu" />
+          <EntitySet Name="ProjetoServicoSerTipoes" EntityType="ProEngModel.ProjetoServicoSerTipo" />
           </EntityContainer>
         <EntityType Name="Logradouro">
           <Key>
@@ -606,6 +727,7 @@
           <Property Name="Estado" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Usuario" Relationship="ProEngModel.FK_Cliente_Usuario" FromRole="Cliente" ToRole="Usuario" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Projeto">
           <Key>
@@ -624,6 +746,7 @@
           <NavigationProperty Name="Cliente" Relationship="ProEngModel.FK_Projeto_Cliente" FromRole="Projeto" ToRole="Cliente" />
           <NavigationProperty Name="ProjetoServicoes" Relationship="ProEngModel.FK_ProjetoServico_Projeto" FromRole="Projeto" ToRole="ProjetoServico" />
           <Property Name="VlMetroQuadradoBase" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EnderecoObra" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProjetoServico">
           <Key>
@@ -845,6 +968,7 @@
           <Property Name="CategoriaID" Type="Int32" Nullable="false" />
           <Property Name="NomeCompleto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Clientes" Relationship="ProEngModel.FK_Cliente_Usuario" FromRole="Usuario" ToRole="Cliente" />
+          <Property Name="CodValidacao" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Cliente_Usuario">
           <End Type="ProEngModel.Usuario" Role="Usuario" Multiplicity="0..1" />
@@ -858,6 +982,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Servico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDTipoServico" Type="Int32" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descricao" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IDPais" Type="Int32" Nullable="false" />
+          <Property Name="PossuiCidade" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServicoTipo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProjetoCliUsu">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ClienteID" />
+            <PropertyRef Name="PaisID" />
+            <PropertyRef Name="LogradouroID" />
+            <PropertyRef Name="AreaID" />
+            <PropertyRef Name="PadraoID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="UsuarioID" />
+            <PropertyRef Name="Token" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="TextoLivre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PaisID" Type="Int32" Nullable="false" />
+          <Property Name="LogradouroID" Type="Int32" Nullable="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="PadraoID" Type="Int32" Nullable="false" />
+          <Property Name="ProjetoID" Type="Int32" Nullable="false" />
+          <Property Name="AreaPersonalizada" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DataCad" Type="DateTime" Precision="3" />
+          <Property Name="VlMetroQuadradoBase" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="Token" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjetoServicoSerTipo">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="ServicoID" />
+            <PropertyRef Name="Valor" />
+            <PropertyRef Name="Data" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="Descricao" />
+            <PropertyRef Name="UsuarioID" />
+            <PropertyRef Name="IDTipoServico" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProjetoID" Type="Int32" Nullable="false" />
+          <Property Name="ServicoID" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="FormaPgto" Type="Int32" />
+          <Property Name="T" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="A" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="P" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="d" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IDTipoServico" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -932,6 +1129,7 @@
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="ProEngModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
                 <ScalarProperty Name="CodPostal" ColumnName="CodPostal" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Cidade" ColumnName="Cidade" />
@@ -950,6 +1148,7 @@
           <EntitySetMapping Name="Projetoes">
             <EntityTypeMapping TypeName="ProEngModel.Projeto">
               <MappingFragment StoreEntitySet="Projeto">
+                <ScalarProperty Name="EnderecoObra" ColumnName="EnderecoObra" />
                 <ScalarProperty Name="VlMetroQuadradoBase" ColumnName="VlMetroQuadradoBase" />
                 <ScalarProperty Name="DataCad" ColumnName="DataCad" />
                 <ScalarProperty Name="AreaPersonalizada" ColumnName="AreaPersonalizada" />
@@ -1112,12 +1311,74 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="ProEngModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="CodValidacao" ColumnName="CodValidacao" />
                 <ScalarProperty Name="NomeCompleto" ColumnName="NomeCompleto" />
                 <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="Ativo" ColumnName="Ativo" />
                 <ScalarProperty Name="Senha" ColumnName="Senha" />
                 <ScalarProperty Name="NomeUsuario" ColumnName="NomeUsuario" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servicoes">
+            <EntityTypeMapping TypeName="ProEngModel.Servico">
+              <MappingFragment StoreEntitySet="Servico">
+                <ScalarProperty Name="PossuiCidade" ColumnName="PossuiCidade" />
+                <ScalarProperty Name="IDPais" ColumnName="IDPais" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="IDTipoServico" ColumnName="IDTipoServico" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServicoTipoes">
+            <EntityTypeMapping TypeName="ProEngModel.ServicoTipo">
+              <MappingFragment StoreEntitySet="ServicoTipo">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjetoCliUsus">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoCliUsu">
+              <MappingFragment StoreEntitySet="ProjetoCliUsu">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="VlMetroQuadradoBase" ColumnName="VlMetroQuadradoBase" />
+                <ScalarProperty Name="DataCad" ColumnName="DataCad" />
+                <ScalarProperty Name="AreaPersonalizada" ColumnName="AreaPersonalizada" />
+                <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
+                <ScalarProperty Name="PadraoID" ColumnName="PadraoID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="LogradouroID" ColumnName="LogradouroID" />
+                <ScalarProperty Name="PaisID" ColumnName="PaisID" />
+                <ScalarProperty Name="TextoLivre" ColumnName="TextoLivre" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjetoServicoSerTipoes">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoServicoSerTipo">
+              <MappingFragment StoreEntitySet="ProjetoServicoSerTipo">
+                <ScalarProperty Name="IDTipoServico" ColumnName="IDTipoServico" />
+                <ScalarProperty Name="d" ColumnName="d" />
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="T" ColumnName="T" />
+                <ScalarProperty Name="FormaPgto" ColumnName="FormaPgto" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="ServicoID" ColumnName="ServicoID" />
+                <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

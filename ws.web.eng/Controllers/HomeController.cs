@@ -7,6 +7,7 @@ using ws.eng.dll;
 using ws.eng.obj;
 using ws.web.eng.Models;
 using System.Net.Mail;
+using ws.com.v2017;
 
 namespace ws.web.eng.Controllers
 {
@@ -32,6 +33,8 @@ namespace ws.web.eng.Controllers
 
         public ActionResult Index()
         {
+            Session["pagAtual"] = Paginas.Index;
+
             ProjetoModel model = new ProjetoModel();
             ViewBag.MsgErro = "";
             //model.Municipios = PopularCidades("RJ");
@@ -45,29 +48,31 @@ namespace ws.web.eng.Controllers
             if (Request.Form["BT_PT"] == "")
             {
                 model.Regiao = RegiaoProjeto.Portugal;
-                TempData["_projeto"] = model;
+                Session["_projeto"] = model;
                 return RedirectToAction("Projeto");
             }
             else if (Request.Form["BT_BR"] == "")
             {
                 model.Regiao = RegiaoProjeto.Brasil;
-                TempData["_projeto"] = model;
+                Session["_projeto"] = model;
                 return RedirectToAction("Projeto");
             }
             else if (Request.Form["BT_RJ"] == "")
             {
                 model.Regiao = RegiaoProjeto.RioDeJaneiro;
-                TempData["_projeto"] = model;
+                Session["_projeto"] = model;
                 return RedirectToAction("Regiao");
             }
 
-           
+
             return View(model);
         }
 
         public ActionResult Regiao()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Regiao;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -84,12 +89,12 @@ namespace ws.web.eng.Controllers
             if (model.CodMunicipio != null)
             {
                 model.Regiao = RegiaoProjeto.RioDeJaneiro;
-                TempData["_projeto"] = model;
+                Session["_projeto"] = model;
                 return RedirectToAction("Projeto");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-               return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -101,10 +106,11 @@ namespace ws.web.eng.Controllers
             return View(model);
         }
 
-        [HttpGet]
         public ActionResult Projeto()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Projeto;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -115,7 +121,7 @@ namespace ws.web.eng.Controllers
         [HttpPost]
         public ActionResult Projeto(ProjetoModel model)
         {
-            if(model == null)
+            if (model == null)
                 return RedirectToAction("Index");
 
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
@@ -123,30 +129,30 @@ namespace ws.web.eng.Controllers
             if (Request.Form["BT_R"] == "")
             {
                 model.Projeto = TipoProjeto.Residencial;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Area");
+                Session["_projeto"] = model;
+                return RedirectToAction("Padrao");
             }
             else if (Request.Form["BT_C"] == "")
             {
                 model.Projeto = TipoProjeto.Comercial;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Area");
+                Session["_projeto"] = model;
+                return RedirectToAction("Padrao");
             }
             else if (Request.Form["BT_I"] == "")
             {
                 model.Projeto = TipoProjeto.Industrial;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Area");
+                Session["_projeto"] = model;
+                return RedirectToAction("Padrao");
             }
-            else if (Request.Form["BT_PER"] == "")
+            else if (Request.Form["BT_PER"] == "Projeto Personalizado")
             {
                 model.Projeto = TipoProjeto.Personalizado;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Persoalizado");
+                Session["_projeto"] = model;
+                return RedirectToAction("Personalizado");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                
+
                 TempData["_projeto"] = model;
                 if (model.Regiao == RegiaoProjeto.RioDeJaneiro)
                 {
@@ -163,7 +169,9 @@ namespace ws.web.eng.Controllers
 
         public ActionResult Area()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Area;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -179,35 +187,36 @@ namespace ws.web.eng.Controllers
 
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
+            model.PadraoAcabamento = (PadraoProjeto)int.Parse(Request.Form["idPadrao"].ToString());
 
             if (Request.Form["BT_P"] == "")
             {
                 model.Area = AreaProjeto.Pequeno;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Padrao");
+                Session["_projeto"] = model;
+                return RedirectToAction("Servicos");
             }
             else if (Request.Form["BT_M"] == "")
             {
                 model.Area = AreaProjeto.Medio;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Padrao");
+                Session["_projeto"] = model;
+                return RedirectToAction("Servicos");
             }
             else if (Request.Form["BT_G"] == "")
             {
                 model.Area = AreaProjeto.Grande;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Padrao");
+                Session["_projeto"] = model;
+                return RedirectToAction("Servicos");
             }
-            else if (Request.Form["BT_PER"] == "")
+            else if (Request.Form["BT_PER"] == "Projeto Personalizado")
             {
                 model.Area = AreaProjeto.Personalizado;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Persoalizado");
+                Session["_projeto"] = model;
+                return RedirectToAction("Personalizado");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                TempData["_projeto"] = model;
-                return RedirectToAction("Projeto");
+                Session["_projeto"] = model;
+                return RedirectToAction("Padrao");
             }
 
             return View(model);
@@ -215,7 +224,9 @@ namespace ws.web.eng.Controllers
 
         public ActionResult Padrao()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Padrao;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -236,31 +247,31 @@ namespace ws.web.eng.Controllers
             if (Request.Form["BT_P"] == "")
             {
                 model.PadraoAcabamento = PadraoProjeto.BaixoCusto;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Servicos");
+                Session["_projeto"] = model;
+                return RedirectToAction("Area");
             }
             else if (Request.Form["BT_M"] == "")
             {
                 model.PadraoAcabamento = PadraoProjeto.MedioCusto;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Servicos");
+                Session["_projeto"] = model;
+                return RedirectToAction("Area");
             }
             else if (Request.Form["BT_G"] == "")
             {
                 model.PadraoAcabamento = PadraoProjeto.AltoCusto;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Servicos");
+                Session["_projeto"] = model;
+                return RedirectToAction("Area");
             }
-            else if (Request.Form["BT_PER"] == "")
+            else if (Request.Form["BT_PER"] == "Projeto Personalizado")
             {
                 model.PadraoAcabamento = PadraoProjeto.Personalizado;
-                TempData["_projeto"] = model;
-                return RedirectToAction("Persoalizado");
+                Session["_projeto"] = model;
+                return RedirectToAction("Personalizado");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                TempData["_projeto"] = model;
-                return RedirectToAction("Area");
+                Session["_projeto"] = model;
+                return RedirectToAction("Projeto");
             }
 
             return View(model);
@@ -268,10 +279,18 @@ namespace ws.web.eng.Controllers
 
         public ActionResult Servicos()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Servicos;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
+
+            if (model.ServicosArquitetura == null)
+                model.ServicosArquitetura = MontarServicos(model.Regiao, "A");
+
+            if (model.ServicosEngenharia == null)
+                model.ServicosEngenharia = MontarServicos(model.Regiao, "E");
 
             return View(model);
         }
@@ -279,35 +298,154 @@ namespace ws.web.eng.Controllers
         [HttpPost]
         public ActionResult Servicos(ProjetoModel model)
         {
+
             if (model == null)
                 return RedirectToAction("Index");
 
+            model.Id = (int)int.Parse(Request.Form["Id"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.Area = (AreaProjeto)int.Parse(Request.Form["idArea"].ToString());
             model.PadraoAcabamento = (PadraoProjeto)int.Parse(Request.Form["idPadrao"].ToString());
+            model.EnderecoCompletoEmpreendimento = Request.Form["EnderecoCompletoEmpreendimento"].ToString();
+            model.TextoLivre = Request.Form["TextoLivre"].ToString();
 
-            TempData["_projeto"] = model;
+            model.ServicosArquitetura = MontarServicos(model.Regiao, "A");
+            model.ServicosEngenharia = MontarServicos(model.Regiao, "E");
 
-            if (Request.Form["BT_PROX"] == "Continuar")
-            {                
+            Session["_projeto"] = model;
+            if (Request.Form["BT_CON"] == "Continuar")
+            {
+                return RedirectToAction("Resumo");
+            }
+            if (Request.Form["BT_PROX"] == "Continuar e fazer um novo cadastro")
+            {
                 return RedirectToAction("Formulario");
             }
-            else if (Request.Form["BT_PER"] == "")
+            if (Request.Form["BT_LOG"] == "Continuar e fazer seu login")
             {
-                return RedirectToAction("Persoalizado");
+                Session["_orcamento"] = true;
+                return RedirectToAction("Login", "Account");
+            }
+            else if (Request.Form["BT_PER"] == "Projeto Personalizado")
+            {
+                return RedirectToAction("Personalizado");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                return RedirectToAction("Padrao");
+                return RedirectToAction("Area");
             }
 
             return View(model);
+        }        
+
+        public ActionResult ConfirmarCadastro()
+        {
+            ProjetoModel projeto = (ProjetoModel)Session["_projeto"];
+            ConfirmarCadastroModel model = new ConfirmarCadastroModel();
+            UsuarioObj usu = new UsuarioObj();
+            UsuarioClienteDll usuCliDll = new UsuarioClienteDll();
+
+            var cod = Request["cod"];
+            var key = Request["key"];
+
+            if (cod != null || key != null)
+            {
+                
+                bool validar = usuCliDll.ValidarCodigoConfirmacao(string.Empty, cod, key);
+
+                if (validar)
+                {                
+                  
+                    usu = usuCliDll.BuscarUsuarioPorKey(key);
+
+                    Session["usu"] = usu;                    
+
+                    PopularProjectModel(usuCliDll.buscarUltimoProjetoPorChaveOuCpf(Guid.Parse(key)));
+
+                    return RedirectToAction("Resumo");
+                }
+                else
+                {
+                    return RedirectToAction("Mensagem");
+                }
+            }
+            else
+            {
+                //return RedirectToAction("Index");
+                if (projeto == null)
+                    ViewBag.DigitarCpf = true;
+                else
+                {
+                    ViewBag.DigitarCpf = false;
+                    try
+                    {
+                        SalvarProjeto(projeto);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Enviar e-mail de erro
+                        ViewBag.Message = "Infelizmente não foi possível registrar suas escolhas devido a um problema interno. Para refazer seu projeto clique no botão abaixo";
+                        return RedirectToAction("Error");
+                    }
+
+                    //disparar e-mail para cliente aqui       
+                    EmailDll email = new EmailDll(Server.MapPath(@"../Content")); 
+                    Destinatario destinatario = new Destinatario(projeto.Nome, projeto.Email);
+
+                    usu = usuCliDll.BuscarUsuario(projeto.CpfCnpj);
+
+                    IDictionary<VariavelEmail, string> dados = new Dictionary<VariavelEmail, string>();
+                    dados.Add(VariavelEmail.VAR_CODIGO, usu.CodigoValidacao);
+                    dados.Add(VariavelEmail.VAR_LINK, @"http://http://www.wallacedamiao.com/avshop/Home/confirmarcadastro?cod=" + usu.CodigoValidacao + "&key=" + usu.Token);
+
+                    email.EnviarEmailTemplate(TemplateEmail.ConfirmaCadastro, dados, destinatario);
+
+                    model.Nome = projeto.Nome;
+                    model.Email = projeto.Email;
+                    model.Cpf_Cnpj = projeto.CpfCnpj;
+                }                
+                
+                
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmarCadastro(ConfirmarCadastroModel model)
+        {
+            UsuarioClienteDll usuCliDll = new UsuarioClienteDll();
+
+            bool validar = usuCliDll.ValidarCodigoConfirmacao(model.Cpf_Cnpj, model.CodigoConfirmacao, string.Empty);
+
+            if (validar)
+            {
+                if (Session["_projeto"] == null)
+                {
+                    PopularProjectModel(usuCliDll.buscarUltimoProjetoPorChaveOuCpf(new Guid(), model.Cpf_Cnpj));
+                }
+                else
+                {
+                    ProjetoModel pro = (ProjetoModel)Session["_projeto"];
+                    pro.Id = usuCliDll.buscarUltimoIDProjetoPorChaveOuCpf(new Guid(),model.Cpf_Cnpj);
+                    Session["_projeto"] = pro;
+                }
+
+                return RedirectToAction("Resumo");
+            }
+            else
+            {
+                ViewBag.Message = "O cõdigo informado é inválido";
+                ViewBag.DigitarCpf = true;
+                return View(model);
+            }
         }
 
         public ActionResult Formulario()
         {
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            Session["pagAtual"] = Paginas.Formulario;
+
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -318,6 +456,7 @@ namespace ws.web.eng.Controllers
         [HttpPost]
         public ActionResult Formulario(ProjetoModel model)
         {
+
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -325,35 +464,36 @@ namespace ws.web.eng.Controllers
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.Area = (AreaProjeto)int.Parse(Request.Form["idArea"].ToString());
             model.PadraoAcabamento = (PadraoProjeto)int.Parse(Request.Form["idPadrao"].ToString());
-            model.ProjetoArquitetonico = bool.Parse(Request.Form["PA"].ToString());
-            model.ProjetoEletrico = bool.Parse(Request.Form["PE"].ToString());
-            model.ProjetoHidraSanitario = bool.Parse(Request.Form["PHS"].ToString());
+            model.ServicosArquitetura = MontarServicos(model.Regiao, "A");
+            model.ServicosEngenharia = MontarServicos(model.Regiao, "E");
 
-            TempData["_projeto"] = model;
-
+            Session["_projeto"] = model;
             ViewBag.Message = "";
 
-            
-                if (Request.Form["BT_PROX"] == "Continuar")
-                {
-                    if (model.CpfCnpj == null)
-                        ViewBag.Message += "- Campo CPF/CNPJ deve ser informado<br>";
-                    if (model.Nome == null)
-                        ViewBag.Message += "- Campo Nome deve ser informado<br>";
-                    if (model.Email == null)
-                        ViewBag.Message += "- Campo E-mail deve ser informado<br>";
-                    if (model.TelContato1 == null)
-                        ViewBag.Message += "- Campo Contato Prefêrencial deve ser informado<br>";
-                    if (ViewBag.Message == "")
-                    {
-                        return RedirectToAction("Resumo");
-                    }
+
+            if (Request.Form["BT_PROX"] == "Continuar")
+            {
+                if (model.CpfCnpj == null)
+                    ViewBag.Message += "- Campo CPF/CNPJ deve ser informado<br>";
+                if (model.Nome == null)
+                    ViewBag.Message += "- Campo Nome deve ser informado<br>";
+                if (model.Email == null)
+                    ViewBag.Message += "- Campo E-mail deve ser informado<br>";
+                if (model.TelContato1 == null)
+                    ViewBag.Message += "- Campo Contato Prefêrencial deve ser informado<br>";
+                if (ViewBag.Message == "")
+                {   
+                    if(Session["usu"] == null)
+                        return RedirectToAction("ConfirmarCadastro");
+                    else
+                        return RedirectToAction("resumo");
                 }
-                else if (Request.Form["BT_VOLTAR"] == "voltar")
-                {
-                    return RedirectToAction("Servicos");
-                }
-            
+            }
+            else if (Request.Form["BT_VOLTAR"] == "voltar")
+            {
+                return RedirectToAction("Servicos");
+            }
+
 
             ViewBag.Message = "Verifique o preenchimento: <br>" + ViewBag.Message;
             return View(model);
@@ -361,12 +501,16 @@ namespace ws.web.eng.Controllers
 
         public ActionResult Resumo()
         {
+            Session["pagAtual"] = Paginas.Resumo;
+
             FinanceiroDll finDll = new FinanceiroDll();
             LogradouroDll logDll = new LogradouroDll();
             UsuarioClienteDll usuCliDll = new UsuarioClienteDll();
 
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
-                        
+            ProjetoModel model = new ProjetoModel();
+
+            model = (ProjetoModel)Session["_projeto"];
+
             if (model == null)
                 return RedirectToAction("Index");
 
@@ -378,92 +522,82 @@ namespace ws.web.eng.Controllers
 
             model.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
 
-            if (model.ProjetoArquitetonico)
+            foreach (var item in model.ServicosArquitetura)
             {
-                model.ValorProjetoArquitetonico = finDll.Calcular(model.Projeto,
-                                                                    model.Area,
-                                                                    model.Regiao,
-                                                                    model.PadraoAcabamento,
-                                                                    ServicosProjeto.ProjetoArquitetonico,
-                                                                    model.CidadeID);
+                if (item.Selecionado)
+                {
+                    //passa valor true para o parametro de projeto arquitetonico
+                    item.Valor = finDll.Calcular(model.Projeto,
+                                                    model.Area,
+                                                    model.Regiao,
+                                                    model.PadraoAcabamento,
+                                                    model.CidadeID,
+                                                    true);
 
-                model.ValorProjetoTotal += model.ValorProjetoArquitetonico;
+                    item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
+
+                    model.ValorProjetoTotal += item.Valor;
+                }
             }
 
-            model.ValorProjetoArquitetonicoFormatado =  string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoArquitetonico);
-
-            if (model.ProjetoEletrico)
+            foreach (var item in model.ServicosEngenharia)
             {
-                model.ValorProjetoEletrico = finDll.Calcular(model.Projeto,
-                                                                    model.Area,
-                                                                    model.Regiao,
-                                                                    model.PadraoAcabamento,
-                                                                    ServicosProjeto.ProjetoEletrico,
-                                                                    model.CidadeID);
+                if (item.Selecionado)
+                {
+                    //passa valor true para o parametro de projeto de engenharia
+                    item.Valor = finDll.Calcular(model.Projeto,
+                                                    model.Area,
+                                                    model.Regiao,
+                                                    model.PadraoAcabamento,
+                                                    model.CidadeID,
+                                                    false);
+                    item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
 
-                model.ValorProjetoTotal += model.ValorProjetoEletrico;
+                    model.ValorProjetoTotal += item.Valor;
+                }
             }
-
-            model.ValorProjetoEletricoFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoEletrico);
-
-            if (model.ProjetoHidraSanitario)
-            {
-                model.ValorProjetoHidroSanitario = finDll.Calcular(model.Projeto,
-                                                                    model.Area,
-                                                                    model.Regiao,
-                                                                    model.PadraoAcabamento,
-                                                                    ServicosProjeto.ProjetoHidroSanitario,
-                                                                    model.CidadeID);
-
-                model.ValorProjetoTotal += model.ValorProjetoHidroSanitario;
-            }
-
-            model.ValorProjetoHidroSanitarioFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoHidroSanitario);
-
-            if (model.ProjetoExecutivo)
-            {
-                model.ValorProjetoExecutivo = finDll.Calcular(model.Projeto,
-                                                                    model.Area,
-                                                                    model.Regiao,
-                                                                    model.PadraoAcabamento,
-                                                                    ServicosProjeto.ProjetoExecutivo,
-                                                                    model.CidadeID);
-
-                model.ValorProjetoTotal += model.ValorProjetoExecutivo;
-            }
-            
-            model.ValorProjetoExecutivoFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoExecutivo);
 
             model.ValorProjetoTotalFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoTotal);
+
+            if (Session["_orcamento"] != null)
+            {
+                UsuarioObj usu = (UsuarioObj)Session["usu"];
+                ClienteObj cli = usuCliDll.BuscarCliente(usu.Cliente.ID);
+
+                model.Nome = cli.Nome;
+                model.CpfCnpj = cli.CPF_CNPJ;
+                model.Email = cli.Email;
+                model.ClienteCidade = cli.Cidade;
+                model.ClienteEstado = cli.Estado;
+                model.ClientePais = cli.Pais;
+                model.TelContato1 = cli.TelContato1;
+                model.TelContato2 = cli.TelContato2;
+                model.TelContato3 = cli.TelContato3;
+            }
+
+            Session["_projeto"] = model;
 
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Resumo(ProjetoModel model)
-        {
+        {            
             UsuarioClienteDll cliDll = new UsuarioClienteDll();
             FinanceiroDll finDll = new FinanceiroDll();
 
             UsuarioObj usu = new UsuarioObj();
             ClienteObj cli = new ClienteObj();
             ProjetoObj pro = new ProjetoObj();
-            
+
 
             DateTime dataCad = DateTime.Now;
 
+            model.Id = (int)int.Parse(Request.Form["Id"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.Area = (AreaProjeto)int.Parse(Request.Form["idArea"].ToString());
             model.PadraoAcabamento = (PadraoProjeto)int.Parse(Request.Form["idPadrao"].ToString());
-            model.ProjetoArquitetonico = bool.Parse(Request.Form["PA"].ToString());
-            model.ProjetoEletrico = bool.Parse(Request.Form["PE"].ToString());
-            model.ProjetoHidraSanitario = bool.Parse(Request.Form["PHS"].ToString());
-
-            model.ValorProjetoArquitetonico = decimal.Parse(Request.Form["ValorProjetoArquitetonico"].ToString());
-            model.ValorProjetoEletrico = decimal.Parse(Request.Form["ValorProjetoEletrico"].ToString());
-            model.ValorProjetoHidroSanitario = decimal.Parse(Request.Form["ValorProjetoHidroSanitario"].ToString());
-            model.ValorProjetoExecutivo = decimal.Parse(Request.Form["ValorProjetoExecutivo"].ToString());
 
             model.CpfCnpj = Request.Form["CpfCnpj"].ToString();
             model.Nome = Request.Form["Nome"].ToString();
@@ -473,167 +607,60 @@ namespace ws.web.eng.Controllers
             model.TextoLivre = Request.Form["TextoLivre"].ToString();
             model.CidadeID = int.Parse(Request.Form["CidadeID"].ToString());
             model.Email = Request.Form["Email"].ToString();
+            model.ClienteCidade = Request.Form["ClienteCidade"].ToString();
+            model.ClienteEstado = Request.Form["ClienteEstado"].ToString();
+            model.ClientePais = Request.Form["ClientePais"].ToString();
+            model.EnderecoCompletoEmpreendimento = Request.Form["EnderecoCompletoEmpreendimento"].ToString();
+            model.ServicosArquitetura = MontarServicos(model.Regiao, "A");
+            model.ServicosEngenharia = MontarServicos(model.Regiao, "E");
 
 
             if (model == null)
                 return RedirectToAction("Index");
 
-            TempData["_projeto"] = model;
-
             if (Request.Form["BT_PROX"] == "Enviar seu Projeto")
             {
-                //popularUsuario
-                usu.NomeUsuario = model.CpfCnpj;
-                usu.CategoriaID = (int)CategoriaUsuario.Cliente;
-
-                cli.Email = model.Email;
-                cli.CPF_CNPJ = model.CpfCnpj;
-                cli.Nome = model.Nome;
-                cli.TelContato1 = model.TelContato1;
-                cli.TelContato2 = model.TelContato2;
-                cli.TelContato3 = model.TelContato3;
-
-                
-                cliDll.CriarUsuario(usu,true);                
-                cliDll.SalvarCliente(cli);
-
-                cli = cliDll.BuscarCliente(cli.CPF_CNPJ);
-
-                pro.Cliente = cli;
-                pro.ClienteID = cli.ID;
-                pro.Regiao = model.Regiao;
-                pro.logradouroID = int.Parse(model.CodMunicipio == null ? "0" : model.CodMunicipio);
-                pro.Projeto = model.Projeto;
-                pro.Area = model.Area;
-                pro.PadraoAcabamento = model.PadraoAcabamento;
-                pro.AreaPersonalizada = model.AreaPersonalizada;
-                pro.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);                
-                pro.DataCad = dataCad;
-                pro.TextoLivre = model.TextoLivre;
-
-                usu = cliDll.BuscarUsuario(cli.CPF_CNPJ);                
-                pro.Servicos = new List<ProjetoServicoObj>();
-
-                if (model.ProjetoArquitetonico)
-                {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
-
-                    ser.ServicoID = (int)ServicosProjeto.ProjetoArquitetonico;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;                    
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Descricao = "Projeto arquitetônico";                    
-                    ser.Valor = model.ValorProjetoArquitetonico;
-
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    ServicosProjeto.ProjetoArquitetonico,
-                                    model.CidadeID);
-
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
-
-                    pro.Servicos.Add(ser);
-                }
-
-                if (model.ProjetoExecutivo)
-                {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
-
-                    ser.ServicoID = (int)ServicosProjeto.ProjetoExecutivo;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Descricao = "Projeto Executivo";
-                    ser.Valor = model.ValorProjetoExecutivo;
-
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    ServicosProjeto.ProjetoExecutivo,
-                                    model.CidadeID);
-
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
-
-                    pro.Servicos.Add(ser);
-                }
-
-                if (model.ProjetoEletrico)
-                {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
-
-                    ser.ServicoID = (int)ServicosProjeto.ProjetoEletrico;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Descricao = "Projeto Elétrico";
-                    ser.Valor = model.ValorProjetoEletrico;
-
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    ServicosProjeto.ProjetoEletrico,
-                                    model.CidadeID);
-
-
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
-
-                    pro.Servicos.Add(ser);
-                }
-
-                if (model.ProjetoHidraSanitario)
-                {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
-
-                    ser.ServicoID = (int)ServicosProjeto.ProjetoHidroSanitario;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;                    
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Valor = model.ValorProjetoHidroSanitario;
-                    ser.Descricao = "Projeto Hidráulico / Sanitário";
-
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    ServicosProjeto.ProjetoHidroSanitario,
-                                    model.CidadeID);
-
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
-
-                    pro.Servicos.Add(ser);
-                }
-                
-                cliDll.SalvarProjeto(pro);
-
+                SalvarProjeto(model);
                 return RedirectToAction("Financeiro");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                return RedirectToAction("Formulario");
+                if (Session["usu"] == null)
+                    return RedirectToAction("Formulario");
+                else
+                    return RedirectToAction("Servicos");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult Personalizado()
+        {
+            Session["pagAtual"] = Paginas.Personalizado;
+
+            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+
+            if (model == null)
+                return RedirectToAction("Index");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Personalizado(ProjetoModel model)
+        {
+            if (model == null)
+                return RedirectToAction("Index");
+
+
+            if (Request.Form["BT_PROX"] == "Continuar")
+            {
+                TempData["Novo"] = true;
+                return RedirectToAction("Login", "Account");
+            }
+            else if (Request.Form["BT_VOLTAR"] == "voltar")
+            {
+                return RedirectToAction("Index");
             }
 
             return View(model);
@@ -707,11 +734,11 @@ namespace ws.web.eng.Controllers
 
                     TempData["Message"] = "Sua mensagem foi enviada para nossos consultores";
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     TempData["Message"] = ex.Message;
                 }
-                
+
                 return RedirectToAction("Contato");
             }
             else
@@ -722,15 +749,17 @@ namespace ws.web.eng.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff(string id)
-        {            
+        {
             Session["usu"] = null;
             return RedirectToAction("index");
         }
 
+        #region Métodos Auxiliares
+
         private List<SelectListItem> PopularCidades(string SiglaUF)
         {
             List<SelectListItem> lista = new List<SelectListItem>();
-            foreach(var item in new LogradouroDll().BuscarMunicipiosPorSiglaUF("RJ"))
+            foreach (var item in new LogradouroDll().BuscarMunicipiosPorSiglaUF("RJ"))
             {
                 lista.Add(new SelectListItem { Value = item.CodMunicipio, Text = item.NomeMunicipio });
             }
@@ -744,5 +773,250 @@ namespace ws.web.eng.Controllers
             //        "NomeMunicipio"
             //    );
         }
+
+        public List<ServicoAux> MontarServicos(RegiaoProjeto regiao, string tipo, List<ProjetoServicoObj> servicos = null)
+        {
+            ServicoDll srvDll = new ServicoDll();
+            List<ServicoObj> listaIn = new List<ServicoObj>();
+            List<ServicoAux> listaOut = new List<ServicoAux>();
+
+            int idPais = 0;
+            int idRegiao = 0;
+
+            if ((int)regiao != 3)
+            {
+                idPais = (int)regiao;
+            }
+            else
+            {
+                idPais = 1;
+            }
+
+            if (tipo == "A")
+                listaIn = srvDll.ListarServicoArquitetura(idPais, idRegiao);
+            else
+                listaIn = srvDll.ListarServicoEngenharia(idPais, idRegiao);
+
+            foreach (var item in listaIn)
+            {
+                ServicoAux obj = new ServicoAux();
+
+                obj.ServicoID = item.ID;
+                obj.ProjetoServicoID = 0;
+                obj.Nome = item.Nome;
+                if (tipo == "A")
+                    obj.Codigo = "ARQID" + item.ID.ToString();
+                else
+                    obj.Codigo = "ENGID" + item.ID.ToString();
+
+                listaOut.Add(obj);
+            }
+
+            if (tipo == "A")
+            {
+                if (Request.Form["ARQID"] != null)
+                {
+                    foreach (var item in listaOut)
+                    {
+                        if (Request.Form["ARQID"] == item.ServicoID.ToString())
+                            item.Selecionado = true;
+                    }
+                }
+                else
+                {
+                    if (servicos != null)
+                    {
+                        foreach (var item in listaOut)
+                        {                            
+                            item.Selecionado = (from s in servicos where s.ServicoID == item.ServicoID && s.Servico.Tipo.ID == 1 select s).Count() > 0;
+                        }
+                    }
+
+                }
+
+
+            }
+            else
+            {
+                foreach (var item in listaOut)
+                {
+                    if (Request.Form[item.Codigo.ToString()] != null)
+                    {
+                        if (Request.Form[item.Codigo.ToString()].ToString() == "true,false")
+                            item.Selecionado = true;
+                    }
+                }
+
+                if (servicos != null)
+                {
+                    if (servicos != null)
+                    {
+                        foreach (var item in listaOut)
+                        {                            
+                            item.Selecionado = (from s in servicos where s.ServicoID == item.ServicoID && s.Servico.Tipo.ID == 2 select s).Count() > 0;
+                        }
+                    }
+
+                }
+            }
+
+            return listaOut;
+        }
+
+        private void SalvarProjeto(ProjetoModel model)
+        {
+            UsuarioClienteDll cliDll = new UsuarioClienteDll();
+            FinanceiroDll finDll = new FinanceiroDll();
+
+            UsuarioObj usu = new UsuarioObj();
+            ClienteObj cli = new ClienteObj();
+            ProjetoObj pro = new ProjetoObj();
+
+
+            DateTime dataCad = DateTime.Now;
+
+
+            //popularUsuario
+            usu.NomeUsuario = model.CpfCnpj;
+            usu.CategoriaID = (int)CategoriaUsuario.Cliente;
+            usu.NomeCompleto = model.Nome;
+
+            cliDll.CriarUsuario(usu, true);
+
+            cli.Email = model.Email;
+            cli.CPF_CNPJ = model.CpfCnpj;
+            cli.Nome = model.Nome;
+            cli.TelContato1 = model.TelContato1;
+            cli.TelContato2 = model.TelContato2;
+            cli.TelContato3 = model.TelContato3;
+            cli.Pais = model.ClientePais;
+            cli.Estado = model.ClienteEstado;
+            cli.Cidade = model.ClienteCidade;
+
+            cliDll.SalvarCliente(cli);
+
+            cli = cliDll.BuscarCliente(cli.CPF_CNPJ);
+
+            pro.ID = model.Id;
+            pro.Cliente = cli;
+            pro.ClienteID = cli.ID;
+            pro.Regiao = model.Regiao;
+            pro.logradouroID = int.Parse(model.CodMunicipio == null ? "0" : model.CodMunicipio);
+            pro.Projeto = model.Projeto;
+            pro.Area = model.Area;
+            pro.PadraoAcabamento = model.PadraoAcabamento;
+            pro.AreaPersonalizada = model.AreaPersonalizada;
+            pro.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
+            pro.DataCad = dataCad;
+
+            pro.TextoLivre = model.TextoLivre;
+            pro.EnderecoCompletoEmpreendimento = model.EnderecoCompletoEmpreendimento;
+
+            usu = cliDll.BuscarUsuario(cli.CPF_CNPJ);
+
+            pro.Servicos = new List<ProjetoServicoObj>();
+
+            foreach (var item in model.ServicosArquitetura)
+            {
+                if (item.Selecionado)
+                {
+                    ProjetoServicoObj ser = new ProjetoServicoObj();
+
+                    ser.ID = item.ProjetoServicoID;
+                    ser.ServicoID = (int)ServicosProjeto.ProjetoArquitetonico;
+                    ser.DataCad = dataCad;
+                    ser.FormaPagamento = FormaPgto.Boleto;
+                    ser.Status = (int)StatusServico.Criado;
+                    ser.Usuario = usu;
+                    ser.UsuarioID = usu.ID;
+                    ser.Descricao = item.Nome;
+                    ser.Valor = item.Valor;
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    model.CidadeID,
+                                    true);
+
+                    ser.T = finDll.T;
+                    ser.P = finDll.P;
+                    ser.A = finDll.A;
+                    ser.d = finDll.D;
+
+                    pro.Servicos.Add(ser);
+                }
+
+            }
+
+            foreach (var item in model.ServicosEngenharia)
+            {
+                if (item.Selecionado)
+                {
+                    ProjetoServicoObj ser = new ProjetoServicoObj();
+
+                    ser.ID = item.ProjetoServicoID;
+                    ser.ServicoID = item.ServicoID;
+                    ser.DataCad = dataCad;
+                    ser.FormaPagamento = FormaPgto.Boleto;
+                    ser.Status = (int)StatusServico.Criado;
+                    ser.Usuario = usu;
+                    ser.UsuarioID = usu.ID;
+                    ser.Descricao = item.Nome;
+                    ser.Valor = item.Valor;
+
+                    finDll.Calcular(model.Projeto,
+                                    model.Area,
+                                    model.Regiao,
+                                    model.PadraoAcabamento,
+                                    model.CidadeID,
+                                    false);
+
+                    ser.T = finDll.T;
+                    ser.P = finDll.P;
+                    ser.A = finDll.A;
+                    ser.d = finDll.D;
+
+                    pro.Servicos.Add(ser);
+                }
+
+            }
+
+            cliDll.SalvarProjeto(pro);
+        }
+
+        private ProjetoModel PopularProjectModel(ProjetoObj obj)
+        {
+            ProjetoModel proj = new ProjetoModel();
+
+            proj.Id = obj.ID;
+            proj.Area = obj.Area;
+            proj.PadraoAcabamento = obj.PadraoAcabamento;
+            proj.Projeto = obj.Projeto;
+            proj.Regiao = obj.Regiao;
+
+            proj.ServicosArquitetura = MontarServicos(proj.Regiao, "A", obj.Servicos);
+            proj.ServicosEngenharia = MontarServicos(proj.Regiao, "E", obj.Servicos);
+
+            proj.AreaPersonalizada = obj.AreaPersonalizada.Value;
+            proj.CidadeID = obj.ClienteID;
+            proj.ClienteCidade = obj.Cliente.Cidade;
+            proj.ClienteEstado = obj.Cliente.Estado;
+            proj.ClientePais = obj.Cliente.Pais;
+            proj.CpfCnpj = obj.Cliente.CPF_CNPJ;
+            proj.Email = obj.Cliente.Email;
+            proj.EnderecoCompletoEmpreendimento = obj.EnderecoCompletoEmpreendimento;
+            proj.Nome = obj.Cliente.Nome;
+            proj.TelContato1 = obj.Cliente.TelContato1;
+            proj.TelContato2 = obj.Cliente.TelContato2;
+            proj.TelContato3 = obj.Cliente.TelContato3;
+            proj.TextoLivre = obj.TextoLivre;
+
+            Session["_projeto"] = proj;
+
+            return proj;
+        }
+
+        #endregion
     }
 }

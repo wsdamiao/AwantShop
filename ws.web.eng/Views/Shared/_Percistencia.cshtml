@@ -1,0 +1,88 @@
+﻿@using ws.eng.obj
+@using ws.web.eng.Models
+@model ws.web.eng.Models.ProjetoModel
+
+
+@{
+
+    //if ((Paginas)Session["pagAtual"] == Paginas.Confirmarcadastro)
+    //{
+        @Html.Hidden("Id", (int)Model.Id)
+    //}
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Area)
+    {
+        @Html.Hidden("idArea", (int)Model.Area)
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Regiao)
+    {
+        @Html.Hidden("idRegiao", (int)Model.Regiao)
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Municipio)
+    {
+        @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+        @Html.Hidden("CidadeID", Model.CidadeID)
+    }
+
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Projeto)
+    {
+        @Html.Hidden("idProjeto", (int)Model.Projeto)
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Padrao)
+    {
+        @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Servicos)
+    {
+        if (Model.ServicosArquitetura != null)
+        {
+
+            foreach (var item in Model.ServicosArquitetura)
+            {
+                if (item.Selecionado)
+                {
+                    @Html.Hidden("ARQID", item.ServicoID)
+                }
+            }
+        }
+
+        if (Model.ServicosEngenharia != null)
+        {
+            foreach (var item in Model.ServicosEngenharia)
+            {
+                if (item.Selecionado)
+                {
+                    @Html.Hidden(item.Codigo, "true,false")
+                }
+            }
+        }        
+        
+
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Personalizado && (Paginas)Session["pagAtual"] != Paginas.Servicos)
+    {
+        @Html.Hidden("EnderecoCompletoEmpreendimento", Model.EnderecoCompletoEmpreendimento)
+        @Html.Hidden("TextoLivre", Model.TextoLivre)
+    }
+
+    if ((Paginas)Session["pagAtual"] != Paginas.Formulario)
+    {
+        @Html.Hidden("CpfCnpj", Model.CpfCnpj)
+        @Html.Hidden("Nome", Model.Nome)
+        @Html.Hidden("TelContato1", Model.TelContato1)
+        @Html.Hidden("TelContato2", Model.TelContato2)
+        @Html.Hidden("TelContato3", Model.TelContato3)        
+        @Html.Hidden("Email", Model.Email)
+        @Html.Hidden("ClienteCidade", Model.ClienteCidade)
+        @Html.Hidden("ClienteEstado", Model.ClienteEstado)
+        @Html.Hidden("ClientePais", Model.ClientePais)
+
+    }    
+
+}

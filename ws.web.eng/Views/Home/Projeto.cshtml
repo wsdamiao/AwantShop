@@ -6,8 +6,13 @@
 @using (Html.BeginForm("Projeto", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @*@Html.Hidden("_projeto", ws.eng.dll.SerializationUtility.Serializable(Model))*@
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @*@Html.Hidden("idRegiao", (int)Model.Regiao)
     @Html.Hidden("CodMunicipio", Model.CodMunicipio)
+    @Html.Hidden("EnderecoCompletoEmpreendimento", Model.EnderecoCompletoEmpreendimento)
+    @Html.Hidden("DescricaoLivre", Model.DescricaoLivre)*@
+    
+    @Html.Partial("_Percistencia")
+
     <br />
     <div class="row">
         <div class="has-error">
@@ -18,13 +23,13 @@
     <div class="row">
         <h1>Informe o <span style="color:red">tipo</span> do seu projeto</h1>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_R" class="btt_PT" />
+            <input type="submit" value="" name="BT_R" class="btt_RES" />
         </div>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_C" class="btt_RJ" />
+            <input type="submit" value="" name="BT_C" class="btt_COM" />
         </div>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_I" class="btt_BR" />
+            <input type="submit" value="" name="BT_I" class="btt_IND" />
         </div>
     </div>    
     <div class="row text-center">

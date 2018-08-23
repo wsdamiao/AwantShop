@@ -27,6 +27,7 @@ namespace ws.eng.dao
         public System.Guid Token { get; set; }
         public int CategoriaID { get; set; }
         public string NomeCompleto { get; set; }
+        public string CodValidacao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Clientes { get; set; }

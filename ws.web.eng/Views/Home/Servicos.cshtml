@@ -1,19 +1,15 @@
 ﻿@model ws.web.eng.Models.ProjetoModel
 @{
     ViewBag.Title = "Serviços";
-    string desc_pa = "Projeto Arquitetônico";
-    string desc_phs = "Projeto Hidráulico/Sanitário";
-    string desc_pe = "Projeto Elétrico";
-}
+   }
 
 @using (Html.BeginForm("Servicos", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
-    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
-    @Html.Hidden("idProjeto", (int)Model.Projeto)
-    @Html.Hidden("idArea", (int)Model.Area)
-    @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
+    
+
+    @Html.Partial("_Percistencia")
+
+
     <br />
     <div class="row">
         <div class="has-error">
@@ -24,29 +20,101 @@
     <div class="row">
         <h2>Nossos <span style="color:red">serviços</span></h2>
         <h4>Para o local, tipo, área e padrão de acabamento, selecione um ou mais serviços que deseja contratar</h4>
-        <div class="col-md-4">
-            @Html.CheckBoxFor(x => x.ProjetoArquitetonico) @desc_pa
-        </div>
-        <div class="col-md-4">
-            @if (Model.Regiao == ws.eng.obj.RegiaoProjeto.RioDeJaneiro)
-            {
-                @Html.CheckBoxFor(x => x.ProjetoHidraSanitario) @desc_phs
-            }
-        </div>
-        <div class="col-md-4">
-            @if (Model.Regiao == ws.eng.obj.RegiaoProjeto.RioDeJaneiro)
-            {
-                @Html.CheckBoxFor(x => x.ProjetoEletrico) @desc_pe
-            }
-        </div>
     </div>
-    
-    <div class="row text-center">
-        <br />
-            <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />        
-            <input type="submit" value="Continuar" name="BT_PROX" class="btn btn-primary" />
-        
-    </div>
+
+    <fieldset>
+        <legend>Projetos de Arquitetura</legend>
+        @for (int l = 0;l <= Model.ServicosArquitetura.Count - 1; l++)
+        {
+            <div class="row">
+
+            @for (int i = 0; i <= 3; i++)
+            {
+                if(l <= Model.ServicosArquitetura.Count - 1)
+                {
+                    string check = "";
+
+                    if (Model.ServicosArquitetura[l].Selecionado)
+                    {
+                        check = "checked";
+                    }
+
+                    <div class="col-md-4">
+                        <input name="ARQID" type="radio" value="@Model.ServicosArquitetura[l].ServicoID" @check /> @Model.ServicosArquitetura[l].Nome
+                    </div>
+
+                    l++;
+
+                }else{
+                    <div class="col-md-4">
+                    </div>
+                }
+            }
+            
+            </div>
+        }
+    </fieldset>
+
+    <fieldset>
+        <legend>Projetos de Engenharia</legend>
+        @for (int l = 0; l <= Model.ServicosEngenharia.Count - 1; l++)
+        {
+            <div class="row">
+
+                @for (int i = 0; i <= 3; i++)
+                {
+                    if (l <= Model.ServicosEngenharia.Count - 1)
+                    {
+                        <div class="col-md-4">
+                            @Html.CheckBox(Model.ServicosEngenharia[l].Codigo,  Model.ServicosEngenharia[l].Selecionado) @Model.ServicosEngenharia[l].Nome
+                        </div>
+
+                        l++;
+
+                    }
+                    else
+                    {
+                        <div class="col-md-4">
+                        </div>
+                    }
+                }
+
+            </div>
+        }
+    </fieldset>
+            
+            <br />
+            <fieldset>
+                <legend>Ficha do Projeto</legend>
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.EnderecoCompletoEmpreendimento)
+                        @Html.TextBoxFor(x => x.EnderecoCompletoEmpreendimento, new { @class = "form-control", @maxlength = "250" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.TextoLivre)
+                        @Html.TextAreaFor(x => x.TextoLivre, new { @class = "form-control", @maxlength = "250", @rows = "5" })
+                    </div>
+                </div>
+            </fieldset>            
+
+            <div class="row text-center">
+                <br />
+                <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
+@if (Session["usu"] == null)
+{
+                <input type="submit" value="Continuar e fazer um novo cadastro" name="BT_PROX" class="btn btn-primary" />
+                <input type="submit" value="Continuar e fazer seu login" name="BT_LOG" class="btn btn-primary" />
+}
+else
+{
+                <input type="submit" value="Continuar" name="BT_CON" class="btn btn-primary" />
+}
+
+
+            </div>
 }
 
 

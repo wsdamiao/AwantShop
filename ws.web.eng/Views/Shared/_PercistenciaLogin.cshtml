@@ -1,0 +1,12 @@
+﻿@using ws.eng.obj
+@using ws.web.eng.Models
+@model ws.web.eng.Models.LoginViewModel
+
+
+@{
+
+    if ((Paginas)Session["pagAtual"] == Paginas.Login)
+    {
+        @Html.Hidden("Projeto", (ProjetoModel)Model.Projeto)
+    }
+}

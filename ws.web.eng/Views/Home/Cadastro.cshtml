@@ -1,0 +1,39 @@
+﻿@model ws.web.eng.Models.ProjetoModel
+@{
+    ViewBag.Title = "Cadastro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Percistencia")
+
+<br />
+<div class="row">
+    <div class="has-error">
+        @ViewBag.Message
+    </div>
+</div>
+<br />
+<div class="row">
+    <h2>Informe seus <span style="color:red;">Dados Cadastrais</span></h2>
+</div>
+<div class="row">
+    <h1>Deseja fazer o seu <span style="color:red">cadastro</span> antes de proseguir?</h1>
+    <div class="col-md-4">
+        <input type="submit" value="" name="BT_P" class="btt_PT" />
+    </div>
+    <div class="col-md-4">
+        <input type="submit" value="" name="BT_M" class="btt_RJ" />
+    </div>
+    <div class="col-md-4">
+        <input type="submit" value="" name="BT_G" class="btt_BR" />
+    </div>
+</div>
+
+<div class="row text-center">
+    <br />
+    <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
+
+    <input type="submit" value="Projeto Personalizado" name="BT_PER" class="btn btn-primary" />
+
+</div>
+

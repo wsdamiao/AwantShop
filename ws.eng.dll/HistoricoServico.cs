@@ -10,42 +10,42 @@ namespace ws.eng.dll
 {
     public class HistoricoServico
     {
-        private ServicoHistoricoDao dao;
+        private ServicoDao dao;
 
         public HistoricoServico()
         {
-            dao = new ServicoHistoricoDao();
+            dao = new ServicoDao();
         }
 
         public List<ServicoHistoricoObj>  Listar()
         {
-            return dao.Listar();
+            return dao.ListarHistoricoServico();
         }
 
         public List<ServicoHistoricoObj> ListarPorId(long ID)
         {
-            return dao.Listar().Where(x=> x.ID == ID).ToList();
+            return dao.ListarHistoricoServico().Where(x=> x.ID == ID).ToList();
         }
 
         public List<ServicoHistoricoObj> ListarPorIdUsuario(long ID)
         {
-            return dao.Listar().Where(x => x.IdUsuario == ID).ToList();
+            return dao.ListarHistoricoServico().Where(x => x.IdUsuario == ID).ToList();
         }
 
         public List<ServicoHistoricoObj> ListarPorIdSerico(long ID)
         {
-            return dao.Listar().Where(x => x.IdServico == ID).ToList();
+            return dao.ListarHistoricoServico().Where(x => x.IdServico == ID).ToList();
         }
 
         public List<ServicoHistoricoObj> ListarPorIdStatus(long ID)
         {
-            return dao.Listar().Where(x => x.IdStatus == ID).ToList();
+            return dao.ListarHistoricoServico().Where(x => x.IdStatus == ID).ToList();
         }
 
         public List<ServicoHistoricoObj> ListarPorIntervalor(DateTime dtInicial, DateTime dtFinal)
         {
             List<ServicoHistoricoObj> result = new List<ServicoHistoricoObj>();
-            result = dao.Listar().Where(x => x.DataHora >= dtInicial && x.DataHora <= dtFinal ).ToList();
+            result = dao.ListarHistoricoServico().Where(x => x.DataHora >= dtInicial && x.DataHora <= dtFinal ).ToList();
 
             return result;
         }
@@ -67,7 +67,7 @@ namespace ws.eng.dll
 
         public void Salvar(ServicoHistoricoObj obj)
         {
-            dao.Salvar(obj);
+            dao.SalvarHistorico(obj);
         }
     }
 }

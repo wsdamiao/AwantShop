@@ -107,18 +107,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelEng.edmx</DependentUpon>
     </Compile>
-    <Compile Include="objs\ServicoHistorico.cs" />
+    <Compile Include="objs\ServicoDao.cs" />
     <Compile Include="Pai.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
     <Compile Include="Projeto.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjetoCliUsu.cs">
+      <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
     <Compile Include="ProjetoServico.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProjetoServicoSerTipo.cs">
+      <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servico.cs">
+      <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
     <Compile Include="ServicoHistorico.cs">
+      <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServicoTipo.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -136,7 +148,6 @@
     <None Include="App.config" />
     <EntityDeploy Include="ModelEng.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelEng.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="ModelEng.edmx.diagram">
       <DependentUpon>ModelEng.edmx</DependentUpon>

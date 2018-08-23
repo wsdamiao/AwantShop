@@ -1,4 +1,5 @@
 ﻿@using ws.eng.obj
+@using ws.web.eng.Models
 @model ws.web.eng.Models.ProjetoModel
 @{
     ViewBag.Title = "Resumo Final";
@@ -6,27 +7,9 @@
 
 @using (Html.BeginForm("Resumo", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
-    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
-    @Html.Hidden("CidadeID", Model.CidadeID)
-    @Html.Hidden("idProjeto", (int)Model.Projeto)
-    @Html.Hidden("idArea", (int)Model.Area)
-    @Html.Hidden("idPadrao", (int)Model.PadraoAcabamento)
-    @Html.Hidden("PA", (bool)Model.ProjetoArquitetonico)
-    @Html.Hidden("PHS", (bool)Model.ProjetoHidraSanitario)
-    @Html.Hidden("PE", (bool)Model.ProjetoEletrico)
-    @Html.Hidden("ValorProjetoArquitetonico", Model.ValorProjetoArquitetonico)
-    @Html.Hidden("ValorProjetoEletrico", Model.ValorProjetoEletrico)
-    @Html.Hidden("ValorProjetoHidroSanitario", Model.ValorProjetoHidroSanitario)
-    @Html.Hidden("ValorProjetoExecutivo", Model.ValorProjetoExecutivo)
 
-    @Html.Hidden("CpfCnpj", Model.CpfCnpj)
-    @Html.Hidden("Nome", Model.Nome)
-    @Html.Hidden("TelContato1", Model.TelContato1)
-    @Html.Hidden("TelContato2", Model.TelContato2)
-    @Html.Hidden("TelContato3", Model.TelContato3)
-    @Html.Hidden("TextoLivre", Model.TextoLivre)
-    @Html.Hidden("Email", Model.Email)
+    @Html.Partial("_Percistencia")
+
     <br />
     <div class="row">
         <div class="has-error">
@@ -61,16 +44,54 @@
     <br />
     <fieldset>
         <legend>Resumo Financeiro</legend>
-        <div class="row">
-            @if (Model.ProjetoArquitetonico)
-                {
-                <div class="col-md-3">
-                    <b>Projeto Arquitetônico:</b>
-                </div>
-                <div class="col-md-3">
-                    @Model.ValorProjetoArquitetonicoFormatado
+        @foreach(var item in Model.ServicosArquitetura)
+        {
+            if (item.Selecionado)
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>@item.Nome :</b>
+                    </div>
+                    <div class="col-md-3">
+                        @item.ValorFormatado
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
                 </div>
             }
+        }
+
+        @foreach (var item in Model.ServicosEngenharia)
+        {
+            if (item.Selecionado)
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <b>@item.Nome :</b>
+                    </div>
+                    <div class="col-md-3">
+                        @item.ValorFormatado
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            }
+        }
+        <div class="row">
+            <div class="col-md-3">
+                
+            </div>
+            <div class="col-md-3">
+                
+            </div>
             <div class="col-md-3">
                 <b>Total:</b>
             </div>
@@ -78,41 +99,7 @@
                 @Model.ValorProjetoTotalFormatado
             </div>
         </div>
-        <div class="row">
-            @if (Model.ProjetoEletrico)
-            {
-                <div class="col-md-3">
-                    <b>Projeto Elétrico: </b>
-                </div>
-                <div class="col-md-3">
-                    @Model.ValorProjetoEletricoFormatado
-                </div>
-            }
-        </div>
-        <div class="row">
-            @if (Model.ProjetoHidraSanitario)
-            {
-                <div class="col-md-3">
-                    <b>Projeto Hidraulico/ Sanitário:</b>
-                </div>
-                <div class="col-md-3">
-                    @Model.ValorProjetoHidroSanitarioFormatado
-                </div>
-            }
-        </div>
-        <div class="row">
-            @if (Model.ProjetoExecutivo)
-            {
-                <div class="col-md-3">
-                    <b>Projeto Executivo:</b>
-                </div>
-                <div class="col-md-3">
-                    @Model.ValorProjetoExecutivoFormatado
-                </div>
-            }
-        </div>
-
-    </fieldset>
+    </fieldset>    
     <br />
     <fieldset>
         <legend>Seus Dados</legend>
@@ -141,29 +128,44 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <b>Telefones de Contato</b>                
+                <b>Local</b>
             </div>
-            <div class="col-md-9">                
-                @Model.TelContato1
-                @if(Model.TelContato2 != null)
-                {
-                    <span> / @Model.TelContato2</span>
-                }
-                @if (Model.TelContato3 != null)
-                {
-                    <span> / @Model.TelContato3</span>
-                }
-            </div>           
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <b>Informações Complementares</b>                
-            </div>
-            <div class="col-md-9">                
-                @Model.TextoLivre
+            <div class="col-md-9">
+                @Model.ClienteCidade - @Model.ClienteEstado - @Model.ClientePais
             </div>
         </div>
-    </fieldset>
+            <div class="row">
+                <div class="col-md-3">
+                    <b>Telefones de Contato</b>
+                </div>
+                <div class="col-md-9">
+                    @Model.TelContato1
+                    @if (Model.TelContato2 != null)
+                    {
+                        <span> / @Model.TelContato2</span>
+                    }
+                    @if (Model.TelContato3 != null)
+                {
+                        <span> / @Model.TelContato3</span>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <b>Endereço do empreendimento</b>
+                </div>
+                <div class="col-md-3">
+                    @Model.EnderecoCompletoEmpreendimento
+                </div>
+                <div class="col-md-3">
+                    <b>Informações Complementares</b>
+                </div>
+
+                <div class="col-md-3">
+                    @Model.TextoLivre
+                    </div>
+                </div>
+</fieldset>
     <br />
 
     <div class="row text-center">

@@ -9,9 +9,27 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ws.web.eng.Models
 {
+    public enum Paginas
+    {
+        Area,
+        Formulario,
+        Index,
+        Municipio,
+        Padrao,
+        Projeto,
+        Regiao,
+        Resumo,
+        Servicos,
+        Personalizado,
+        Login,
+        Confirmarcadastro
+    }
+
     [Serializable]
     public class ProjetoModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Região")]
         public RegiaoProjeto Regiao { get; set; }
 
@@ -22,23 +40,33 @@ namespace ws.web.eng.Models
         public AreaProjeto Area { get; set; }
 
         [Display(Name = "Tipo de Acabamento")]
-        public PadraoProjeto PadraoAcabamento { get; set; }  
-        
+        public PadraoProjeto PadraoAcabamento { get; set; }
+
+        [Display(Name = "Área Personalizada")]
         public decimal AreaPersonalizada { get; set; }
 
-        public decimal ValorProjetoArquitetonico { get; set; }
-        public decimal ValorProjetoEletrico { get; set; }
-        public decimal ValorProjetoHidroSanitario { get; set; }
-        public decimal ValorProjetoExecutivo { get; set; }
-        public decimal ValorProjetoOutro { get; set; }
-        public decimal ValorProjetoTotal { get; set; }
+        public List<ServicoAux> ServicosEngenharia { get; set; }
+        public List<ServicoAux> ServicosArquitetura { get; set; }
+                
+        public decimal ValorProjetoTotal { get; set; }               
+        public string ValorProjetoTotalFormatado { get; set; }  
+        
+        [Required]
+        [Display(Name = "Endereço completo do empreendimento")]
+        public string EnderecoCompletoEmpreendimento { get; set; }
+        
+        
+        [Required]
+        [Display(Name = "País")]
+        public string ClientePais { get; set; }
 
-        public string ValorProjetoArquitetonicoFormatado { get; set; }
-        public string ValorProjetoEletricoFormatado { get; set; }
-        public string ValorProjetoHidroSanitarioFormatado { get; set; }
-        public string ValorProjetoExecutivoFormatado { get; set; }
-        public string ValorProjetoOutroFormatado { get; set; }
-        public string ValorProjetoTotalFormatado { get; set; }
+        [Required]
+        [Display(Name = "Estado (Sigla)")]
+        public string ClienteEstado { get; set; }
+
+        [Required]
+        [Display(Name = "Cidade")]
+        public string ClienteCidade { get; set; }
 
         public FormaPgto FormaPagamento { get; set; }
         public string CodMunicipio { get; set; }
@@ -47,19 +75,7 @@ namespace ws.web.eng.Models
         [Display(Name = "Valor do Metro Quadrado")]
         public decimal ValorMetroQuadradoAplicado { get; set; }
 
-        public IEnumerable<SelectListItem> Municipios { get; set; }
-
-        [Display(Name = "Projeto Arquitetônico")]
-        public bool ProjetoArquitetonico { get; set; }
-
-        [Display(Name = "Projeto Hidraulico/Sanitário")]
-        public bool ProjetoHidraSanitario { get; set; }
-
-        [Display(Name = "Projeto Eletrico")]
-        public bool ProjetoEletrico { get; set; }
-
-        [Display(Name = "Projeto Executivo")]
-        public bool ProjetoExecutivo { get; set; }
+        public IEnumerable<SelectListItem> Municipios { get; set; }        
 
         [Required]
         [Key]
@@ -78,8 +94,22 @@ namespace ws.web.eng.Models
         [Required]
         [Display(Name = "E-Mail(*)")]
         public string Email { get; set; }
-        [Display(Name = "Descrição Complementar")]
+
+        [Required]
+        [Display(Name = "Descreva em até 250 caracteres o que você deseja em seu projeto")]
         public string TextoLivre { get; set; }
+    }
+
+    [Serializable]
+    public class ServicoAux
+    {
+        public int ServicoID { get; set; }
+        public int ProjetoServicoID { get; set; }
+        public string Codigo { get; set; }
+        public bool Selecionado { get; set; }
+        public string Nome { get; set; }
+        public decimal Valor { get; set; }
+        public string ValorFormatado { get; set; }
     }
 
     [Serializable]
@@ -202,5 +232,14 @@ namespace ws.web.eng.Models
         public IEnumerable<SelectListItem> Moedas { get; set; }
 
         public string NomeMoeda { get; set; }
+    }
+
+    public class ConfirmarCadastroModel
+    {
+        public string CodigoConfirmacao { get; set; }
+        public string Cpf_Cnpj { get; set; }
+        public string Email { get; set; }
+        public string Nome { get; set; }
+        public UsuarioObj Usu { get; set; }
     }
 }

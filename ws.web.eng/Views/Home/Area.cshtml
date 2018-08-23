@@ -5,10 +5,9 @@
 
 @using (Html.BeginForm("Area", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
-    @Html.Hidden("CodMunicipio", Model.CodMunicipio)
-    @Html.Hidden("idProjeto", (int)Model.Projeto)
+    
+    @Html.Partial("_Percistencia")
+
     <br />
     <div class="row">
         <div class="has-error">
@@ -18,20 +17,22 @@
     <br />
     <div class="row">
         <h1>Informe a <span style="color:red">área</span> do seu projeto</h1>
-        <div class="col-md-4">
-            <input type="submit" value="" name="BT_P" class="btt_PT" />
+        <div class="col-md-3">
+            <input type="submit" value="" name="BT_P" class="btt_P" />
         </div>
-        <div class="col-md-4">
-            <input type="submit" value="" name="BT_M" class="btt_RJ" />
+        <div class="col-md-3">
+            <input type="submit" value="" name="BT_M" class="btt_M" />
         </div>
-        <div class="col-md-4">
-            <input type="submit" value="" name="BT_G" class="btt_BR" />
+        <div class="col-md-3">
+            <input type="submit" value="" name="BT_G" class="btt_G" />
+        </div>
+        <div class="col-md-3">
+            <input type="submit" value="" name="BT_PER" class="btt_PER" />
         </div>
     </div>
 
     <div class="row text-center">
         <br />
-        <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
-        <input type="submit" value="Projeto Personalizado" name="BT_PER" class="btn btn-primary" />
+        <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />        
     </div>
 }

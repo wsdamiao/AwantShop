@@ -19,7 +19,7 @@ namespace ws.eng.dll
             cliDao = new UsuarioClienteDao();
         }
 
-        
+
         #region Usuario
 
         public void CriarUsuario(UsuarioObj obj, bool gerarSenhaAutomatica)
@@ -28,6 +28,7 @@ namespace ws.eng.dll
             Criptografia criptografia = new Criptografia(CryptProvider.TripleDES);
 
             string senha = obj.Senha;
+            string codValidacao = Gerador.Numero(4);
 
             criptografia.Key = ws.eng.obj.DadosProjeto.CRIPTOGRAFIA;
 
@@ -37,10 +38,11 @@ namespace ws.eng.dll
             {
                 if (gerarSenhaAutomatica)
                     senha = criptografia.Encrypt(Gerador.alfanumericoAleatorio(DadosProjeto.TAMANHOSENHAPADRAO));
-                
+
                 obj.Senha = senha;
                 obj.Ativo = false;
                 obj.Token = Guid.NewGuid();
+                obj.CodigoValidacao = codValidacao;
 
                 cliDao.SalvarUsuario(obj);
             }
@@ -90,13 +92,25 @@ namespace ws.eng.dll
             obj.Senha = cript.Decrypt(obj.Senha);
 
             return obj;
-            
+
         }
 
-        public UsuarioObj  ValidarAcesso(string login, string senha, bool reEnvio)
+        public UsuarioObj BuscarUsuarioPorKey(string key)
+        {
+            Criptografia cript = new Criptografia(CryptProvider.TripleDES);
+            cript.Key = ws.eng.obj.DadosProjeto.CRIPTOGRAFIA;
+
+            UsuarioObj obj = cliDao.ListarUsuario().Where(x => x.Token == Guid.Parse(key)).FirstOrDefault();
+
+            obj.Senha = cript.Decrypt(obj.Senha);
+
+            return obj;
+        }
+
+        public UsuarioObj ValidarAcesso(string login, string senha, bool reEnvio)
         {
             UsuarioObj usu;
-            
+
             try
             {
                 usu = BuscarUsuario(login);
@@ -107,22 +121,22 @@ namespace ws.eng.dll
                 else if (reEnvio)
                 {
                     Email mail = new Email();
-                    mail.RecuperarSenha(usu);
+                    //mail.RecuperarSenha(usu);
                 }
-                                                  
+
                 return new UsuarioObj();
 
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
-                new LogDeErro(ex);           
+                new LogDeErro(ex);
             }
 
             return new UsuarioObj();
         }
 
         public List<UsuarioObj> ListarUsuarioAdministrativo()
-        {            
+        {
             try
             {
                 return ListarUsuario().Where(x => x.CategoriaID != (int)CategoriaUsuario.Cliente).ToList();
@@ -168,6 +182,33 @@ namespace ws.eng.dll
             return cliDao.ListarCliente().Where(x => x.Email == email).FirstOrDefault();
         }
 
+        public bool ValidarCodigoConfirmacao(string cpf_cnpj, string codigo, string key)
+        {
+            UsuarioObj usu = new UsuarioObj();
+
+            if (cpf_cnpj != string.Empty)
+                usu = BuscarUsuario(cpf_cnpj);
+            else
+            {
+                usu = BuscarUsuarioPorKey(key);
+                cpf_cnpj = usu.NomeUsuario;
+            }
+
+            if (usu.NomeUsuario == cpf_cnpj)
+            {
+                if (usu.CodigoValidacao == codigo)
+                {
+                    cliDao.AtivarUsuario(usu.ID);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Projeto
@@ -204,6 +245,35 @@ namespace ws.eng.dll
                 return true;
         }
 
+        public int buscarUltimoIDProjetoPorChaveOuCpf(Guid key, string cpf = "")
+        {
+            if (cpf == string.Empty)
+                cpf = ListarUsuario().Where(x => x.Token == key).FirstOrDefault().NomeUsuario;
+
+            var idCli = BuscarCliente(cpf).ID;
+
+            var proj = ListarProjeto(idCli).LastOrDefault();
+
+            return proj.ID;
+        }
+
+        public ProjetoObj buscarUltimoProjetoPorChaveOuCpf(Guid key, string cpf = "")
+        {
+            if(cpf == string.Empty)
+                cpf = ListarUsuario().Where(x => x.Token == key).FirstOrDefault().NomeUsuario;
+
+            var idCli = BuscarCliente(cpf).ID;
+
+            var proj = ListarProjeto(idCli).LastOrDefault();
+
+            return proj;
+        }
+
+        public List<ProjetoServicoObj> FiltrarServicosPorTipo(List<ProjetoServicoObj> obj, int tipoServico)
+        {
+            return new List<ProjetoServicoObj>();
+        }
+
         public void SalvarProjeto(ProjetoObj obj)
         {
             cliDao.SalvarProjeto(obj);
@@ -211,27 +281,21 @@ namespace ws.eng.dll
 
         public ICollection<ProjetoObj> ListarProjeto()
         {
-            ICollection<ProjetoObj> pro = cliDao.ListarProjeto(); 
-
-            foreach(var item in pro)
-            {
-                item.Cliente = cliDao.ListarCliente().Where(x => x.ID == item.ClienteID).FirstOrDefault();
-                item.Servicos = cliDao.ListarProjetoServico().Where(x => x.ProjetoID == item.ID).ToList();
-            }
-
+            ICollection<ProjetoObj> pro = cliDao.ListarProjeto();
+            
             return pro;
         }
 
         public ICollection<ProjetoObj> ListarProjeto(int IdCliente)
         {
-            return ListarProjeto().Where(x => x.ClienteID == IdCliente).ToList();
+            return cliDao.ListarProjetoPorCliente(IdCliente);
         }
-
+        
         public string CalculaValorTotalServicos(List<ProjetoServicoObj> servicos, RegiaoProjeto regiao)
         {
             decimal total = 0;
             string moeda = UnidadeMonetaria(regiao);
-                        
+
             if (servicos != null)
             {
                 foreach (var item in servicos)
@@ -241,7 +305,7 @@ namespace ws.eng.dll
             }
 
             return moeda + string.Format("{0:N2}", total);
-            
+
         }
 
         public string UnidadeMonetaria(RegiaoProjeto regiao)
@@ -266,7 +330,7 @@ namespace ws.eng.dll
 
         public string StatusProjetos(List<ProjetoServicoObj> servicos)
         {
-            StatusServico menorStatus =  StatusServico.RevisãoFinalizada;
+            StatusServico menorStatus = StatusServico.RevisãoFinalizada;
             if (servicos != null)
             {
                 foreach (var item in servicos)

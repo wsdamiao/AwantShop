@@ -73,6 +73,8 @@ namespace ws.web.eng.Models
         public bool RememberMe { get; set; }
 
         public bool UserLoged { get; set; }
+
+        public ProjetoModel Projeto { get; set; }
     }
 
     public class LoginValidatorModel
@@ -94,7 +96,6 @@ namespace ws.web.eng.Models
         [DataType(DataType.Password)]
         [Display(Name = "Repetir Senha")]
         public string RepetirNovaSenha { get; set; }
-               
     }
 
     public class RegisterViewModel

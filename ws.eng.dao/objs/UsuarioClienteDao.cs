@@ -30,6 +30,7 @@ namespace ws.eng.dao
             objOut.Senha = obj.Senha;
             objOut.Token = obj.Token;
             objOut.Categoria = this.ListarUsuarioCategoria().Where(x => x.ID == obj.CategoriaID).FirstOrDefault();
+            objOut.CodigoValidacao = obj.CodValidacao;
 
             return objOut;
         }
@@ -45,6 +46,7 @@ namespace ws.eng.dao
             objOut.NomeCompleto = obj.NomeCompleto;
             objOut.Senha = obj.Senha;
             objOut.Token = obj.Token;
+            objOut.CodValidacao = obj.CodigoValidacao;
 
             return objOut;
         }
@@ -62,6 +64,9 @@ namespace ws.eng.dao
             objOut.TelContato3 = obj.TelContato3;
             objOut.UsuarioID = obj.UsuarioID.Value;
             objOut.Usuario = ListarUsuario().Where(x=> x.ID == objOut.UsuarioID).FirstOrDefault();
+            objOut.Cidade = obj.Cidade;
+            objOut.Estado = obj.Estado;
+            objOut.Pais = obj.Pais;
 
             //objOut.Endereco = new Endereco();
             //objOut.Endereco.Rua = obj.Logradouro;
@@ -82,6 +87,9 @@ namespace ws.eng.dao
             objOut.TelContato2 = obj.TelContato2;
             objOut.TelContato3 = obj.TelContato3;
             objOut.UsuarioID = obj.UsuarioID;
+            objOut.Cidade = obj.Cidade;
+            objOut.Estado = obj.Estado;
+            objOut.Pais = obj.Pais;
 
             //objOut.Endereco = new Endereco();
             //objOut.Endereco.Rua = obj.Logradouro;
@@ -106,6 +114,7 @@ namespace ws.eng.dao
             objOut.ValorMetroQuadradoAplicado = obj.VlMetroQuadradoBase;            
             objOut.DataCad = obj.DataCad.Value;
             objOut.TextoLivre = obj.TextoLivre;
+            objOut.EnderecoCompletoEmpreendimento = obj.EnderecoObra;
 
             return objOut;
         }
@@ -116,8 +125,7 @@ namespace ws.eng.dao
 
             objOut.ID = obj.ID;
             objOut.AreaID = (int)obj.Area;
-            objOut.ClienteID = obj.ClienteID;
-            //objOut.Cliente = ConverterObj(obj.Cliente);
+            objOut.ClienteID = obj.ClienteID;            
             objOut.LogradouroID = obj.logradouroID;
             objOut.PadraoID = (int)obj.PadraoAcabamento;
             objOut.ProjetoID = (int)obj.Projeto;
@@ -126,9 +134,79 @@ namespace ws.eng.dao
             objOut.VlMetroQuadradoBase = obj.ValorMetroQuadradoAplicado;            
             objOut.DataCad = obj.DataCad;
             objOut.TextoLivre = obj.TextoLivre;
+            objOut.EnderecoObra = obj.EnderecoCompletoEmpreendimento;
 
             return objOut;
         }
+
+        private ServicoObj ConverterObj(Servico obj)
+        {
+            ServicoObj objOut = new ServicoObj();
+
+            objOut.ID = obj.ID;
+            objOut.Ativo = obj.Ativo;            
+            objOut.Descricao = obj.Descricao;
+            objOut.IDPais = obj.IDPais;
+            objOut.IDServicoTipo = obj.IDTipoServico;
+            objOut.Nome = obj.Nome;
+            objOut.PossuiCidade = obj.PossuiCidade;            
+
+            return objOut;
+        }
+
+        private ServicoTipoObj ConverterObj(ServicoTipo obj)
+        {
+            ServicoTipoObj objOut = new ServicoTipoObj();
+
+            objOut.ID = obj.ID;
+            objOut.Descricao = obj.Descricao;
+            objOut.Nome = obj.Nome;
+            
+            return objOut;
+        }
+
+
+        //private ProjetoObj ConverterObj(Projeto obj)
+        //{
+        //    ProjetoObj objOut = new ProjetoObj();
+
+        //    objOut.ID = obj.ID;
+        //    objOut.Area = (AreaProjeto)obj.AreaID;
+        //    objOut.ClienteID = obj.ClienteID;
+        //    objOut.Cliente = ConverterObj(obj.Cliente);
+        //    objOut.logradouroID = obj.LogradouroID;
+        //    objOut.PadraoAcabamento = (PadraoProjeto)obj.PadraoID;
+        //    objOut.Projeto = (TipoProjeto)obj.ProjetoID;
+        //    objOut.Regiao = (RegiaoProjeto)obj.PaisID;
+        //    objOut.AreaPersonalizada = obj.AreaPersonalizada;
+        //    objOut.ValorMetroQuadradoAplicado = obj.VlMetroQuadradoBase;
+        //    objOut.DataCad = obj.DataCad.Value;
+        //    objOut.TextoLivre = obj.TextoLivre;
+
+        //    return objOut;
+        //}
+
+        //private Projeto ConverterObj(ProjetoObj obj)
+        //{
+        //    Projeto objOut = new Projeto();
+
+        //    objOut.ID = obj.ID;
+        //    objOut.AreaID = (int)obj.Area;
+        //    objOut.ClienteID = obj.ClienteID;
+        //    //objOut.Cliente = ConverterObj(obj.Cliente);
+        //    objOut.LogradouroID = obj.logradouroID;
+        //    objOut.PadraoID = (int)obj.PadraoAcabamento;
+        //    objOut.ProjetoID = (int)obj.Projeto;
+        //    objOut.PaisID = (int)obj.Regiao;
+        //    objOut.AreaPersonalizada = obj.AreaPersonalizada;
+        //    objOut.VlMetroQuadradoBase = obj.ValorMetroQuadradoAplicado;
+        //    objOut.DataCad = obj.DataCad;
+        //    objOut.TextoLivre = obj.TextoLivre;
+
+        //    return objOut;
+        //}
+
+
 
         private ProjetoServicoObj ConverterObj(ProjetoServico obj)
         {
@@ -141,6 +219,7 @@ namespace ws.eng.dao
             objOut.Projeto = ConverterObj(obj.Projeto);
             objOut.ProjetoID = obj.ProjetoID;
             objOut.ServicoID = obj.ServicoID;
+            //objOut.Servico = PopularSer;            
             objOut.Status = obj.Status;
             objOut.UsuarioID = obj.UsuarioID;
             objOut.Valor = obj.Valor;
@@ -246,6 +325,61 @@ namespace ws.eng.dao
             }
             return objOut;
         }
+
+        private List<ServicoObj> PopularListaObj(List<Servico> obj)
+        {
+            List<ServicoObj> objOut = new List<ServicoObj>();
+            foreach (var item in obj)
+            {
+                objOut.Add(ConverterObj(item));
+            }
+            return objOut;
+        }
+
+        private List<ServicoTipoObj> PopularListaObj(List<ServicoTipo> obj)
+        {
+            List<ServicoTipoObj> objOut = new List<ServicoTipoObj>();
+            foreach (var item in obj)
+            {
+                objOut.Add(ConverterObj(item));
+            }
+            return objOut;
+        }
+
+        private void PopularModel(ref Projeto model,ProjetoObj obj)
+        {
+            //model.ID = obj.ID;
+            model.AreaID = (int)obj.Area;
+            model.ClienteID = obj.ClienteID;
+            model.LogradouroID = obj.logradouroID;
+            model.PadraoID = (int)obj.PadraoAcabamento;
+            model.ProjetoID = (int)obj.Projeto;
+            model.PaisID = (int)obj.Regiao;
+            model.AreaPersonalizada = obj.AreaPersonalizada;
+            model.VlMetroQuadradoBase = obj.ValorMetroQuadradoAplicado;
+            model.DataCad = obj.DataCad;
+            model.TextoLivre = obj.TextoLivre;
+            model.EnderecoObra = obj.EnderecoCompletoEmpreendimento;            
+        }
+
+        private void PopularModel(ref ProjetoServico model, ProjetoServicoObj obj)
+        {
+            model.ID = obj.ID;
+            model.Data = obj.DataCad;
+            model.Descricao = obj.Descricao;
+            //model.FormaPgto = (FormaPgto)obj.FormaPgto.Value;
+            model.Projeto = ConverterObj(obj.Projeto);
+            model.ProjetoID = obj.ProjetoID;
+            model.ServicoID = obj.ServicoID;
+            //objOut.Servico = PopularSer;            
+            model.Status = obj.Status;
+            model.UsuarioID = obj.UsuarioID;
+            model.Valor = obj.Valor;
+            model.T = obj.T;
+            model.A = obj.A;
+            model.P = obj.P;
+            model.d = obj.d;
+        }
         #endregion
 
         public List<UsuarioObj> ListarUsuario()
@@ -258,14 +392,68 @@ namespace ws.eng.dao
             return PopularListaObj(ProEng.Clientes.ToList());
         }
 
-        public List<ProjetoObj> ListarProjeto()
+        public List<ProjetoObj> ListarProjetoPorCliente(int idCli)
         {
-            return PopularListaObj(ProEng.Projetoes.ToList());
+            List<ProjetoObj> r = PopularListaObj(ProEng.Projetoes.ToList().Where(x => x.ClienteID == idCli).ToList());
+
+            r = ComporProjeto(r);
+
+            return r;
         }
 
-        public List<ProjetoServicoObj> ListarProjetoServico()
+        
+        public List<ProjetoObj> ListarProjeto()
+        {
+            List <ProjetoObj> r = PopularListaObj(ProEng.Projetoes.ToList());
+
+            r = ComporProjeto(r);
+
+            return r;
+        }
+
+        private List<ProjetoObj> ComporProjeto(List<ProjetoObj> r)
+        {
+            foreach (var prj in r)
+            {
+                prj.Servicos = ListarProjetoServico().Where(x => x.ProjetoID == prj.ID).ToList();
+                prj.Cliente = ListarCliente().Where(x => x.ID == prj.ClienteID).FirstOrDefault();
+
+                foreach (var srv in prj.Servicos)
+                {
+                    srv.Servico = BuscarServico(srv.ServicoID);
+                }
+            }
+
+            return r;
+        }
+               
+
+        private List<ProjetoServicoObj> ListarProjetoServico()
         {
             return PopularListaObj(ProEng.ProjetoServicoes.ToList());
+        }
+
+        public List<ServicoObj> ListarServico()
+        {
+            return PopularListaObj(ProEng.Servicoes.ToList());
+        }
+
+        public List<ServicoTipoObj> ListarServicoTipo()
+        {
+            return PopularListaObj(ProEng.ServicoTipoes.ToList());
+        }
+
+        public ServicoObj BuscarServico(int Id)
+        {
+            ServicoObj r = ConverterObj(ProEng.Servicoes.Find(Id));
+            r.Tipo = BuscarServicoTipo(r.IDServicoTipo);
+
+            return r;
+        }
+
+        public ServicoTipoObj BuscarServicoTipo(int Id)
+        {
+            return ConverterObj(ProEng.ServicoTipoes.Find(Id));
         }
 
         public List<UsuarioCategoriaObj> ListarUsuarioCategoria()
@@ -323,25 +511,38 @@ namespace ws.eng.dao
                     if (obj.ID == 0)
                     {
                         ProEng.Projetoes.Add(objIn);
-                        ProEng.SaveChanges();
+                        //ProEng.SaveChanges();
                         
                         foreach (var item in obj.Servicos)
                         {
                             item.ProjetoID = objIn.ID;                            
                             ProEng.ProjetoServicoes.Add(ConverterObj(item));
-                            ProEng.SaveChanges();
+                            //ProEng.SaveChanges();
                         }
                     }
                     else
                     {
-                        ProEng.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+                        Projeto model = ProEng.Projetoes.Find(obj.ID);
+                        PopularModel(ref model, obj);
+                        ProEng.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        //ProEng.SaveChanges();
+
+                        List<ProjetoServico> listProSrv = ProEng.ProjetoServicoes.Where(x => x.ProjetoID == model.ID).ToList();
+                        foreach(var item in listProSrv)
+                        {
+                            ProjetoServico proser = ProEng.ProjetoServicoes.Find(item.ID);
+                            ProEng.Entry(proser).State = System.Data.Entity.EntityState.Deleted;
+                        }
 
                         foreach (var item in obj.Servicos)
                         {
-                            ProEng.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                            item.ProjetoID = objIn.ID;
+                            ProEng.ProjetoServicoes.Add(ConverterObj(item));
+                            //ProEng.SaveChanges();
                         }
                     }
-                   
+
+                    ProEng.SaveChanges();
                     dbContextTransaction.Commit();
                 }
                 catch (Exception ex)
@@ -378,6 +579,18 @@ namespace ws.eng.dao
             ProEng.Entry(obj).State = System.Data.Entity.EntityState.Modified;
             //ProEng.Projetoes.Remove(ConverterObj(obj));
             ProEng.SaveChanges();
+        }        
+
+        public void AtivarUsuario(int idUsu)
+        {
+            var usu = ProEng.Usuarios.Find(idUsu);
+
+            usu.Ativo = true;
+            usu.CodValidacao = string.Empty;
+
+            ProEng.Entry(usu).State = System.Data.Entity.EntityState.Modified;
+            ProEng.SaveChanges();
         }
+                
     }
 }

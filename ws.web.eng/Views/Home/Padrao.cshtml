@@ -6,10 +6,14 @@
 @using (Html.BeginForm("Padrao", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @*@Html.Hidden("_projetoP", ws.eng.dll.SerializationUtility.Serializable(Model))*@
-    @Html.Hidden("idRegiao", (int)Model.Regiao)
+    @*@Html.Hidden("idRegiao", (int)Model.Regiao)
     @Html.Hidden("CodMunicipio", Model.CodMunicipio)
     @Html.Hidden("idProjeto", (int)Model.Projeto)
     @Html.Hidden("idArea", (int)Model.Area)
+    @Html.Hidden("EnderecoCompletoEmpreendimento", Model.EnderecoCompletoEmpreendimento)
+    @Html.Hidden("DescricaoLivre", Model.DescricaoLivre)*@
+
+    @Html.Partial("_Percistencia")
 
     <br />
     <div class="row">
@@ -21,13 +25,52 @@
     <div class="row">
         <h1>Informe o <span style="color:red">padrão de acabamento</span> do seu projeto</h1>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_P" class="btt_PT" />
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Residencial)
+            {
+                <input type="submit" value="" name="BT_P" class="btt_RES" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Comercial)
+            {
+                <input type="submit" value="" name="BT_P" class="btt_COM" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Industrial)
+            {
+                <input type="submit" value="" name="BT_P" class="btt_IND" />
+            }
         </div>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_M" class="btt_RJ" />
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Residencial)
+            {
+                <input type="submit" value="" name="BT_M" class="btt_RESM" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Comercial)
+            {
+                <input type="submit" value="" name="BT_M" class="btt_COMM" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Industrial)
+            {
+                <input type="submit" value="" name="BT_M" class="btt_INDM" />
+            }
         </div>
         <div class="col-md-4">
-            <input type="submit" value="" name="BT_G" class="btt_BR" />
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Residencial)
+            {
+                <input type="submit" value="" name="BT_G" class="btt_RESG" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Comercial)
+            {
+                <input type="submit" value="" name="BT_G" class="btt_COMG" />
+            }
+
+            @if (Model.Projeto == ws.eng.obj.TipoProjeto.Industrial)
+            {
+                <input type="submit" value="" name="BT_G" class="btt_INDG" />
+            }
         </div>
     </div>
    

@@ -1,0 +1,74 @@
+﻿@using ws.web.eng.Models
+@model ConfirmarCadastroModel
+
+@{
+    ViewBag.Title = "ConfirmarCadastro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="row">
+    <div class="text-danger">
+        @ViewBag.Message
+    </div>
+</div>
+<br />
+<h2>Confirme o seu <span style="color:red">cadastro</span></h2>
+<h4>Informe abaixo o código recebido em seu e-mail cadastrado</h4>
+<div class="row">
+</div>
+<div class="row">
+
+    @using (Html.BeginForm("ConfirmarCadastro", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <fieldset>
+            @if (ViewBag.DigitarCpf)
+            {
+                <div class="col-md-3">
+                    <b>CPF/CNPJ</b>
+                </div>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Cpf_Cnpj, new { @class = "form-control" })
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3">
+                    <b>Nome</b>
+                </div>
+                <div class="col-md-9">
+                    @Model.Nome
+                </div>
+                <div class="col-md-3">
+                    <b>Cpf/CNPJ</b>
+                </div>
+                <div class="col-md-9">
+                    @Model.Cpf_Cnpj
+                    @Html.Hidden("Cpf_Cnpj", Model.Cpf_Cnpj)
+                </div>
+                <div class="col-md-3">
+                    <b>E-Mail</b>
+                </div>
+                <div class="col-md-9">
+                    @Model.Email
+                </div>
+            }
+            <div class="col-md-3">
+                <b>Codigo de confirmação</b>
+            </div>            
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.CodigoConfirmacao, new { @class = "form-control" })
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="row text-center">
+                <br /><br />
+                <input type="submit" value="Confirmar" name="BT_OK" class="btn btn-primary" />
+            </div>    
+        </fieldset>
+    }
+</div>
+
+
+
+

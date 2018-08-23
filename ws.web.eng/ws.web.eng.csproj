@@ -221,6 +221,7 @@
     <Content Include="Content\Image\btt_BR.png" />
     <Content Include="Content\Image\btt_PT.png" />
     <Content Include="Content\Image\btt_RJ.png" />
+    <Content Include="Content\Template\Email\ConfirmarCadastro.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -262,7 +263,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -318,6 +321,11 @@
     <Content Include="Views\Manager\DistanciaList.cshtml" />
     <Content Include="Views\Manager\PaisList.cshtml" />
     <Content Include="Views\Manager\Pais.cshtml" />
+    <Content Include="Views\Shared\_PercistenciaLogin.cshtml" />
+    <Content Include="Views\Home\Cadastro.cshtml" />
+    <Content Include="Views\Home\Personalizado.cshtml" />
+    <Content Include="Views\Shared\_Percistencia.cshtml" />
+    <Content Include="Views\Home\ConfirmarCadastro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,7 @@ using ws.eng.obj;
 
 namespace ws.web.eng.Controllers
 {
-    
+
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -24,7 +24,7 @@ namespace ws.web.eng.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +36,9 @@ namespace ws.web.eng.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -59,14 +59,26 @@ namespace ws.web.eng.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            LoginViewModel Model = new LoginViewModel();
+
+            Session["pagAtual"] = Paginas.Login;
+
             ViewBag.ReturnUrl = returnUrl;
+
+            //ViewBag.Novo = Session["Novo"];
+
+            //if (ViewBag.Novo)
+            //{                
+            //    Model.Projeto = new ProjetoModel();
+            //    Model.Projeto = (ProjetoModel)TempData["_projeto"];
+            //}
 
             if (returnUrl != null)
             {
                 return RedirectToAction("LogOff");
             }
 
-            return View();
+            return View(Model);
         }
 
         //
@@ -76,33 +88,18 @@ namespace ws.web.eng.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewBag.Orcamento = Session["_orcamento"];
+                                    
             UsuarioClienteDll usuDll = new UsuarioClienteDll();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-            // Isso não conta falhas de login em relação ao bloqueio de conta
-            // Para permitir que falhas de senha acionem o bloqueio da conta, altere para shouldLockout: true
-            //var result =  await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        //Session("usuario") = usuDll.BuscarUsuario()
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Tentativa de login inválida.");
-            //        return View(model);
-            //}
+            
 
             UsuarioObj usu = usuDll.ValidarAcesso(model.UserName, model.Password, model.RememberMe);
 
-            if(model.RememberMe)
+            if (model.RememberMe)
             {
 
             }
@@ -114,6 +111,12 @@ namespace ws.web.eng.Controllers
                     model.UserName = usu.NomeUsuario;
 
                     Session["usu"] = usu;
+
+                    if (ViewBag.Orcamento)
+                    {
+                        return RedirectToAction("Resumo", "Home");
+                    }
+
                     if (usu.Categoria.ID == 5)
                     {
                         model.ClienteName = usu.Cliente.Nome;
@@ -134,7 +137,7 @@ namespace ws.web.eng.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Tentativa de login inválida");                
+                ModelState.AddModelError("", "Tentativa de login inválida");
             }
 
             return View(model);
@@ -169,7 +172,7 @@ namespace ws.web.eng.Controllers
             // Se um usuário inserir códigos incorretos para uma quantidade especificada de tempo, então a conta de usuário 
             // será bloqueado por um período especificado de tempo. 
             // Você pode configurar os ajustes de bloqueio da conta em IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -204,8 +207,8 @@ namespace ws.web.eng.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar um email com este link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -487,7 +490,7 @@ namespace ws.web.eng.Controllers
 
             usu = usuDll.BuscarUsuario(int.Parse(TempData["UsuarioId"].ToString()));
 
-            if(usu.Ativo)
+            if (usu.Ativo)
             {
                 Session["usu"] = usu;
                 if (usu.Categoria.ID == 5)
@@ -527,7 +530,7 @@ namespace ws.web.eng.Controllers
                     usu.Ativo = true;
                     usu.Senha = model.NovaSenha;
 
-                    usuDll.AlterarUsuario(usu,true);
+                    usuDll.AlterarUsuario(usu, true);
 
                     Session["usu"] = usu;
                     if (usu.Categoria.ID == 5)

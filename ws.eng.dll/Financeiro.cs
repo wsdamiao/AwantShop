@@ -85,9 +85,9 @@ namespace ws.eng.dll
         public decimal Calcular(TipoProjeto tipo,
                                 AreaProjeto area,
                                 RegiaoProjeto regiao,
-                                PadraoProjeto padrao,
-                                ServicosProjeto Oferta,
-                                int idCidade = 0)
+                                PadraoProjeto padrao,                                
+                                int idCidade = 0,
+                                bool ProjetoArquitetonico = false)
         {
             decimal vlMetroQ, vlPercentual = 0;
 
@@ -98,21 +98,14 @@ namespace ws.eng.dll
 
             vlMetroQ = this.BuscarValorMetroQuadrado(regiao);
             
-            switch (Oferta)
+            if(ProjetoArquitetonico)
             {
-                case ServicosProjeto.ProjetoArquitetonico:
-                    vlPercentual = T * A * P;
-                    break;
-                case ServicosProjeto.ProjetoEletrico:
-                    vlPercentual = T * A * P * d;
-                    break;
-                case ServicosProjeto.ProjetoHidroSanitario:
-                    vlPercentual = T * A * P * d;
-                    break;
-                case ServicosProjeto.ProjetoExecutivo:
-                    vlPercentual = T * A * P * d;
-                    break;
+                vlPercentual = T * A * P;
             }
+            else
+            {
+                vlPercentual = T * A * P * d;
+            }            
 
             return vlMetroQ * vlPercentual;
         }

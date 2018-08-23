@@ -19,6 +19,9 @@ namespace ws.eng.obj
         public string CPF_CNPJ { get; set; }
         public UsuarioObj Usuario { get; set; }
         public Endereco Endereco { get; set; }
+        public string Pais { get; set; }
+        public string Estado { get; set; }
+        public string Cidade { get; set; }        
     }
 
     public class Endereco
@@ -39,6 +42,7 @@ namespace ws.eng.obj
         public Guid Token { get; set; }
         public ClienteObj Cliente { get; set; }
         public UsuarioCategoriaObj Categoria { get; set; }        
+        public string CodigoValidacao { get; set; }
     }
 
     public class UsuarioCategoriaObj
@@ -64,6 +68,7 @@ namespace ws.eng.obj
         public List<ProjetoServicoObj> Servicos { get; set; }
         public DateTime DataCad { get; set; }
         public string TextoLivre { get; set; }
+        public string EnderecoCompletoEmpreendimento { get; set; }
     }
 
     public class ProjetoServicoObj
@@ -79,12 +84,11 @@ namespace ws.eng.obj
         public UsuarioObj Usuario { get; set; }
         public FormaPgto FormaPagamento { get; set; }
         public ProjetoObj Projeto { get; set; }
+        public ServicoObj Servico { get; set; }
         public decimal? T { get; set; }
         public decimal? A { get; set; }
         public decimal? P { get; set; }
         public decimal? d { get; set; }
-    }
-
-    
+    }    
       
 }
