@@ -28,7 +28,7 @@ namespace ws.eng.dll
             Criptografia criptografia = new Criptografia(CryptProvider.TripleDES);
 
             string senha = obj.Senha;
-            string codValidacao = Gerador.Numero(4);
+            string codValidacao = "123456"; // Gerador.Numero(6);
 
             criptografia.Key = ws.eng.obj.DadosProjeto.CRIPTOGRAFIA;
 

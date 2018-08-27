@@ -112,7 +112,7 @@ namespace ws.web.eng.Controllers
 
                     Session["usu"] = usu;
 
-                    if (ViewBag.Orcamento)
+                    if (ViewBag.Orcamento != null)
                     {
                         return RedirectToAction("Resumo", "Home");
                     }
