@@ -339,6 +339,7 @@
     <Content Include="Views\Home\Personalizado.cshtml" />
     <Content Include="Views\Shared\_Percistencia.cshtml" />
     <Content Include="Views\Home\ConfirmarCadastro.cshtml" />
+    <Content Include="Views\Manager\ClientList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,81 @@
+﻿@model ICollection<ws.eng.obj.UsuarioObj>
+@{
+    ViewBag.Title = "Lista de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm("ClientList", "Manager", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <script type="text/javascript">
+        $(function () {
+            function DialogoExcluir() {
+                $("#dialogExcluir").dialog();
+            }
+        });
+    </script>
+
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+        <div class="h1">Clientes</div>
+        <table class="table">            
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.NomeCompleto</td>
+                        <td>@item.NomeUsuario</td>
+                        <td>@item.Categoria.Nome</td>                        
+                        <td>
+                            @if(item.Ativo)
+                            {
+                                <span>Ativo</span>
+                            }
+                            else
+                            {
+                                <span>Inativo</span>
+                            }
+                        </td>
+                        <td>                         
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Opções
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupop">
+                                    <li><a tabindex="-1" href="@Url.Action("User","Manager",new {id = item.ID })">Editar</a></li>
+                                    @if (item.CategoriaID != 1)
+                                    {
+                                    <li><a tabindex="-1" href="@Url.Action("UserIna", "Manager", new { id = item.ID })">Inativar</a></li>
+                                    }
+                                    <li><a tabindex="-1" href="@Url.Action("UserPassword","Manager",new {id = item.ID })">Resetar Senha</a></li>
+                                </div>
+                            </div>
+                                    
+                        </td>
+                    </tr>                   
+                }
+            </tbody>
+        </table>
+
+        @*<div id="dialogExcluir" title="Basic dialog">
+            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+        </div>*@
+
+}
+
