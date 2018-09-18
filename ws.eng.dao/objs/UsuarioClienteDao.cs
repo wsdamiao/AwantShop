@@ -512,12 +512,15 @@ namespace ws.eng.dao
                     {
                         ProEng.Projetoes.Add(objIn);
                         //ProEng.SaveChanges();
-                        
-                        foreach (var item in obj.Servicos)
+
+                        if (obj.Servicos != null)
                         {
-                            item.ProjetoID = objIn.ID;                            
-                            ProEng.ProjetoServicoes.Add(ConverterObj(item));
-                            //ProEng.SaveChanges();
+                            foreach (var item in obj.Servicos)
+                            {
+                                item.ProjetoID = objIn.ID;
+                                ProEng.ProjetoServicoes.Add(ConverterObj(item));
+                                //ProEng.SaveChanges();
+                            }
                         }
                     }
                     else
@@ -527,18 +530,21 @@ namespace ws.eng.dao
                         ProEng.Entry(model).State = System.Data.Entity.EntityState.Modified;
                         //ProEng.SaveChanges();
 
-                        List<ProjetoServico> listProSrv = ProEng.ProjetoServicoes.Where(x => x.ProjetoID == model.ID).ToList();
-                        foreach(var item in listProSrv)
+                        if (obj.Servicos != null)
                         {
-                            ProjetoServico proser = ProEng.ProjetoServicoes.Find(item.ID);
-                            ProEng.Entry(proser).State = System.Data.Entity.EntityState.Deleted;
-                        }
+                            List<ProjetoServico> listProSrv = ProEng.ProjetoServicoes.Where(x => x.ProjetoID == model.ID).ToList();
+                            foreach (var item in listProSrv)
+                            {
+                                ProjetoServico proser = ProEng.ProjetoServicoes.Find(item.ID);
+                                ProEng.Entry(proser).State = System.Data.Entity.EntityState.Deleted;
+                            }
 
-                        foreach (var item in obj.Servicos)
-                        {
-                            item.ProjetoID = objIn.ID;
-                            ProEng.ProjetoServicoes.Add(ConverterObj(item));
-                            //ProEng.SaveChanges();
+                            foreach (var item in obj.Servicos)
+                            {
+                                item.ProjetoID = objIn.ID;
+                                ProEng.ProjetoServicoes.Add(ConverterObj(item));
+                                //ProEng.SaveChanges();
+                            }
                         }
                     }
 

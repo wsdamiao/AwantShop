@@ -22,7 +22,8 @@ namespace ws.web.eng.Models
         Servicos,
         Personalizado,
         Login,
-        Confirmarcadastro
+        Confirmarcadastro,
+        Encerramento
     }
 
     [Serializable]

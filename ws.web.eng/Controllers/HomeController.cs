@@ -12,24 +12,7 @@ using ws.com.v2017;
 namespace ws.web.eng.Controllers
 {
     public class HomeController : Controller
-    {
-        //private ProjetoModel _projeto;
-
-        //protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    base.OnActionExecuting(filterContext);
-
-        //    _projeto = (SerializationUtility.Deserialize(Request.Form["_projeto"]) ?? TempData["_projeto"] ?? new ProjetoModel()) as ProjetoModel;
-        //    TryUpdateModel(_projeto);
-        //}
-
-        //protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        //{
-        //    base.OnActionExecuted(filterContext);
-
-        //    if (filterContext.Result is RedirectToRouteResult)
-        //        TempData["_projeto"] = _projeto;
-        //}
+    {       
 
         public ActionResult Index()
         {
@@ -207,7 +190,7 @@ namespace ws.web.eng.Controllers
                 Session["_projeto"] = model;
                 return RedirectToAction("Servicos");
             }
-            else if (Request.Form["BT_PER"] == "Projeto Personalizado")
+            else if (Request.Form["BT_PER"] == "")
             {
                 model.Area = AreaProjeto.Personalizado;
                 Session["_projeto"] = model;
@@ -324,7 +307,7 @@ namespace ws.web.eng.Controllers
             }
             if (Request.Form["BT_LOG"] == "Continuar e fazer seu login")
             {
-                Session["_orcamento"] = true;
+                TempData["_orcamento"] = true;
                 return RedirectToAction("Login", "Account");
             }
             else if (Request.Form["BT_PER"] == "Projeto Personalizado")
@@ -483,11 +466,18 @@ namespace ws.web.eng.Controllers
                 if (model.TelContato1 == null)
                     ViewBag.Message += "- Campo Contato Prefêrencial deve ser informado<br>";
                 if (ViewBag.Message == "")
-                {   
-                    if(Session["usu"] == null)
+                {
+                    if (Session["usu"] == null)
                         return RedirectToAction("ConfirmarCadastro");
                     else
-                        return RedirectToAction("resumo");
+                    {
+                        if ((Paginas)Session["_pagAnt"] == Paginas.Personalizado)
+                        {
+                            SalvarProjeto(model);
+                            return RedirectToAction("Encerramento");
+                        }else
+                            return RedirectToAction("resumo");
+                    }
                 }
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
@@ -515,75 +505,84 @@ namespace ws.web.eng.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
-            if (model.CodMunicipio != null)
-                model.CidadeID = logDll.BuscarMunicipio(model.CodMunicipio).ID;
+            if (TempData["_personalizado"] != null)
+            {
+                SalvarProjeto(model);
+                return RedirectToAction("Encerramento");
+            }
             else
-                model.CidadeID = 0;
-
-
-            model.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
-
-            foreach (var item in model.ServicosArquitetura)
             {
-                if (item.Selecionado)
+
+                if (model.CodMunicipio != null)
+                    model.CidadeID = logDll.BuscarMunicipio(model.CodMunicipio).ID;
+                else
+                    model.CidadeID = 0;
+
+
+                model.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
+
+                foreach (var item in model.ServicosArquitetura)
                 {
-                    //passa valor true para o parametro de projeto arquitetonico
-                    item.Valor = finDll.Calcular(model.Projeto,
-                                                    model.Area,
-                                                    model.Regiao,
-                                                    model.PadraoAcabamento,
-                                                    model.CidadeID,
-                                                    true);
+                    if (item.Selecionado)
+                    {
+                        //passa valor true para o parametro de projeto arquitetonico
+                        item.Valor = finDll.Calcular(model.Projeto,
+                                                        model.Area,
+                                                        model.Regiao,
+                                                        model.PadraoAcabamento,
+                                                        model.CidadeID,
+                                                        true);
 
-                    item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
+                        item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
 
-                    model.ValorProjetoTotal += item.Valor;
+                        model.ValorProjetoTotal += item.Valor;
+                    }
                 }
-            }
 
-            foreach (var item in model.ServicosEngenharia)
-            {
-                if (item.Selecionado)
+                foreach (var item in model.ServicosEngenharia)
                 {
-                    //passa valor true para o parametro de projeto de engenharia
-                    item.Valor = finDll.Calcular(model.Projeto,
-                                                    model.Area,
-                                                    model.Regiao,
-                                                    model.PadraoAcabamento,
-                                                    model.CidadeID,
-                                                    false);
-                    item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
+                    if (item.Selecionado)
+                    {
+                        //passa valor true para o parametro de projeto de engenharia
+                        item.Valor = finDll.Calcular(model.Projeto,
+                                                        model.Area,
+                                                        model.Regiao,
+                                                        model.PadraoAcabamento,
+                                                        model.CidadeID,
+                                                        false);
+                        item.ValorFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), item.Valor);
 
-                    model.ValorProjetoTotal += item.Valor;
+                        model.ValorProjetoTotal += item.Valor;
+                    }
                 }
+
+                model.ValorProjetoTotalFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoTotal);
+
+                if (Session["_orcamento"] != null)
+                {
+                    UsuarioObj usu = (UsuarioObj)Session["usu"];
+                    ClienteObj cli = usuCliDll.BuscarCliente(usu.Cliente.ID);
+
+                    model.Nome = cli.Nome;
+                    model.CpfCnpj = cli.CPF_CNPJ;
+                    model.Email = cli.Email;
+                    model.ClienteCidade = cli.Cidade;
+                    model.ClienteEstado = cli.Estado;
+                    model.ClientePais = cli.Pais;
+                    model.TelContato1 = cli.TelContato1;
+                    model.TelContato2 = cli.TelContato2;
+                    model.TelContato3 = cli.TelContato3;
+                }
+
+                Session["_projeto"] = model;
+
+                return View(model);
             }
-
-            model.ValorProjetoTotalFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoTotal);
-
-            if (Session["_orcamento"] != null)
-            {
-                UsuarioObj usu = (UsuarioObj)Session["usu"];
-                ClienteObj cli = usuCliDll.BuscarCliente(usu.Cliente.ID);
-
-                model.Nome = cli.Nome;
-                model.CpfCnpj = cli.CPF_CNPJ;
-                model.Email = cli.Email;
-                model.ClienteCidade = cli.Cidade;
-                model.ClienteEstado = cli.Estado;
-                model.ClientePais = cli.Pais;
-                model.TelContato1 = cli.TelContato1;
-                model.TelContato2 = cli.TelContato2;
-                model.TelContato3 = cli.TelContato3;
-            }
-
-            Session["_projeto"] = model;
-
-            return View(model);
         }
 
         [HttpPost]
         public ActionResult Resumo(ProjetoModel model)
-        {            
+        {
             UsuarioClienteDll cliDll = new UsuarioClienteDll();
             FinanceiroDll finDll = new FinanceiroDll();
 
@@ -622,7 +621,7 @@ namespace ws.web.eng.Controllers
             if (Request.Form["BT_PROX"] == "Enviar seu Projeto")
             {
                 SalvarProjeto(model);
-                return RedirectToAction("Financeiro");
+                return RedirectToAction("Encerramento");
             }
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
@@ -639,7 +638,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Personalizado;
 
-            ProjetoModel model = (ProjetoModel)TempData["_projeto"];
+            ProjetoModel model = (ProjetoModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -652,16 +651,25 @@ namespace ws.web.eng.Controllers
         {
             if (model == null)
                 return RedirectToAction("Index");
-
-
-            if (Request.Form["BT_PROX"] == "Continuar")
+                        
+            Session["_projeto"] = model;
+            if (Request.Form["BT_CON"] == "Continuar")
             {
-                TempData["Novo"] = true;
-                return RedirectToAction("Login", "Account");
+                SalvarProjeto(model);
+                return RedirectToAction("Encerramento");
             }
+            if (Request.Form["BT_PROX"] == "Continuar e fazer um novo cadastro")
+            {
+                return RedirectToAction("Formulario");
+            }
+            if (Request.Form["BT_LOG"] == "Continuar e fazer seu login")
+            {
+                Session["_personalizado"] = true;                
+                return RedirectToAction("Login", "Account");
+            }            
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Area");
             }
 
             return View(model);
@@ -690,6 +698,11 @@ namespace ws.web.eng.Controllers
         {
             ViewBag.Message = TempData["Message"];
 
+            return View();
+        }
+
+        public ActionResult Encerramento()
+        {
             return View();
         }
 
@@ -876,27 +889,36 @@ namespace ws.web.eng.Controllers
 
             DateTime dataCad = DateTime.Now;
 
+            if (Session["usu"] == null)
+            {
+                //popularUsuario
+                usu.NomeUsuario = model.CpfCnpj;
+                usu.CategoriaID = (int)CategoriaUsuario.Cliente;
+                usu.NomeCompleto = model.Nome;
 
-            //popularUsuario
-            usu.NomeUsuario = model.CpfCnpj;
-            usu.CategoriaID = (int)CategoriaUsuario.Cliente;
-            usu.NomeCompleto = model.Nome;
+                cliDll.CriarUsuario(usu, true);
 
-            cliDll.CriarUsuario(usu, true);
 
-            cli.Email = model.Email;
-            cli.CPF_CNPJ = model.CpfCnpj;
-            cli.Nome = model.Nome;
-            cli.TelContato1 = model.TelContato1;
-            cli.TelContato2 = model.TelContato2;
-            cli.TelContato3 = model.TelContato3;
-            cli.Pais = model.ClientePais;
-            cli.Estado = model.ClienteEstado;
-            cli.Cidade = model.ClienteCidade;
+                cli.Email = model.Email;
+                cli.CPF_CNPJ = model.CpfCnpj;
+                cli.Nome = model.Nome;
+                cli.TelContato1 = model.TelContato1;
+                cli.TelContato2 = model.TelContato2;
+                cli.TelContato3 = model.TelContato3;
+                cli.Pais = model.ClientePais;
+                cli.Estado = model.ClienteEstado;
+                cli.Cidade = model.ClienteCidade;
 
-            cliDll.SalvarCliente(cli);
+                cliDll.SalvarCliente(cli);
 
-            cli = cliDll.BuscarCliente(cli.CPF_CNPJ);
+                usu = cliDll.BuscarUsuario(model.CpfCnpj);
+            }
+            else
+            {
+                usu = (UsuarioObj)Session["usu"];
+            }
+
+            cli = cliDll.BuscarCliente(usu.NomeUsuario);
 
             pro.ID = model.Id;
             pro.Cliente = cli;
@@ -907,80 +929,83 @@ namespace ws.web.eng.Controllers
             pro.Area = model.Area;
             pro.PadraoAcabamento = model.PadraoAcabamento;
             pro.AreaPersonalizada = model.AreaPersonalizada;
-            pro.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
+            
             pro.DataCad = dataCad;
 
             pro.TextoLivre = model.TextoLivre;
-            pro.EnderecoCompletoEmpreendimento = model.EnderecoCompletoEmpreendimento;
+            pro.EnderecoCompletoEmpreendimento = model.EnderecoCompletoEmpreendimento;            
 
-            usu = cliDll.BuscarUsuario(cli.CPF_CNPJ);
-
-            pro.Servicos = new List<ProjetoServicoObj>();
-
-            foreach (var item in model.ServicosArquitetura)
+            if (model.Area != AreaProjeto.Personalizado)
             {
-                if (item.Selecionado)
+                pro.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
+
+                pro.Servicos = new List<ProjetoServicoObj>();
+
+                foreach (var item in model.ServicosArquitetura)
                 {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
+                    if (item.Selecionado)
+                    {
+                        ProjetoServicoObj ser = new ProjetoServicoObj();
 
-                    ser.ID = item.ProjetoServicoID;
-                    ser.ServicoID = (int)ServicosProjeto.ProjetoArquitetonico;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Descricao = item.Nome;
-                    ser.Valor = item.Valor;
+                        ser.ID = item.ProjetoServicoID;
+                        ser.ServicoID = (int)ServicosProjeto.ProjetoArquitetonico;
+                        ser.DataCad = dataCad;
+                        ser.FormaPagamento = FormaPgto.Boleto;
+                        ser.Status = (int)StatusServico.Criado;
+                        ser.Usuario = usu;
+                        ser.UsuarioID = usu.ID;
+                        ser.Descricao = item.Nome;
+                        ser.Valor = item.Valor;
 
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    model.CidadeID,
-                                    true);
+                        finDll.Calcular(model.Projeto,
+                                        model.Area,
+                                        model.Regiao,
+                                        model.PadraoAcabamento,
+                                        model.CidadeID,
+                                        true);
 
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
+                        ser.T = finDll.T;
+                        ser.P = finDll.P;
+                        ser.A = finDll.A;
+                        ser.d = finDll.D;
 
-                    pro.Servicos.Add(ser);
+                        pro.Servicos.Add(ser);
+                    }
+
                 }
 
-            }
-
-            foreach (var item in model.ServicosEngenharia)
-            {
-                if (item.Selecionado)
+                foreach (var item in model.ServicosEngenharia)
                 {
-                    ProjetoServicoObj ser = new ProjetoServicoObj();
+                    if (item.Selecionado)
+                    {
+                        ProjetoServicoObj ser = new ProjetoServicoObj();
 
-                    ser.ID = item.ProjetoServicoID;
-                    ser.ServicoID = item.ServicoID;
-                    ser.DataCad = dataCad;
-                    ser.FormaPagamento = FormaPgto.Boleto;
-                    ser.Status = (int)StatusServico.Criado;
-                    ser.Usuario = usu;
-                    ser.UsuarioID = usu.ID;
-                    ser.Descricao = item.Nome;
-                    ser.Valor = item.Valor;
+                        ser.ID = item.ProjetoServicoID;
+                        ser.ServicoID = item.ServicoID;
+                        ser.DataCad = dataCad;
+                        ser.FormaPagamento = FormaPgto.Boleto;
+                        ser.Status = (int)StatusServico.Criado;
+                        ser.Usuario = usu;
+                        ser.UsuarioID = usu.ID;
+                        ser.Descricao = item.Nome;
+                        ser.Valor = item.Valor;
 
-                    finDll.Calcular(model.Projeto,
-                                    model.Area,
-                                    model.Regiao,
-                                    model.PadraoAcabamento,
-                                    model.CidadeID,
-                                    false);
+                        finDll.Calcular(model.Projeto,
+                                        model.Area,
+                                        model.Regiao,
+                                        model.PadraoAcabamento,
+                                        model.CidadeID,
+                                        false);
 
-                    ser.T = finDll.T;
-                    ser.P = finDll.P;
-                    ser.A = finDll.A;
-                    ser.d = finDll.D;
+                        ser.T = finDll.T;
+                        ser.P = finDll.P;
+                        ser.A = finDll.A;
+                        ser.d = finDll.D;
 
-                    pro.Servicos.Add(ser);
+                        pro.Servicos.Add(ser);
+                    }
+
                 }
-
             }
 
             cliDll.SalvarProjeto(pro);

@@ -88,8 +88,10 @@ namespace ws.web.eng.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            ViewBag.Orcamento = Session["_orcamento"];
-                                    
+            ViewBag.Orcamento = TempData["_orcamento"];
+            ViewBag.Personalizado = Session["_personalizado"];
+            Session["_personalizado"] = null;
+
             UsuarioClienteDll usuDll = new UsuarioClienteDll();
             if (!ModelState.IsValid)
             {
@@ -111,6 +113,12 @@ namespace ws.web.eng.Controllers
                     model.UserName = usu.NomeUsuario;
 
                     Session["usu"] = usu;
+
+                    if (ViewBag.Personalizado != null)
+                    {
+                        TempData["_personalizado"] = true;
+                        ViewBag.Orcamento = true;
+                    }
 
                     if (ViewBag.Orcamento != null)
                     {

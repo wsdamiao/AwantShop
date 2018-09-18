@@ -45,8 +45,8 @@
         </div>
         <div class="row">
             <div class="form-group">
-                @Html.LabelFor(x => x.DescricaoLivre)
-                @Html.TextAreaFor(x => x.DescricaoLivre, new { @class = "form-control", @maxlength = "250", @rows = "5" })
+                @Html.LabelFor(x => x.TextoLivre)
+                @Html.TextAreaFor(x => x.TextoLivre, new { @class = "form-control", @maxlength = "250", @rows = "5" })
             </div>
         </div>
     </fieldset>
@@ -54,7 +54,15 @@
     <div class="row text-center">
         <br />
         <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
-        <input type="submit" value="Continuar" name="BT_PROX" class="btn btn-primary" />
+        @if (Session["usu"] == null)
+        {
+            <input type="submit" value="Continuar e fazer um novo cadastro" name="BT_PROX" class="btn btn-primary" />
+            <input type="submit" value="Continuar e fazer seu login" name="BT_LOG" class="btn btn-primary" />
+        }
+        else
+        {
+            <input type="submit" value="Continuar" name="BT_CON" class="btn btn-primary" />
+        }
 
     </div>
 }
