@@ -1,0 +1,85 @@
+﻿@model ws.web.eng.Models.PesquisarClienteViewModel
+@{
+    ViewBag.Title = "Lista de Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm("Index", "Client", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <script type="text/javascript">
+        $(function () {
+            function DialogoExcluir() {
+                $("#dialogExcluir").dialog();
+            }
+        });
+    </script>
+
+    <br />
+    <div class="row">
+        <div class="has-error">
+            @ViewBag.Message
+        </div>
+    </div>
+    <br />
+    <div class="h1">Clientes</div>
+    <br />
+    <div class="container-fluid">
+        <fieldset>
+            <legend>Informe abaixo os dados para pesquisa</legend>
+            <div class="row">
+                @Html.RadioButtonFor(x => x.PesquisaPor,"C") CPF/CNPJ  @Html.RadioButtonFor(x => x.PesquisaPor, "N") Nome do Cliente
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">                        
+                        @Html.TextBoxFor(x => x.ValorPesquisa, new { @class = "form-control" }) <input type="submit" value="Pesquisar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">E-Mail</th>
+                                <th scope="col">CPF/CNPJ</th>
+                                <th scope="col">País</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Clientes)
+                            {
+                                <tr>
+
+                                    <td>@item.Nome</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.CPF_CNPJ</td>
+                                    <td>@item.Pais</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupop" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Opções
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="btnGroupop">
+                                                <li><a tabindex="-1" href="@Url.Action("Edit","Client",new {id = item.ID })">Editar</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("Details", "Client", new { id = item.ID })">Detalhe</a></li>
+                                                <li><a tabindex="-1" href="@Url.Action("Index","Home",new {clienteId = item.ID })">Orçar para o cliente</a></li>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @*<div id="dialogExcluir" title="Basic dialog">
+                        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+                    </div>*@
+
+                    }
+

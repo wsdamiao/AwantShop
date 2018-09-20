@@ -31,6 +31,8 @@ namespace ws.web.eng.Models
     {
         public int Id { get; set; }
 
+        public int ClienteId { get; set; }
+
         [Display(Name = "Região")]
         public RegiaoProjeto Regiao { get; set; }
 

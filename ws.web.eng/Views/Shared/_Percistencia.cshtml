@@ -5,9 +5,10 @@
 
 @{
 
-    //if ((Paginas)Session["pagAtual"] == Paginas.Confirmarcadastro)
+    //if ((Paginas)Session["pagAtual"] == Paginas.Index)
     //{
         @Html.Hidden("Id", (int)Model.Id)
+        @Html.Hidden("ClienteId", (int)Model.ClienteId)
     //}
 
     if ((Paginas)Session["pagAtual"] != Paginas.Area)

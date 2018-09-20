@@ -14,11 +14,16 @@ namespace ws.web.eng.Controllers
     public class HomeController : Controller
     {       
 
-        public ActionResult Index()
+        public ActionResult Index(int clienteId = 0)
         {
             Session["pagAtual"] = Paginas.Index;
 
             ProjetoModel model = new ProjetoModel();
+
+            model.ClienteId = clienteId;
+
+            if (model.ClienteId > 0) Session["_projeto"] = model;
+
             ViewBag.MsgErro = "";
             //model.Municipios = PopularCidades("RJ");
 
@@ -28,6 +33,11 @@ namespace ws.web.eng.Controllers
         [HttpPost]
         public ActionResult Index(ProjetoModel model)
         {
+            ProjetoModel modelAux = (ProjetoModel)Session["_projeto"];
+
+            if (modelAux != null)
+                model.ClienteId = modelAux.ClienteId;
+
             if (Request.Form["BT_PT"] == "")
             {
                 model.Regiao = RegiaoProjeto.Portugal;
@@ -107,6 +117,7 @@ namespace ws.web.eng.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
 
             if (Request.Form["BT_R"] == "")
@@ -168,6 +179,7 @@ namespace ws.web.eng.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.PadraoAcabamento = (PadraoProjeto)int.Parse(Request.Form["idPadrao"].ToString());
@@ -285,6 +297,7 @@ namespace ws.web.eng.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
             model.Id = (int)int.Parse(Request.Form["Id"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
@@ -444,6 +457,7 @@ namespace ws.web.eng.Controllers
             if (model == null)
                 return RedirectToAction("Index");
 
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.Area = (AreaProjeto)int.Parse(Request.Form["idArea"].ToString());
@@ -593,7 +607,8 @@ namespace ws.web.eng.Controllers
 
             DateTime dataCad = DateTime.Now;
 
-            model.Id = (int)int.Parse(Request.Form["Id"].ToString());
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
+            model.Id = int.Parse(Request.Form["Id"].ToString());
             model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
             model.Projeto = (TipoProjeto)int.Parse(Request.Form["idProjeto"].ToString());
             model.Area = (AreaProjeto)int.Parse(Request.Form["idArea"].ToString());
@@ -918,7 +933,10 @@ namespace ws.web.eng.Controllers
                 usu = (UsuarioObj)Session["usu"];
             }
 
-            cli = cliDll.BuscarCliente(usu.NomeUsuario);
+            if (model.ClienteId > 0)
+                cli = cliDll.BuscarCliente(model.ClienteId);
+            else
+                cli = cliDll.BuscarCliente(usu.NomeUsuario);
 
             pro.ID = model.Id;
             pro.Cliente = cli;

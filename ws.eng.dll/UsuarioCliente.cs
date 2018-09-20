@@ -209,6 +209,36 @@ namespace ws.eng.dll
             return true;
         }
 
+        public List<ClienteObj> Listar()
+        {
+            return cliDao.ListarCliente();
+        }
+
+        public List<ClienteObj> Listar(int qtd)
+        {
+            return cliDao.ListarCliente().OrderByDescending(x => x.ID).Take(qtd).ToList();
+        }
+
+        public List<ClienteObj> ListarPor(string tipo, string valor)
+        {
+            List<ClienteObj> resultado = new List<ClienteObj>();
+
+            switch (tipo)
+            {
+                case "C":
+                    resultado = cliDao.ListarCliente().Where(x => x.CPF_CNPJ == valor).OrderBy(x => x.Nome).ToList();
+                    break;
+                case "N":
+                    resultado = cliDao.ListarCliente().Where(x => x.Nome.Contains(valor)).OrderBy(x=> x.Nome).ToList();
+                    break;
+                default:
+                    resultado = new List<ClienteObj>();
+                    break;
+            }
+
+            return resultado;
+        }
+
         #endregion
 
         #region Projeto

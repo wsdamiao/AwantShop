@@ -103,16 +103,15 @@
             <div class="row text-center">
                 <br />
                 <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
-@if (Session["usu"] == null)
-{
+                @if (Session["usu"] == null || Model.ClienteId == 0)
+                {
                 <input type="submit" value="Continuar e fazer um novo cadastro" name="BT_PROX" class="btn btn-primary" />
                 <input type="submit" value="Continuar e fazer seu login" name="BT_LOG" class="btn btn-primary" />
-}
-else
-{
+                }
+                else
+                {
                 <input type="submit" value="Continuar" name="BT_CON" class="btn btn-primary" />
-}
-
+                }
 
             </div>
 }

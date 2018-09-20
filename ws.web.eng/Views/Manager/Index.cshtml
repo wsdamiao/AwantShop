@@ -5,7 +5,8 @@
 }
 
 <h2>Administrar o Sistema</h2>
-<ul>    
+<ul> 
+    <li>@Html.ActionLink("Clientes", "Index", "Client", routeValues: null, htmlAttributes: new { title = "Orçamento para o Cliente" })</li>
     <li>@Html.ActionLink("Listar Usuários", "UserList", "Manager", routeValues: null, htmlAttributes: new { title = "Listar Usuários" })</li>
     <li>@Html.ActionLink("Distâncias Rodoviárias", "DistanciaList", "Manager", routeValues: null, htmlAttributes: new { title = "Distancia Rodoviária" })</li>
     <li>@Html.ActionLink("Países", "PaisList", "Manager", routeValues: null, htmlAttributes: new { title = "Países" })</li>

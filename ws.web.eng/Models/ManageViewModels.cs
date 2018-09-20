@@ -86,5 +86,11 @@ namespace ws.web.eng.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
-    
+
+    public class PesquisarClienteViewModel
+    {        
+        public string ValorPesquisa { get; set; }
+        public string PesquisaPor { get; set; }        
+        public List<ClienteObj> Clientes { get; set; }
+    }    
 }
