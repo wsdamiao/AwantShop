@@ -27,7 +27,7 @@ namespace ws.web.eng.Models
     }
 
     [Serializable]
-    public class ProjetoModel
+    public class SimuladorDeProjetoViewModel
     {
         public int Id { get; set; }
 

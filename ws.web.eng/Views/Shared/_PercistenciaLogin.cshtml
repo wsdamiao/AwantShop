@@ -7,6 +7,6 @@
 
     if ((Paginas)Session["pagAtual"] == Paginas.Login)
     {
-        @Html.Hidden("Projeto", (ProjetoModel)Model.Projeto)
+        @Html.Hidden("Projeto", (SimuladorDeProjetoViewModel)Model.Projeto)
     }
 }

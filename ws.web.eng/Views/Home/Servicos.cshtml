@@ -1,4 +1,4 @@
-﻿@model ws.web.eng.Models.ProjetoModel
+﻿@model ws.web.eng.Models.SimuladorDeProjetoViewModel
 @{
     ViewBag.Title = "Serviços";
    }
@@ -103,12 +103,13 @@
             <div class="row text-center">
                 <br />
                 <input type="submit" value="voltar" name="BT_VOLTAR" class="btn btn-primary" />
-                @if (Session["usu"] == null || Model.ClienteId == 0)
+                @if (Session["usu"] == null && Model.ClienteId == 0)
                 {
                 <input type="submit" value="Continuar e fazer um novo cadastro" name="BT_PROX" class="btn btn-primary" />
                 <input type="submit" value="Continuar e fazer seu login" name="BT_LOG" class="btn btn-primary" />
                 }
-                else
+                
+                @if (Session["usu"] != null || Model.ClienteId != 0)
                 {
                 <input type="submit" value="Continuar" name="BT_CON" class="btn btn-primary" />
                 }

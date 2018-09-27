@@ -85,6 +85,11 @@ namespace ws.eng.dao
 
         public decimal Buscarvalor(int idTipo, int idPais, int idCidade = 0)
         {
+            if (idTipo == 0)
+                return 0;
+            if (idPais == 0)
+                return 0;
+
             return ListarElementoValor().Where(x => x.ElementoID == idTipo && x.PaisID == idPais && x.Vigenciafim == null).FirstOrDefault().Valor;
         }
 

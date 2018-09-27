@@ -18,7 +18,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Index;
 
-            ProjetoModel model = new ProjetoModel();
+            SimuladorDeProjetoViewModel model = new SimuladorDeProjetoViewModel();
 
             model.ClienteId = clienteId;
 
@@ -31,9 +31,9 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(ProjetoModel model)
+        public ActionResult Index(SimuladorDeProjetoViewModel model)
         {
-            ProjetoModel modelAux = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel modelAux = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (modelAux != null)
                 model.ClienteId = modelAux.ClienteId;
@@ -65,7 +65,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Regiao;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -77,7 +77,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Regiao(ProjetoModel model)
+        public ActionResult Regiao(SimuladorDeProjetoViewModel model)
         {
             if (model.CodMunicipio != null)
             {
@@ -103,7 +103,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Projeto;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -112,7 +112,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Projeto(ProjetoModel model)
+        public ActionResult Projeto(SimuladorDeProjetoViewModel model)
         {
             if (model == null)
                 return RedirectToAction("Index");
@@ -165,7 +165,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Area;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -174,7 +174,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Area(ProjetoModel model)
+        public ActionResult Area(SimuladorDeProjetoViewModel model)
         {
             if (model == null)
                 return RedirectToAction("Index");
@@ -221,7 +221,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Padrao;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -230,7 +230,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Padrao(ProjetoModel model)
+        public ActionResult Padrao(SimuladorDeProjetoViewModel model)
         {
             if (model == null)
                 return RedirectToAction("Index");
@@ -276,7 +276,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Servicos;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -291,7 +291,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Servicos(ProjetoModel model)
+        public ActionResult Servicos(SimuladorDeProjetoViewModel model)
         {
 
             if (model == null)
@@ -337,7 +337,7 @@ namespace ws.web.eng.Controllers
 
         public ActionResult ConfirmarCadastro()
         {
-            ProjetoModel projeto = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel projeto = (SimuladorDeProjetoViewModel)Session["_projeto"];
             ConfirmarCadastroModel model = new ConfirmarCadastroModel();
             UsuarioObj usu = new UsuarioObj();
             UsuarioClienteDll usuCliDll = new UsuarioClienteDll();
@@ -422,7 +422,7 @@ namespace ws.web.eng.Controllers
                 }
                 else
                 {
-                    ProjetoModel pro = (ProjetoModel)Session["_projeto"];
+                    SimuladorDeProjetoViewModel pro = (SimuladorDeProjetoViewModel)Session["_projeto"];
                     pro.Id = usuCliDll.buscarUltimoIDProjetoPorChaveOuCpf(new Guid(),model.Cpf_Cnpj);
                     Session["_projeto"] = pro;
                 }
@@ -442,7 +442,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Formulario;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -451,7 +451,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Formulario(ProjetoModel model)
+        public ActionResult Formulario(SimuladorDeProjetoViewModel model)
         {
 
             if (model == null)
@@ -512,9 +512,9 @@ namespace ws.web.eng.Controllers
             LogradouroDll logDll = new LogradouroDll();
             UsuarioClienteDll usuCliDll = new UsuarioClienteDll();
 
-            ProjetoModel model = new ProjetoModel();
+            SimuladorDeProjetoViewModel model = new SimuladorDeProjetoViewModel();
 
-            model = (ProjetoModel)Session["_projeto"];
+            model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -595,7 +595,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Resumo(ProjetoModel model)
+        public ActionResult Resumo(SimuladorDeProjetoViewModel model)
         {
             UsuarioClienteDll cliDll = new UsuarioClienteDll();
             FinanceiroDll finDll = new FinanceiroDll();
@@ -653,7 +653,7 @@ namespace ws.web.eng.Controllers
         {
             Session["pagAtual"] = Paginas.Personalizado;
 
-            ProjetoModel model = (ProjetoModel)Session["_projeto"];
+            SimuladorDeProjetoViewModel model = (SimuladorDeProjetoViewModel)Session["_projeto"];
 
             if (model == null)
                 return RedirectToAction("Index");
@@ -662,11 +662,14 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Personalizado(ProjetoModel model)
+        public ActionResult Personalizado(SimuladorDeProjetoViewModel model)
         {
             if (model == null)
                 return RedirectToAction("Index");
-                        
+
+            model.ClienteId = int.Parse(Request.Form["ClienteId"].ToString());
+            model.Regiao = (RegiaoProjeto)int.Parse(Request.Form["idRegiao"].ToString());
+
             Session["_projeto"] = model;
             if (Request.Form["BT_CON"] == "Continuar")
             {
@@ -684,7 +687,7 @@ namespace ws.web.eng.Controllers
             }            
             else if (Request.Form["BT_VOLTAR"] == "voltar")
             {
-                return RedirectToAction("Area");
+                return RedirectToAction("Index");
             }
 
             return View(model);
@@ -697,7 +700,7 @@ namespace ws.web.eng.Controllers
         }
 
         [HttpPost]
-        public ActionResult Financeiro(ProjetoModel model)
+        public ActionResult Financeiro(SimuladorDeProjetoViewModel model)
         {
             return View();
         }
@@ -892,7 +895,7 @@ namespace ws.web.eng.Controllers
             return listaOut;
         }
 
-        private void SalvarProjeto(ProjetoModel model)
+        private void SalvarProjeto(SimuladorDeProjetoViewModel model)
         {
             UsuarioClienteDll cliDll = new UsuarioClienteDll();
             FinanceiroDll finDll = new FinanceiroDll();
@@ -973,9 +976,11 @@ namespace ws.web.eng.Controllers
                         ser.Usuario = usu;
                         ser.UsuarioID = usu.ID;
                         ser.Descricao = item.Nome;
-                        ser.Valor = item.Valor;
 
-                        finDll.Calcular(model.Projeto,
+                        if(item.Valor != 0)
+                            ser.Valor = item.Valor;
+                        else
+                            ser.Valor = finDll.Calcular(model.Projeto,
                                         model.Area,
                                         model.Regiao,
                                         model.PadraoAcabamento,
@@ -1029,9 +1034,9 @@ namespace ws.web.eng.Controllers
             cliDll.SalvarProjeto(pro);
         }
 
-        private ProjetoModel PopularProjectModel(ProjetoObj obj)
+        private SimuladorDeProjetoViewModel PopularProjectModel(ProjetoObj obj)
         {
-            ProjetoModel proj = new ProjetoModel();
+            SimuladorDeProjetoViewModel proj = new SimuladorDeProjetoViewModel();
 
             proj.Id = obj.ID;
             proj.Area = obj.Area;

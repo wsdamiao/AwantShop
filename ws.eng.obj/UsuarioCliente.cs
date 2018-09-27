@@ -69,6 +69,7 @@ namespace ws.eng.obj
         public DateTime DataCad { get; set; }
         public string TextoLivre { get; set; }
         public string EnderecoCompletoEmpreendimento { get; set; }
+        public int CidadeID { get; set; }
     }
 
     public class ProjetoServicoObj

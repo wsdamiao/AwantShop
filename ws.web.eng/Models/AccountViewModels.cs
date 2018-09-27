@@ -74,7 +74,7 @@ namespace ws.web.eng.Models
 
         public bool UserLoged { get; set; }
 
-        public ProjetoModel Projeto { get; set; }
+        public SimuladorDeProjetoViewModel Projeto { get; set; }
     }
 
     public class LoginValidatorModel

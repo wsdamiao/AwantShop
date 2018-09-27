@@ -9,7 +9,7 @@ using ws.eng.dll;
 
 namespace ws.web.eng.Controllers
 {
-    public class ClientController : Controller
+    public class ClienteController : Controller
     {
         // GET: Client
         public ActionResult Index()
@@ -32,7 +32,7 @@ namespace ws.web.eng.Controllers
         }
 
             // GET: Client/Details/5
-            public ActionResult Details(int id)
+            public ActionResult Detalhes(int id)
         {
             return View();
         }

@@ -69,8 +69,8 @@ namespace ws.web.eng.Controllers
 
             //if (ViewBag.Novo)
             //{                
-            //    Model.Projeto = new ProjetoModel();
-            //    Model.Projeto = (ProjetoModel)TempData["_projeto"];
+            //    Model.Projeto = new SimuladorDeSimuladorDeSimuladorDeSimuladorDeProjetoViewModel();
+            //    Model.Projeto = (SimuladorDeSimuladorDeSimuladorDeSimuladorDeProjetoViewModel)TempData["_projeto"];
             //}
 
             if (returnUrl != null)

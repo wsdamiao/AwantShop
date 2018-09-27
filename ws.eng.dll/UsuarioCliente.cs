@@ -321,22 +321,22 @@ namespace ws.eng.dll
             return cliDao.ListarProjetoPorCliente(IdCliente);
         }
         
-        public string CalculaValorTotalServicos(List<ProjetoServicoObj> servicos, RegiaoProjeto regiao)
-        {
-            decimal total = 0;
-            string moeda = UnidadeMonetaria(regiao);
+        //public string CalculaValorTotalServicos(List<ProjetoServicoObj> servicos, RegiaoProjeto regiao)
+        //{
+        //    decimal total = 0;
+        //    string moeda = UnidadeMonetaria(regiao);
 
-            if (servicos != null)
-            {
-                foreach (var item in servicos)
-                {
-                    total += item.Valor;
-                }
-            }
+        //    if (servicos != null)
+        //    {
+        //        foreach (var item in servicos)
+        //        {
+        //            total += item.Valor;
+        //        }
+        //    }
 
-            return moeda + string.Format("{0:N2}", total);
+        //    return moeda + string.Format("{0:N2}", total);
 
-        }
+        //}
 
         public string UnidadeMonetaria(RegiaoProjeto regiao)
         {

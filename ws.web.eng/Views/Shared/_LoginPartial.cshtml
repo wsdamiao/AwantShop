@@ -20,14 +20,25 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            @if (usu.CategoriaID == 5)
-            {
-                <li>@Html.ActionLink("Cliente: " + usu.NomeCompleto, "Index", "Dashboard", routeValues: null, htmlAttributes: new { title = "Seu Dashboard" })</li>
-            }
-            else
-            {
-                <li>@Html.ActionLink("Administrativo", "Index", "Manager", routeValues: null, htmlAttributes: new { title = "Gerenciamento" })</li>
-            }
+         @if (usu.CategoriaID == 5)
+         {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Bem Vindo(a), @usu.NomeCompleto
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @Html.ActionLink("Meus Projetos", "Index", "Projeto", routeValues: null, htmlAttributes: new { title = "Meus Projetos" })
+                    <a class="dropdown-item" href="#">Meus Dados</a>
+                    <a class="dropdown-item" href="#">Minhas Solicitações</a>
+                </div>
+            </li>
+        @*@Html.ActionLink("Cliente: " + usu.NomeCompleto, "Detalhes", "Cliente", routeValues: null, htmlAttributes: new { id = usu.ID, title = "Seu Dashboard" })*@
+        
+        }
+        else
+        {
+            <li>@Html.ActionLink("Administrativo", "Index", "Manager", routeValues: null, htmlAttributes: new { title = "Gerenciamento" })</li>
+        }
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Sair</a></li>
         </ul>
     }

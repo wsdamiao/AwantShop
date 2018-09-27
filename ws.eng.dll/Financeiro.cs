@@ -54,7 +54,7 @@ namespace ws.eng.dll
         }
 
         public decimal BuscarValorMetroQuadrado(RegiaoProjeto regiao)
-        {
+        {            
             LogradouroDao logDao = new LogradouroDao();
             return logDao.ListarPais().Where(x => x.ID == (int)regiao).FirstOrDefault().MetroQuadrado;
         }
