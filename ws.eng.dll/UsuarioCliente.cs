@@ -360,7 +360,7 @@ namespace ws.eng.dll
 
         public string StatusProjetos(List<ProjetoServicoObj> servicos)
         {
-            StatusServico menorStatus = StatusServico.RevisãoFinalizada;
+            StatusServico menorStatus = StatusServico.Criado;
             if (servicos != null)
             {
                 foreach (var item in servicos)

@@ -18,6 +18,7 @@ namespace ws.web.eng.Models
     public class ProjetoCustomizado
     {
         public string Id { get; set; }
+        public string TipoProj { get; set; }
         public string DescrProj { get; set; }
         public string Regiao { get; set; }
         public string Valor { get; set; }
@@ -33,4 +34,12 @@ namespace ws.web.eng.Models
         public string Status { get; set; }
         public string Pagamento { get; set; }
     }
+
+    public class AcompanharViewModel
+    {
+        public ProjetoAcompanharObj NovoAcompanhamento { get; set; }
+        public ProjetoObj Projeto { get; set; }
+        public List<ProjetoAcompanharObj> Historico { get; set; }
+    }
+    
 }

@@ -53,43 +53,6 @@ namespace ws.eng.obj
         public bool Ativo { get; set; }        
     }
 
-    public class ProjetoObj
-    {
-        public int ID { get; set; }
-        public int ClienteID { get; set; }
-        public int logradouroID { get; set; }
-        public ClienteObj Cliente{ get; set; }
-        public RegiaoProjeto Regiao { get; set; }
-        public TipoProjeto Projeto { get; set; }
-        public AreaProjeto Area { get; set; }
-        public PadraoProjeto PadraoAcabamento { get; set; }
-        public decimal? ValorMetroQuadradoAplicado { get; set; }        
-        public decimal? AreaPersonalizada { get; set; }
-        public List<ProjetoServicoObj> Servicos { get; set; }
-        public DateTime DataCad { get; set; }
-        public string TextoLivre { get; set; }
-        public string EnderecoCompletoEmpreendimento { get; set; }
-        public int CidadeID { get; set; }
-    }
-
-    public class ProjetoServicoObj
-    {
-        public int ID { get; set; }
-        public int ProjetoID { get; set; }
-        public int ServicoID { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime DataCad { get; set; }
-        public int Status { get; set; }
-        public string Descricao { get; set; }
-        public int UsuarioID { get; set; }
-        public UsuarioObj Usuario { get; set; }
-        public FormaPgto FormaPagamento { get; set; }
-        public ProjetoObj Projeto { get; set; }
-        public ServicoObj Servico { get; set; }
-        public decimal? T { get; set; }
-        public decimal? A { get; set; }
-        public decimal? P { get; set; }
-        public decimal? d { get; set; }
-    }    
+        
       
 }

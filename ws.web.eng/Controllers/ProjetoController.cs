@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ws.eng.dll;
 using ws.eng.obj;
 using ws.web.eng.Models;
+using ws.eng.dll;
 
 namespace ws.web.eng.Controllers
 {
@@ -40,6 +41,7 @@ namespace ws.web.eng.Controllers
 
                 tela.Id = item.ID.ToString().PadLeft(9, char.Parse("0"));
                 tela.Regiao = item.Regiao.ToString();
+                tela.TipoProj = item.Projeto.ToString();
                 tela.DescrProj = string.Format("Área: {0} | Tipo: {0} | Padrão: {0} ", item.Area.ToString(), item.Projeto.ToString(), item.PadraoAcabamento.ToString());
                 tela.Valor = finDll.Calcular(item.Projeto,
                                             item.Area,
@@ -158,6 +160,26 @@ namespace ws.web.eng.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Acompanhar (long Id)
+        {
+            if (Session["usu"] == null)
+                return RedirectToAction("index", "Home");
+
+            AcompanharViewModel model = new AcompanharViewModel();
+
+            model.Historico = new ProjetoAcompanharDll().ListarPorProjeto(Id);
+            model.Projeto = new ProjetoDll().Buscar(Id);
+            model.NovoAcompanhamento = new ProjetoAcompanharObj();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Acompanhar(int Id, ProjetoObj model)
+        {
+            return View();
         }
     }
 }

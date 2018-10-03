@@ -52,6 +52,7 @@
     <Compile Include="HistoricoServico.cs" />
     <Compile Include="LogDeErro.cs" />
     <Compile Include="Logradouro.cs" />
+    <Compile Include="Projeto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializationUtility.cs" />
     <Compile Include="ServicoDll.cs" />

@@ -52,24 +52,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetRole.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetRoleClaim.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUser.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserClaim.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserLogin.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AspNetUserToken.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
     <Compile Include="Cliente.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
@@ -87,6 +69,11 @@
     </Compile>
     <Compile Include="MensagemCliente.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelEng1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEng.edmx</DependentUpon>
     </Compile>
     <Compile Include="objs\ContatoDao.cs" />
     <Compile Include="objs\DistanciaRodoviariaDao.cs" />
@@ -110,11 +97,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelEng.edmx</DependentUpon>
     </Compile>
+    <Compile Include="objs\ProjetoDao.cs" />
     <Compile Include="objs\ServicoDao.cs" />
     <Compile Include="Pai.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
     <Compile Include="Projeto.cs">
+      <DependentUpon>ModelEng.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjetoAcompanhar.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
     <Compile Include="ProjetoCliUsu.cs">
@@ -136,9 +127,6 @@
     <Compile Include="ServicoTipo.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>ModelEng.tt</DependentUpon>
-    </Compile>
     <Compile Include="Usuario.cs">
       <DependentUpon>ModelEng.tt</DependentUpon>
     </Compile>
@@ -151,6 +139,7 @@
     <None Include="App.config" />
     <EntityDeploy Include="ModelEng.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelEng1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="ModelEng.edmx.diagram">
       <DependentUpon>ModelEng.edmx</DependentUpon>

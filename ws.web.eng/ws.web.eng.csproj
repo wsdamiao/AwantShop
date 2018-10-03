@@ -355,6 +355,7 @@
     <Content Include="Views\Usuario\Detalhe.cshtml" />
     <Content Include="Views\Projeto\Index.cshtml" />
     <Content Include="Views\Projeto\Detalhe.cshtml" />
+    <Content Include="Views\Projeto\Acompanhar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -137,20 +137,38 @@ namespace ws.eng.obj
 
     public enum StatusServico
     {
-        [Description("Serviço Criado. Em fila de espera")]
+        [Description("Serviço Criado. Aguardando análise")]
         Criado = 1,
-        [Description("Serviço lido pelo operador")]
-        Lido = 2,
-        [Description("Tentando contactar cliente/Aguardando Retorno")]
-        Contato = 3,
-        [Description("Serviço Iniciado")]
-        Iniciado = 4,
-        [Description("Enviado para o cliente")]
-        EnviadoCliente = 5,
+        [Description("Serviço analisado pelo Consultor")]
+        AnaliseConsultor = 2,
+        [Description("Tentando contactar cliente/Sem sucesso")]
+        ContatoSemSucesso = 3,
+        [Description("Contato efetuado com o cliente")]
+        ContatoComSucesso = 4,
+        [Description("Serviço Iniciado / Encaminhado para área técnica")]
+        Iniciado = 5,
+        [Description("Área Técnica necessita de informaçõess complementares")]
+        InformacaoComplementar = 6,
+        [Description("Obtida as informaçõess complementares / Encaminhado Área Técnica")]
+        RespostaInformacaoComplementar = 7,
+        [Description("Serviço Concluído pela Área Técnica")]
+        ServicoConcluidoAreaTecnica = 8,
+        [Description("Enviado para cliente")]
+        EnviadoCliente = 9,
         [Description("Cliente solicita Revisão")]
-        SolicitadaRevisão = 6,
-        [Description("Serviço Iniciado")]
-        RevisãoFinalizada = 7
+        ClienteSolicitaRevisao = 10,
+        [Description("Revisão concluída")]
+        RevisaoConcluida = 11,
+        [Description("Revisao finalizada")]
+        RevisaoFinalizada = 12,
+        [Description("Servico Finalizado")]
+        ServicoFinalizado = 13,
+        [Description("Servico Cancelado pelo cliente")]
+        ServicoCanceladoCliente = 14,
+        [Description("Servico em Andamento")]
+        ServicoEmAndamento = 15,
+        [Description("Servico Parado")]
+        ServicoParado = 16,
     }
 
     public enum StatusLoginAcesso

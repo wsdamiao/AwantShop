@@ -1,0 +1,56 @@
+﻿@using ws.web.eng.Models;
+@model ws.web.eng.Models.AcompanharViewModel
+@{
+    ViewBag.Title = "Acompanhar meus projetos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Formulario", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        <div class="text-warning">
+            @Html.Raw(ViewBag.Message)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <h2>Acompanhamento do projeto <span style="color:red;">@Model.Projeto.ID.ToString().PadLeft(9, char.Parse("0"))</span></h2>
+    </div>
+
+    <div class="container-fluid">
+        <fieldset>
+            <legend>Informações do projeto</legend>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <b>Tipo de Projeto: </b> @Model.Projeto.Projeto.ToString()
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <b>Região: </b> @Model.Projeto.Regiao.ToString()
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <b>Área: </b> @Model.Projeto.Area.ToString()
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <b>Acabamento: </b> @Model.Projeto.PadraoAcabamento.ToString()
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.NovoAcompanhamento.Texto)
+                        @Html.TextAreaFor(x => x.NovoAcompanhamento.Texto, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+}
+

@@ -12,13 +12,15 @@ namespace ws.eng.dao
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRoleClaim
+    public partial class ProjetoAcompanhar
     {
-        public int Id { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-        public string RoleId { get; set; }
-    
-        public virtual AspNetRole AspNetRole { get; set; }
+        public long ID { get; set; }
+        public long ProjetoID { get; set; }
+        public long ClienteID { get; set; }
+        public long ServicoID { get; set; }
+        public string Texto { get; set; }
+        public long UsuarioID { get; set; }
+        public int EstadoID { get; set; }
+        public System.DateTime Data { get; set; }
     }
 }
