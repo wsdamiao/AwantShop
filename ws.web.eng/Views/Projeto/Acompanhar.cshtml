@@ -45,8 +45,37 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        @Html.LabelFor(x => x.NovoAcompanhamento.Texto)
+                        @Html.Label("Nova interação")
                         @Html.TextAreaFor(x => x.NovoAcompanhamento.Texto, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Enviar" name="BT_OK" class="btn btn-primary" />
+            </div>
+        </fieldset>
+        <br />
+        <fieldset>
+            <legend>Histórico do projeto</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <b>Em: </b>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <b>Por: </b>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <b>Relatou: </b>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <b>Situação: </b>
                     </div>
                 </div>
             </div>
