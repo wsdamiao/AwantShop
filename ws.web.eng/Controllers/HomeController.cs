@@ -572,7 +572,7 @@ namespace ws.web.eng.Controllers
 
                 model.ValorProjetoTotalFormatado = string.Format("{0}{1:N2}", usuCliDll.UnidadeMonetaria(model.Regiao), model.ValorProjetoTotal);
 
-                if (Session["_orcamento"] != null)
+                if (Session["_orcamento"] != null && Session["usu"] != null)
                 {
                     UsuarioObj usu = (UsuarioObj)Session["usu"];
                     ClienteObj cli = usuCliDll.BuscarCliente(usu.Cliente.ID);
@@ -945,7 +945,7 @@ namespace ws.web.eng.Controllers
             pro.Cliente = cli;
             pro.ClienteID = cli.ID;
             pro.Regiao = model.Regiao;
-            pro.logradouroID = int.Parse(model.CodMunicipio == null ? "0" : model.CodMunicipio);
+            pro.LogradouroID = int.Parse(model.CodMunicipio == null ? "0" : model.CodMunicipio);
             pro.Projeto = model.Projeto;
             pro.Area = model.Area;
             pro.PadraoAcabamento = model.PadraoAcabamento;
@@ -958,7 +958,7 @@ namespace ws.web.eng.Controllers
 
             if (model.Area != AreaProjeto.Personalizado)
             {
-                pro.ValorMetroQuadradoAplicado = finDll.BuscarValorMetroQuadrado(model.Regiao);
+                pro.VlMetroQuadradoBase = finDll.BuscarValorMetroQuadrado(model.Regiao);
 
                 pro.Servicos = new List<ProjetoServicoObj>();
 

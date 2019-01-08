@@ -266,7 +266,7 @@ namespace ws.eng.dll
             objEncontrado = cliDao.ListarProjeto().Where(x => x.Area == obj.Area &&
             x.PadraoAcabamento == obj.PadraoAcabamento &&
             x.Projeto == obj.Projeto &&
-            x.logradouroID == obj.logradouroID &&
+            x.LogradouroID == obj.LogradouroID &&
             x.AreaPersonalizada == obj.AreaPersonalizada).FirstOrDefault();
 
             if (objEncontrado == null)

@@ -169,15 +169,76 @@ namespace ws.web.eng.Controllers
 
             AcompanharViewModel model = new AcompanharViewModel();
 
-            model.Historico = new ProjetoAcompanharDll().ListarPorProjeto(Id);
             model.Projeto = new ProjetoDll().Buscar(Id);
-            model.NovoAcompanhamento = new ProjetoAcompanharObj();
+            model.ProjetoSolicitacao = new ProjetoSolicitacaoDll().BuscarPorprojeto(Id);
+            model.SolicitacaoID = model.ProjetoSolicitacao.ID;
+            model.Historico = new List<HistoricoViewModel>();
+
+            foreach (var hist in new ProjetoSolicitacaoDll().ListarIteracoesPorSolicitacao(model.ProjetoSolicitacao.ID))
+            {
+                HistoricoViewModel obj = new HistoricoViewModel();
+
+                obj.Data = hist.Data;
+                obj.EstadoID = hist.EstadoID;
+                obj.LeituraRealizada = hist.LeituraRealizada;
+                obj.SolicitacaoID = hist.SolicitacaoID;
+                obj.Texto = hist.Texto;
+                obj.UsuarioID = hist.UsuarioID;
+
+                model.Historico.Add(obj);
+            }
+
+            foreach (var hist in new ProjetosStatusDll().ListarStatusPorprojeto(Id))
+            {
+                HistoricoViewModel obj = new HistoricoViewModel();
+
+                obj.Data = hist.DataStatus;
+                obj.EstadoID = hist.StatusID;
+                obj.LeituraRealizada = true;
+                obj.SolicitacaoID = 0;
+                obj.Texto = hist.Observacao;
+                obj.UsuarioID = hist.UsuarioID;
+
+                model.Historico.Add(obj);
+            }
+
+            model.Historico = model.Historico.OrderByDescending(x => x.Data).ToList();
+
+            model.ProjetoID = Id;
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Acompanhar(int Id, ProjetoObj model)
+        public ActionResult Acompanhar(long Id, AcompanharViewModel model)
+        {
+            if (Request.Form["BT_VOLTAR"] == "Voltar")
+            {
+                return RedirectToAction("Index");
+            }
+
+            ProjetoSolicitacaoIteracaoObj obj = new ProjetoSolicitacaoIteracaoObj();
+
+            model.Projeto = new ProjetoDll().Buscar(model.ProjetoID);
+
+            obj.SolicitacaoID = model.SolicitacaoID;
+            obj.Data = DateTime.Now;
+            obj.EstadoID = 1;            
+            obj.LeituraRealizada = false;
+            obj.UsuarioID = ((UsuarioObj)Session["usu"]).ID;            
+            obj.Texto = model.NovoAcompanhamento;
+
+            new ProjetoSolicitacaoDll().Incluir(obj);
+            return RedirectToAction("Acompanhar", new { Id = model.ProjetoID });
+        }
+
+        public ActionResult Informar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Informar(int Id)
         {
             return View();
         }

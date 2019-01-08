@@ -34,7 +34,12 @@ namespace ws.eng.dao
             objOut.Nome= obj.Nome;
             objOut.NomeOficial = obj.NomeOficial;
             objOut.Idioma = obj.Idioma;
-            objOut.MetroQuadrado = obj.MetroQuadrado.Value;
+
+            if (obj.MetroQuadrado != null)
+                objOut.MetroQuadrado = obj.MetroQuadrado.Value;
+            else
+                objOut.MetroQuadrado = 0;
+
             objOut.MoedaID = obj.MoedaID.Value;
 
             return objOut;

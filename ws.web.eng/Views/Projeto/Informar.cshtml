@@ -1,14 +1,12 @@
-﻿@using ws.web.eng.Models;
-@model ws.web.eng.Models.AcompanharViewModel
+﻿@model ws.web.eng.Models.InformarViewModel
 @{
-    ViewBag.Title = "Acompanhar meus projetos";
+    ViewBag.Title = "Informar Status do projeto";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}ProjetoID
 
-@using (Html.BeginForm("Acompanhar", "Projeto", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Informar", "Projeto", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.Hidden("ProjetoID", Model.ProjetoID);
-    @Html.Hidden("SolicitacaoID", Model.SolicitacaoID);
     <div class="row">
         <div class="text-warning">
             @Html.Raw(ViewBag.Message)
@@ -16,7 +14,7 @@
     </div>
     <br />
     <div class="row">
-        <h2>Acompanhamento do projeto <span style="color:red;">@Model.Projeto.ID.ToString().PadLeft(9, char.Parse("0"))</span></h2>
+        <h2>Informar Status do projeto <span style="color:red;">@Model.ProjetoID.ToString().PadLeft(9, char.Parse("0"))</span></h2>
     </div>
 
     <div class="container-fluid">
@@ -45,22 +43,28 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-1">
+                    @Html.DropDownListFor(m => m.StatusID, 
+                   new SelectList(Model.Status, "Id", "Nome"),
+                    "Selecione o Status")
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        @Html.Label("Nova interação")
-                        @Html.TextAreaFor(x => x.NovoAcompanhamento, new { @class = "form-control" })
+                        @Html.Label("Novo Informe")
+                        @Html.TextAreaFor(x => x.Observação, new { @class = "form-control" })
                     </div>
                 </div>
             </div>
             <div class="row">
                 <input type="submit" value="Enviar" name="BT_OK" class="btn btn-primary" />
-                <input type="submit" value="Voltar" name="BT_VOLTAR" class="btn btn-primary" />
             </div>
         </fieldset>
         <br />
         <fieldset>
             <legend>Histórico do projeto</legend>
-            @foreach (var item in Model.Historico)
+            @*@foreach (var item in Model.Historico)
             {
                 <div class="row">
                     <div class="col-md-12">
@@ -80,8 +84,9 @@
                         </div>
                     </div>
                 </div>
-            }
+            }*@
         </fieldset>
     </div>
 }
+
 

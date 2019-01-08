@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using ws.eng.obj;
 
 namespace ws.web.eng.Models
@@ -37,9 +38,32 @@ namespace ws.web.eng.Models
 
     public class AcompanharViewModel
     {
-        public ProjetoAcompanharObj NovoAcompanhamento { get; set; }
+        public long ProjetoID { get; set; }
+        public long SolicitacaoID { get; set; }
+        public String NovoAcompanhamento { get; set; }
         public ProjetoObj Projeto { get; set; }
-        public List<ProjetoAcompanharObj> Historico { get; set; }
+        public ProjetoSolicitacaoObj ProjetoSolicitacao { get; set; }
+        public List<HistoricoViewModel> Historico { get; set; }
     }
-    
+
+    public class InformarViewModel
+    {
+        public long ProjetoID { get; set; }
+        public int StatusID { get; set; }
+        public IEnumerable<SelectListItem> Status { get; set; }
+        public String Observação { get; set; }
+        public ProjetoObj Projeto { get; set; }        
+    }
+
+    public class HistoricoViewModel
+    {
+        public long SolicitacaoID { get; set; }
+        public DateTime Data { get; set; }
+        public long UsuarioID { get; set; }
+        public int EstadoID { get; set; }
+        public string Texto { get; set; }
+        public bool LeituraRealizada { get; set; }
+    }
+
+
 }

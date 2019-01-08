@@ -12,15 +12,13 @@ namespace ws.eng.dao
     using System;
     using System.Collections.Generic;
     
-    public partial class ProjetoAcompanhar
+    public partial class ProjetoSolicitacaoIteracao
     {
-        public long ID { get; set; }
-        public long ProjetoID { get; set; }
-        public long ClienteID { get; set; }
-        public long ServicoID { get; set; }
-        public string Texto { get; set; }
+        public long SolicitacaoID { get; set; }
+        public System.DateTime Data { get; set; }
         public long UsuarioID { get; set; }
         public int EstadoID { get; set; }
-        public System.DateTime Data { get; set; }
+        public string Texto { get; set; }
+        public bool leituraRealizada { get; set; }
     }
 }

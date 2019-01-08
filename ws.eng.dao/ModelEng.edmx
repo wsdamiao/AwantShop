@@ -21,7 +21,7 @@
           <Property Name="Cidade" Type="nvarchar" MaxLength="250" />
           <Property Name="Estado" Type="nvarchar" MaxLength="4" />
           <Property Name="CodPostal" Type="nvarchar" MaxLength="10" />
-          <Property Name="Pais" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pais" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DadosGerais">
           <Key>
@@ -60,6 +60,16 @@
           <Property Name="PaisID" Type="int" Nullable="false" />
           <Property Name="Valor" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="VigenciaFim" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProEng.dbo.IteracaoStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IteracaoStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Nome" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Logradouro">
           <Key>
@@ -112,19 +122,6 @@
           <Property Name="VlMetroQuadradoBase" Type="decimal" Precision="18" Scale="2" />
           <Property Name="EnderecoObra" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="ProjetoAcompanhar">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProjetoID" Type="bigint" Nullable="false" />
-          <Property Name="ClienteID" Type="bigint" Nullable="false" />
-          <Property Name="ServicoID" Type="bigint" Nullable="false" />
-          <Property Name="Texto" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="UsuarioID" Type="bigint" Nullable="false" />
-          <Property Name="EstadoID" Type="int" Nullable="false" />
-          <Property Name="Data" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="ProjetoServico">
           <Key>
             <PropertyRef Name="ID" />
@@ -142,6 +139,46 @@
           <Property Name="A" Type="decimal" Precision="18" Scale="2" />
           <Property Name="P" Type="decimal" Precision="18" Scale="2" />
           <Property Name="d" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProjetoSolicitacao">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjetoID" Type="bigint" Nullable="false" />
+          <Property Name="ClienteID" Type="bigint" Nullable="false" />
+          <Property Name="ServicoID" Type="bigint" Nullable="false" />
+          <Property Name="UsuarioID" Type="bigint" Nullable="false" />
+          <Property Name="EstadoID" Type="int" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Data" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjetoSolicitacaoIteracao">
+          <Key>
+            <PropertyRef Name="SolicitacaoID" />
+            <PropertyRef Name="Data" />
+          </Key>
+          <Property Name="SolicitacaoID" Type="bigint" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioID" Type="bigint" Nullable="false" />
+          <Property Name="EstadoID" Type="int" Nullable="false" />
+          <Property Name="Texto" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="leituraRealizada" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProEng.dbo.ProjetoStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProjetoStatus">
+          <Key>
+            <PropertyRef Name="DataStatus" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="DataStatus" Type="datetime" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="ProjetoID" Type="bigint" Nullable="false" />
+          <Property Name="UsuarioID" Type="bigint" Nullable="false" />
+          <Property Name="Observacao" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Servico">
           <Key>
@@ -221,6 +258,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoCliUsu' does not have a primary 
           <Property Name="AreaPersonalizada" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DataCad" Type="datetime" />
           <Property Name="VlMetroQuadradoBase" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EnderecoObra" Type="nvarchar" MaxLength="255" />
           <Property Name="UsuarioID" Type="int" Nullable="false" />
           <Property Name="Token" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -323,13 +361,29 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <EntitySet Name="MensagemCliente" EntityType="Self.MensagemCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projeto" EntityType="Self.Projeto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProjetoAcompanhar" EntityType="Self.ProjetoAcompanhar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjetoServico" EntityType="Self.ProjetoServico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjetoSolicitacao" EntityType="Self.ProjetoSolicitacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjetoSolicitacaoIteracao" EntityType="Self.ProjetoSolicitacaoIteracao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servico" EntityType="Self.Servico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServicoHistorico" EntityType="Self.ServicoHistorico" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServicoTipo" EntityType="Self.ServicoTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioCategoria" EntityType="Self.UsuarioCategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IteracaoStatus" EntityType="Self.IteracaoStatus" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IteracaoStatus].[ID] AS [ID], 
+    [IteracaoStatus].[Nome] AS [Nome]
+    FROM [dbo].[IteracaoStatus] AS [IteracaoStatus]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ProjetoStatus" EntityType="Self.ProjetoStatus" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProjetoStatus].[DataStatus] AS [DataStatus], 
+    [ProjetoStatus].[StatusID] AS [StatusID], 
+    [ProjetoStatus].[ProjetoID] AS [ProjetoID], 
+    [ProjetoStatus].[UsuarioID] AS [UsuarioID], 
+    [ProjetoStatus].[Observacao] AS [Observacao]
+    FROM [dbo].[ProjetoStatus] AS [ProjetoStatus]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ProjetoCliUsu" EntityType="Self.ProjetoCliUsu" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ProjetoCliUsu].[ID] AS [ID], 
@@ -343,6 +397,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
     [ProjetoCliUsu].[AreaPersonalizada] AS [AreaPersonalizada], 
     [ProjetoCliUsu].[DataCad] AS [DataCad], 
     [ProjetoCliUsu].[VlMetroQuadradoBase] AS [VlMetroQuadradoBase], 
+    [ProjetoCliUsu].[EnderecoObra] AS [EnderecoObra], 
     [ProjetoCliUsu].[UsuarioID] AS [UsuarioID], 
     [ProjetoCliUsu].[Token] AS [Token]
     FROM [dbo].[ProjetoCliUsu] AS [ProjetoCliUsu]</DefiningQuery>
@@ -428,7 +483,10 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <EntitySet Name="ServicoTipoes" EntityType="ProEngModel.ServicoTipo" />
           <EntitySet Name="ProjetoCliUsus" EntityType="ProEngModel.ProjetoCliUsu" />
           <EntitySet Name="ProjetoServicoSerTipoes" EntityType="ProEngModel.ProjetoServicoSerTipo" />
-          <EntitySet Name="ProjetoAcompanhars" EntityType="ProEngModel.ProjetoAcompanhar" />
+          <EntitySet Name="ProjetoSolicitacaos" EntityType="ProEngModel.ProjetoSolicitacao" />
+          <EntitySet Name="ProjetoSolicitacaoIteracaos" EntityType="ProEngModel.ProjetoSolicitacaoIteracao" />
+          <EntitySet Name="ProjetoStatus" EntityType="ProEngModel.ProjetoStatu" />
+          <EntitySet Name="IteracaoStatus" EntityType="ProEngModel.IteracaoStatu" />
           </EntityContainer>
         <EntityType Name="Logradouro">
           <Key>
@@ -535,7 +593,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <Property Name="Estado" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Name="CodPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Usuario" Relationship="ProEngModel.FK_Cliente_Usuario" FromRole="Cliente" ToRole="Usuario" />
-          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Projeto">
           <Key>
@@ -703,6 +761,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <Property Name="VlMetroQuadradoBase" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="UsuarioID" Type="Int32" Nullable="false" />
           <Property Name="Token" Type="Guid" Nullable="false" />
+          <Property Name="EnderecoObra" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProjetoServicoSerTipo">
           <Key>
@@ -731,7 +790,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <Property Name="d" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IDTipoServico" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="ProjetoAcompanhar">
+        <EntityType Name="ProjetoSolicitacao">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -739,10 +798,43 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <Property Name="ProjetoID" Type="Int64" Nullable="false" />
           <Property Name="ClienteID" Type="Int64" Nullable="false" />
           <Property Name="ServicoID" Type="Int64" Nullable="false" />
-          <Property Name="Texto" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="UsuarioID" Type="Int64" Nullable="false" />
           <Property Name="EstadoID" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ProjetoSolicitacaoIteracao">
+          <Key>
+            <PropertyRef Name="SolicitacaoID" />
+            <PropertyRef Name="Data" />
+          </Key>
+          <Property Name="SolicitacaoID" Type="Int64" Nullable="false" />
           <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioID" Type="Int64" Nullable="false" />
+          <Property Name="EstadoID" Type="Int32" Nullable="false" />
+          <Property Name="Texto" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="leituraRealizada" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjetoStatu">
+          <Key>
+            <PropertyRef Name="DataStatus" />
+            <PropertyRef Name="StatusID" />
+            <PropertyRef Name="ProjetoID" />
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="DataStatus" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="ProjetoID" Type="Int64" Nullable="false" />
+          <Property Name="UsuarioID" Type="Int64" Nullable="false" />
+          <Property Name="Observacao" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="IteracaoStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Nome" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -946,6 +1038,7 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
           <EntitySetMapping Name="ProjetoCliUsus">
             <EntityTypeMapping TypeName="ProEngModel.ProjetoCliUsu">
               <MappingFragment StoreEntitySet="ProjetoCliUsu">
+                <ScalarProperty Name="EnderecoObra" ColumnName="EnderecoObra" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
                 <ScalarProperty Name="VlMetroQuadradoBase" ColumnName="VlMetroQuadradoBase" />
@@ -982,16 +1075,47 @@ warning 6002: The table/view 'ProEng.dbo.ProjetoServicoSerTipo' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProjetoAcompanhars">
-            <EntityTypeMapping TypeName="ProEngModel.ProjetoAcompanhar">
-              <MappingFragment StoreEntitySet="ProjetoAcompanhar">
+          <EntitySetMapping Name="ProjetoSolicitacaos">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoSolicitacao">
+              <MappingFragment StoreEntitySet="ProjetoSolicitacao">
                 <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="EstadoID" ColumnName="EstadoID" />
                 <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
-                <ScalarProperty Name="Texto" ColumnName="Texto" />
                 <ScalarProperty Name="ServicoID" ColumnName="ServicoID" />
                 <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
                 <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjetoSolicitacaoIteracaos">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoSolicitacaoIteracao">
+              <MappingFragment StoreEntitySet="ProjetoSolicitacaoIteracao">
+                <ScalarProperty Name="leituraRealizada" ColumnName="leituraRealizada" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+                <ScalarProperty Name="EstadoID" ColumnName="EstadoID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="SolicitacaoID" ColumnName="SolicitacaoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjetoStatus">
+            <EntityTypeMapping TypeName="ProEngModel.ProjetoStatu">
+              <MappingFragment StoreEntitySet="ProjetoStatus">
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ProjetoID" ColumnName="ProjetoID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="DataStatus" ColumnName="DataStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IteracaoStatus">
+            <EntityTypeMapping TypeName="ProEngModel.IteracaoStatu">
+              <MappingFragment StoreEntitySet="IteracaoStatus">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

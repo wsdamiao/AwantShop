@@ -34,7 +34,9 @@ namespace ws.eng.dll
 
         public ProjetoObj Buscar(long ID)
         {
-            return dao.Buscar(ID);
+            ProjetoObj obj = dao.Buscar(ID);
+            obj.Cliente = new UsuarioClienteDao().ListarCliente().Where(x => x.ID == obj.ClienteID).FirstOrDefault();
+            return obj;
         }
 
         public List<ProjetoObj> ListarPorCliente(int ID)
@@ -58,21 +60,26 @@ namespace ws.eng.dll
         }
     }
 
-    public class ProjetoAcompanharDll
+    public class ProjetoSolicitacaoDll
     {
-        ProjetoAcompanharDao dao;
+        ProjetoSolicitacaoDao dao;
 
-        public ProjetoAcompanharDll()
+        public ProjetoSolicitacaoDll()
         {
-            dao = new ProjetoAcompanharDao();
+            dao = new ProjetoSolicitacaoDao();
         }
 
-        public bool Incluir(ProjetoAcompanharObj obj)
+        public bool Incluir(ProjetoSolicitacaoObj obj)
         {            
             return dao.Incluir(obj);            
         }
 
-        public bool Alterar(ProjetoAcompanharObj obj)
+        public bool Incluir(ProjetoSolicitacaoIteracaoObj obj)
+        {
+            return dao.Incluir(obj);
+        }
+
+        public bool Alterar(ProjetoSolicitacaoObj obj)
         {
             return dao.Alterar(obj);
         }
@@ -82,44 +89,126 @@ namespace ws.eng.dll
             return dao.Excluir(ID);
         }
 
-        public ProjetoAcompanharObj Buscar(int ID)
+        public ProjetoSolicitacaoObj Buscar(int ID)
         {
             return dao.Buscar(ID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorCliente(int ID)
+        public ProjetoSolicitacaoObj BuscarPorprojeto(long ProjetoID)
+        {
+            return dao.ListarPorProjeto(ProjetoID).FirstOrDefault();
+        }
+
+        public List<ProjetoSolicitacaoObj> ListarPorCliente(int ID)
         {
             return dao.ListarPorCliente(ID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorUsuario(int ID)
+        public List<ProjetoSolicitacaoObj> ListarPorUsuario(int ID)
         {
             return dao.ListarPorUsuario(ID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorEstado(int ID)
+        public List<ProjetoSolicitacaoObj> ListarPorEstado(int ID)
         {
             return dao.ListarPorEstado(ID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorUsuarioEstado(int usuarioID, long estadoID)
+        public List<ProjetoSolicitacaoObj> ListarPorUsuarioEstado(int usuarioID, long estadoID)
         {
             return dao.ListarPorUsuarioEstado(usuarioID, estadoID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorProjeto(long projetoID, int usuarioID)
+        public List<ProjetoSolicitacaoObj> ListarPorProjeto(long projetoID, int usuarioID)
         {
             return dao.ListarPorProjeto(projetoID, usuarioID);
         }
 
-        public List<ProjetoAcompanharObj> ListarPorProjeto(long projetoID)
+        public List<ProjetoSolicitacaoObj> ListarPorProjeto(long projetoID)
         {
-            return dao.ListarPorProjeto(projetoID);
+            List<ProjetoSolicitacaoObj> obj = dao.ListarPorProjeto(projetoID);
+
+            //foreach(var item in obj)
+            //    item.Usuario = new UsuarioClienteDll().ListarUsuario().Where(x => x.ID == item.UsuarioID).FirstOrDefault();
+
+            return obj;
         }
 
-        public List<ProjetoAcompanharObj> ListarPorServico(long servicoID, int usuarioID)
+        public List<ProjetoSolicitacaoObj> ListarPorServico(long servicoID, int usuarioID)
         {
             return dao.ListarPorServico(servicoID, usuarioID);
         }
+
+        public List<ProjetoSolicitacaoIteracaoObj> ListarIteracoesPorSolicitacao(long solicitacaoID)
+        {
+            return dao.ListarIteracoesPorSolicitacao(solicitacaoID);
+        }
+        
+
+    }
+
+    public class ProjetosStatusDll
+    {
+        ProjetoStatusDao dao;
+
+        public ProjetosStatusDll()
+        {
+            dao = new ProjetoStatusDao();
+        }
+
+        #region ProjetoStatus
+
+        public bool Incluir(ProjetoStatusObj obj)
+        {
+            return dao.Incluir(obj);
+        }
+
+        public bool Alterar(ProjetoStatusObj obj)
+        {           
+            return dao.Alterar(obj);
+        }
+
+        public bool ExcluirStatus(long ID)
+        {
+            return ExcluirStatus(ID);
+        }
+
+        public ProjetoStatusObj BuscarStatus(int ID)
+        {
+            return dao.BuscarStatus(ID);
+        }
+
+        public List<ProjetoStatusObj> ListarStatusPorprojeto(long ProjetoID)
+        {
+            return dao.ListarStatusPorprojeto(ProjetoID);
+        }
+
+        public ProjetoStatusObj UltimoStatus(int ProjetoID)
+        {
+            return dao.UltimoStatus(ProjetoID);
+        }
+
+        #endregion
+    }
+
+    public class IteracaoStatusDll
+    {
+        IteracaoStatusDao dao;
+
+        public IteracaoStatusDll()
+        {
+            dao = new IteracaoStatusDao();
+        }
+
+        public IteracaoStatusObj Buscar(int ID)
+        {
+            return dao.Buscar(ID);
+        }
+
+        public List<IteracaoStatusObj> Listar()
+        {
+            return dao.Listar();
+        }
+
     }
 }

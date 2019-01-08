@@ -42,6 +42,9 @@ namespace ws.eng.dao
         public virtual DbSet<ServicoTipo> ServicoTipoes { get; set; }
         public virtual DbSet<ProjetoCliUsu> ProjetoCliUsus { get; set; }
         public virtual DbSet<ProjetoServicoSerTipo> ProjetoServicoSerTipoes { get; set; }
-        public virtual DbSet<ProjetoAcompanhar> ProjetoAcompanhars { get; set; }
+        public virtual DbSet<ProjetoSolicitacao> ProjetoSolicitacaos { get; set; }
+        public virtual DbSet<ProjetoSolicitacaoIteracao> ProjetoSolicitacaoIteracaos { get; set; }
+        public virtual DbSet<ProjetoStatu> ProjetoStatus { get; set; }
+        public virtual DbSet<IteracaoStatu> IteracaoStatus { get; set; }
     }
 }

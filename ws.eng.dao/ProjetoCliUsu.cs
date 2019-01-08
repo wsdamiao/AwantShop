@@ -27,5 +27,6 @@ namespace ws.eng.dao
         public Nullable<decimal> VlMetroQuadradoBase { get; set; }
         public int UsuarioID { get; set; }
         public System.Guid Token { get; set; }
+        public string EnderecoObra { get; set; }
     }
 }
